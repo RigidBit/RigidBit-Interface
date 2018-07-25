@@ -1,4 +1,4 @@
-const config = require("./webpack.config.js");
+const config = require("./webpack.config.js")("prod");
 const { EnvironmentPlugin } = require("webpack");
 const { environmentPluginGenerator } = require("./environmentPluginGenerator.js");
 
