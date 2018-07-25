@@ -5,7 +5,9 @@
   "author": "Jordan Mack <jordan.mack@brilliantnotion.com> (http://www.brilliantnotion.com/)",
   "license": "ISC",
   "main": "",
-  "dependencies": {},
+  "dependencies": {
+    "loglevel": "^1.6.1"
+  },
   "devDependencies": {
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -23,7 +25,7 @@
   },
   "scripts": {
     "start": "npm run clean && npm run server",
-    "clean": "rm -f dist/bundle.css dist/bundle.js || del dist\\bundle.css dist\\bundle.js",
+    "clean": "rm -f dist/index.html || del dist\\index.html",
     "server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --content-base dist --config dev/webpack/webpack.config.development.js",
     "build": "node ./node_modules/webpack/bin/webpack.js --config dev/webpack/webpack.config.production.js"
   },

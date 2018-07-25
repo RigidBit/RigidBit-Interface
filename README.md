@@ -32,6 +32,12 @@ Use the following command to start the Webpack dev server.
 npm start
 ```
 
+If the RigitBit server is not on localhost, it can be specified manually. Load the RigidBit Interface in a web browser, then open the development console. Set the "baseUrl" cookie using the command below, replacing the IP address to your RigitBit server IP.
+
+```
+Cookies.set("baseUrl", "http://192.168.0.123:8000", { expires: 365 });
+```
+
 ## Building
 
 Use the following command to build the final dist/index.html file without launching the server. This only needs to be done as a final step, and does not need to be done during development.
