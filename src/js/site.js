@@ -17,14 +17,14 @@ const disableAllFormSubmission = function()
 	});
 };
 
-const setSubmitButtonBusyState = function(uploadButton, isBusy)
+const setSubmitButtonBusyState = function(uploadButton, isBusy, busyText = "Saving...")
 {
 	if(isBusy)
 	{
 		if(typeof uploadButton.dataset.defaultText === "undefined")
 			uploadButton.dataset.defaultText = uploadButton.value;
 
-		uploadButton.value = "Uploading...";
+		uploadButton.value = busyText;
 		uploadButton.disabled = true;
 	}
 	else
