@@ -19,7 +19,6 @@ const disableAllFormSubmission = function()
 
 const setSubmitButtonBusyState = function(uploadButton, isBusy)
 {
-	console.log(uploadButton.dataset.defaultText);
 	if(isBusy)
 	{
 		if(typeof uploadButton.dataset.defaultText === "undefined")
