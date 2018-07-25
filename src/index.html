@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+	<title>RigidBit</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rajdhani">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+</head>
+
+<body>
+	<div id="content-wrapper">
+
+		<section class="logo">
+			RigidBit
+		</section>
+
+		<section class="file form">
+			<h2>Store a File</h2>
+			<p class="description">Upload a store a file of any type.</p>
+			<form action="/api/file" method="post" enctype="multipart/form-data">
+				<input type="file" name="file">
+				<input type="submit" value="Save to Blockchain">
+			</form>
+		</section>
+
+		<section class="filehash form">
+			<h2>Store a Filehash</h2>
+			<p class="description">Upload a file and store the hash only. This does not store the file itself!</p>
+			<form action="/api/filehash" method="post" enctype="multipart/form-data">
+				<input type="file" name="file">
+				<input type="submit" value="Save to Blockchain">
+			</form>
+		</section>
+
+		<section class="text form">
+			<h2>Store a Text Message</h2>
+			<p class="description">Store a plain text message.</p>
+			<form action="/api/text" method="post" enctype="multipart/form-data">
+				<textarea name="text"></textarea>
+				<input type="submit" value="Save to Blockchain">
+			</form>
+		</section>
+
+	</div>
+</body>
+
+</html>
