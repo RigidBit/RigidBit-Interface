@@ -8,6 +8,7 @@
 	<title>RigidBit</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rajdhani">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 
 <body>
@@ -18,37 +19,52 @@
 		</section>
 
 		<section class="file form">
-			<h2>Store a File</h2>
-			<p class="description">Upload a store a file of any type.</p>
+			<h2>Save a File</h2>
+			<p class="description">Upload a store a file of any type in the blockchain.</p>
 			<form action="/api/file" method="post" enctype="multipart/form-data">
-				<input type="file" name="file">
-				<input type="submit" value="Save to Blockchain">
+				<label class="file">
+					<input type="file" name="file">
+					<i class="fas fa-file-upload"></i>
+					<span class="filename"></span>
+				</label>
+				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
 			</form>
 		</section>
 
 		<section class="filehash form">
-			<h2>Store a Filehash</h2>
-			<p class="description">Upload a file and store the hash only. This does not store the file itself!</p>
+			<h2>Save a Filehash</h2>
+			<p class="description">
+				Upload a file and store the hash but not the data itself.
+				The original file must be stored indefinitely in an external location, or existance will not be able to be proven.
+				If you don't understand the difference, use "Save a File" instead.
+			</p>
 			<form action="/api/filehash" method="post" enctype="multipart/form-data">
-				<input type="file" name="file">
-				<input type="submit" value="Save to Blockchain">
+				<label class="file">
+					<input type="file" name="file">
+					<i class="fas fa-file-upload"></i>
+					<span class="filename"></span>
+				</label>
+				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
 			</form>
 		</section>
 
 		<section class="text form">
-			<h2>Store a Text Message</h2>
-			<p class="description">Store a plain text message.</p>
+			<h2>Save a Text Message</h2>
+			<p class="description">Save a plain text message in the blockchain.</p>
 			<form action="/api/text" method="post" enctype="multipart/form-data">
-				<textarea name="text"></textarea>
-				<input type="submit" value="Save to Blockchain">
+				<div class="textarea">
+					<textarea name="text" maxlength="100000"></textarea>
+					<span class="counter"></span>
+				</div>
+				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
 			</form>
 		</section>
 
 		<section class="timestamp form">
-			<h2>Store a Timestamp</h2>
-			<p class="description">Create a manual timestamp entry with the current time.</p>
+			<h2>Save a Timestamp</h2>
+			<p class="description">Create a manual timestamp entry in the blockchain.</p>
 			<form action="/api/timestamp" method="post" enctype="multipart/form-data">
-				<input type="submit" value="Save to Blockchain">
+				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
 			</form>
 		</section>
 

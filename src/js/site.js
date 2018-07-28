@@ -2,7 +2,9 @@
 
 import "../vendor/browserupdate/browserupdate.js";
 import * as Cookies from "../vendor/js-cookie/js-cookie.js";
+import * as iziToast from "../../node_modules/izitoast/dist/js/iziToast.min.js";
 import log from "loglevel";
+require("../../node_modules/setimmediate/setImmediate.js");
 
 (function(){
 
@@ -17,21 +19,103 @@ const disableAllFormSubmission = function()
 	});
 };
 
-const setSubmitButtonBusyState = function(uploadButton, isBusy, busyText = "Saving...")
+const generateNotification = function(state, message)
 {
+	let title = "";
+	let func = null;
+
+	switch(state)
+	{
+		case("error"):
+			title = "Error";
+			iziToast.error({title, message});
+			break;
+		case("info"):
+			title = "Info";
+			iziToast.info({title, message});
+			break;
+		case("success"):
+			title = "Success";
+			iziToast.success({title, message});
+			break;
+		case("warning"):
+			title = "Warning";
+			iziToast.warning({title, message});
+			break;
+		default:
+			return log.error("Invalid state provided to generateNotification().");
+			break;
+	}
+}
+
+const setSubmitButtonBusyState = function(submitButton, isBusy, busyText = "Saving...")
+{
+	let label = submitButton.querySelector("span");
+
 	if(isBusy)
 	{
-		if(typeof uploadButton.dataset.defaultText === "undefined")
-			uploadButton.dataset.defaultText = uploadButton.value;
+		if(typeof submitButton.dataset.defaultText === "undefined")
+			submitButton.dataset.defaultText = label.textContent;
 
-		uploadButton.value = busyText;
-		uploadButton.disabled = true;
+		label.textContent = busyText;
+		submitButton.disabled = true;
 	}
 	else
 	{
-		uploadButton.value = uploadButton.dataset.defaultText;
-		uploadButton.disabled = false;
+		label.textContent = submitButton.dataset.defaultText;
+		submitButton.disabled = false;
 	}
+};
+
+const formDataSppendFiles = function(formData, fileSelect)
+{
+    let files = fileSelect.files;
+    for (let i = 0; i < files.length; i++)
+    {
+        let name = "file" + i;
+        let file = files[i];
+        formData.append(name, file, file.name);
+    }
+
+	return formData;
+};
+
+const formGenerateXhr = function(method, url, submitButton=null)
+{
+	const xhr = new XMLHttpRequest();
+
+	xhr.open(method, url, true);
+
+	xhr.setRequestHeader('cache-control', 'no-cache, must-revalidate, post-check=0, pre-check=0');
+	xhr.setRequestHeader('cache-control', 'max-age=0');
+	xhr.setRequestHeader('expires', '0');
+	xhr.setRequestHeader('expires', 'Tue, 01 Jan 1980 1:00:00 GMT');
+	xhr.setRequestHeader('pragma', 'no-cache');
+
+	xhr.onreadystatechange = function()
+	{
+		if(xhr.readyState === 4)
+		{
+			if(submitButton)
+				setSubmitButtonBusyState(submitButton, false);
+
+			if(xhr.status === 200)
+			{
+				let message = JSON.parse(xhr.response).message;
+				generateNotification("success", message);
+			}
+			else
+			{
+				if(submitButton)
+					submitButton.querySelector("span").innerText = "Save failed!";
+				generateNotification("error", "Operation failed: " + xhr.response);
+			}
+
+			log.debug(xhr.response);
+		}
+	};
+
+	return xhr;
 };
 
 const formUrlFromActionUrl = function(actionUrl)
@@ -49,88 +133,103 @@ const formUrlFromActionUrl = function(actionUrl)
 	return formUrl;
 };
 
-const formFilehashInit = function()
+const formFileLabelInit = function()
 {
-	let parentSelector = "form[action='/api/filehash']";
+	const parentSelector = "form label.file";
+	Array.from(document.querySelectorAll(parentSelector)).forEach(function(parent)
+	{
+		const filename = parent.querySelector("span.filename");
+		const file = parent.querySelector("input[type='file']");
+
+		file.addEventListener("change", function(event)
+		{
+			filename.innerText = file.value.replace(/.*[\/\\]/, '');
+		});
+
+	});
+};
+
+const formFileInit = function()
+{
+	const parentSelector = "form[action='/api/file']";
 	document.querySelector(parentSelector).addEventListener("submit", function(event)
 	{
 		let fileSelect = document.querySelector(parentSelector + " input[type='file']");
-		let uploadButton = document.querySelector(parentSelector + " input[type='submit']");
+		let submitButton = document.querySelector(parentSelector + " button[class='submit']");
 
-		setSubmitButtonBusyState(uploadButton, true);
+		setSubmitButtonBusyState(submitButton, true);
 
+		// Collect form data.
 		const formData = new FormData();
+		formDataSppendFiles(formData, fileSelect);
 
-		// Add files.
-		let files = fileSelect.files;
-		for (let i = 0; i < files.length; i++)
-		{
-			let name = "file" + i;
-			let file = files[i];
-			formData.append(name, file, file.name);
-		}
-
-		// Add additional form fields.
-		// formData.append("test", fieldTest.value);
-
-		const formUrl = formUrlFromActionUrl(document.querySelector(parentSelector).action);
-
-		const xhr = new XMLHttpRequest();
-		xhr.open("POST", formUrl, true);
-
-		xhr.onreadystatechange = function()
-		{
-			if(xhr.readyState === 4)
-			{
-				setSubmitButtonBusyState(uploadButton, false);
-
-				if(xhr.status !== 200)
-				{
-					uploadButton.value = "Upload failed!";
-					alert("Operation failed: " + xhr.response);
-				}
-
-				log.debug(xhr.response);
-			}
-		};
-
+		const xhr = formGenerateXhr("POST", formUrlFromActionUrl(document.querySelector(parentSelector).action), submitButton);
 		xhr.send(formData);
 	});
 };
 
-const formTimestampInit = function()
+const formFilehashInit = function()
 {
-	let parentSelector = "form[action='/api/timestamp']";
+	const parentSelector = "form[action='/api/filehash']";
 	document.querySelector(parentSelector).addEventListener("submit", function(event)
 	{
-		let uploadButton = document.querySelector(parentSelector + " input[type='submit']");
+		let fileSelect = document.querySelector(parentSelector + " input[type='file']");
+		let submitButton = document.querySelector(parentSelector + " button[class='submit']");
 
-		setSubmitButtonBusyState(uploadButton, true);
+		setSubmitButtonBusyState(submitButton, true);
 
+		// Collect form data.
 		const formData = new FormData();
+		formDataSppendFiles(formData, fileSelect);
 
-		const formUrl = formUrlFromActionUrl(document.querySelector(parentSelector).action);
-
-		const xhr = new XMLHttpRequest();
-		xhr.open("POST", formUrl, true);
-
-		xhr.onreadystatechange = function()
-		{
-			if(xhr.readyState === 4)
-			{
-				setSubmitButtonBusyState(uploadButton, false);
-
-				if(xhr.status !== 200)
-				{
-					uploadButton.value = "Save failed!";
-					alert("Operation failed: " + xhr.response);
-				}
-
-				log.debug(xhr.response);
-			}
-		};
-
+		const xhr = formGenerateXhr("POST", formUrlFromActionUrl(document.querySelector(parentSelector).action), submitButton);
 		xhr.send(formData);
+	});
+};
+
+const formTextInit = function()
+{
+	const parentSelector = "form[action='/api/text']";
+	document.querySelector(parentSelector).addEventListener("submit", function(event)
+	{
+		let submitButton = document.querySelector(parentSelector + " button[class='submit']");
+		let textField = document.querySelector(parentSelector + " textarea[name='text']");
+
+		setSubmitButtonBusyState(submitButton, true);
+
+		// Collect form data.
+		const formData = new FormData();
+		formData.append("text", textField.value);
+
+		const xhr = formGenerateXhr("POST", formUrlFromActionUrl(document.querySelector(parentSelector).action), submitButton);
+		xhr.send(formData);
+	});
+
+	const textarea = document.querySelector(parentSelector + " div.textarea textarea[name='text']");
+	const counter = document.querySelector(parentSelector + " div.textarea span.counter");
+	const textAreaChange = function()
+	{
+		counter.innerText = textarea.maxLength - textarea.value.length;
+		
+	};
+	textarea.addEventListener("change", textAreaChange);
+	textarea.addEventListener("keydown", textAreaChange);
+	textarea.addEventListener("keyup", textAreaChange);
+	textarea.addEventListener("paste", function(){setImmediate(textAreaChange);});
+	textAreaChange();
+};
+
+const formTimestampInit = function()
+{
+	const parentSelector = "form[action='/api/timestamp']";
+	document.querySelector(parentSelector).addEventListener("submit", function(event)
+	{
+		let submitButton = document.querySelector(parentSelector + " button[class='submit']");
+
+		setSubmitButtonBusyState(submitButton, true);
+
+		const xhr = formGenerateXhr("POST", formUrlFromActionUrl(document.querySelector(parentSelector).action), submitButton);
+		xhr.send(new FormData());
 	});
 };
 
@@ -149,8 +248,17 @@ document.addEventListener("DOMContentLoaded", function()
 	else
 		log.setLevel(log.levels.ERROR);
 
+	// Configure iziToast.
+	iziToast.settings(
+	{
+		position: "topRight",
+	});
+
 	disableAllFormSubmission();
+	formFileLabelInit();
+	formFileInit();
 	formFilehashInit();
+	formTextInit();
 	formTimestampInit();
 });
 

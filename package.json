@@ -6,6 +6,7 @@
   "license": "ISC",
   "main": "",
   "dependencies": {
+    "izitoast": "^1.3.0",
     "loglevel": "^1.6.1"
   },
   "devDependencies": {
