@@ -111,7 +111,7 @@ const formGenerateXhr = function(method, url, submitButton=null)
 				generateNotification("error", "Operation failed: " + xhr.response);
 			}
 
-			log.debug(xhr.response);
+			log.debug(JSON.stringify(JSON.parse(xhr.response), null, 4));
 		}
 	};
 
