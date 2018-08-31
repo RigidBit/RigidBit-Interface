@@ -155,4 +155,27 @@ section.logo
 	text-align: center;
 }
 
+section.status
+{
+	h2
+	{
+		position: relative;
 
+		.refresh
+		{
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	.label
+	{
+		display: inline-block;
+		width: 145px;
+	}
+
+	.value
+	{
+		font-family: "Courier New";
+	}
+}

@@ -68,6 +68,27 @@
 			</form>
 		</section>
 
+		<section class="status">
+			<h2>Status<a href="#refresh" class="refresh"><i class="fas fa-sync-alt"></i></a></h2>
+			<form action="/api/status" method="get">
+				<div>
+					<span class="label">Genesis Hash:</span> <span class="genesis_hash value"></span>
+				</div>
+				<div>
+					<span class="label">Current Block Height:</span> <span class="block_height value"></span>
+				</div>
+				<div>
+					<span class="label">Last Block Hash:</span> <span class="last_hash value"></span>
+				</div>
+				<div>
+					<span class="label">Last Block Type:</span> <span class="last_type value"></span>
+				</div>
+				<div>
+					<span class="label">RigidBit Version:</span> <span class="rigidbit_version value"></span>
+				</div>
+			</form>
+		</section>
+
 	</div>
 </body>
 

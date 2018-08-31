@@ -80,7 +80,7 @@ const formDataSppendFiles = function(formData, fileSelect)
 	return formData;
 };
 
-const formGenerateXhr = function(method, url, submitButton=null)
+const generateBaseXhr = function(method, url)
 {
 	const xhr = new XMLHttpRequest();
 
@@ -91,6 +91,13 @@ const formGenerateXhr = function(method, url, submitButton=null)
 	xhr.setRequestHeader('expires', '0');
 	xhr.setRequestHeader('expires', 'Tue, 01 Jan 1980 1:00:00 GMT');
 	xhr.setRequestHeader('pragma', 'no-cache');
+
+	return xhr;
+};
+
+const formGenerateXhr = function(method, url, submitButton=null)
+{
+	const xhr = generateBaseXhr(method, url);
 
 	xhr.onreadystatechange = function()
 	{
@@ -233,6 +240,55 @@ const formTimestampInit = function()
 	});
 };
 
+const statusUpdate = function()
+{
+	const parentSelector = "form[action='/api/status']";
+	const xhr = generateBaseXhr("GET", formUrlFromActionUrl(document.querySelector(parentSelector).action));
+
+	xhr.onreadystatechange = function()
+	{
+		if(xhr.readyState === 4)
+		{
+			if(xhr.status === 200)
+			{
+				const response = JSON.parse(xhr.response);
+				const values = ["block_height", "genesis_hash", "last_hash", "last_type", "rigidbit_version"];
+
+				values.forEach(function(value)
+				{
+					document.querySelector(parentSelector + " ." + value).innerText = response[value];
+				});
+			}
+			else
+			{
+				generateNotification("error", "Operation failed: " + xhr.response);
+			}
+
+			log.debug(JSON.stringify(JSON.parse(xhr.response), null, 4));
+		}
+	};
+
+	xhr.send(new FormData());
+};
+
+const statusInit = function()
+{
+	setInterval(statusUpdate, 60 * 1000);
+	statusUpdate();
+};
+
+const statusRefreshInit = function()
+{
+	const parentSelector = "section.status a.refresh";
+	const refreshButton = document.querySelector(parentSelector);
+
+	refreshButton.addEventListener("click", function(event)
+	{
+		event.preventDefault();
+		statusUpdate();
+	});
+};
+
 document.addEventListener("DOMContentLoaded", function()
 {
 	// Make Cookies available for use in dev environments to set the baseUrl.
@@ -260,6 +316,8 @@ document.addEventListener("DOMContentLoaded", function()
 	formFilehashInit();
 	formTextInit();
 	formTimestampInit();
+	statusInit();
+	statusRefreshInit();
 });
 
 })();
