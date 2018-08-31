@@ -8,3 +8,5 @@ dev/tests/config/coverage/
 dev/tests/error_shots/
 src/css/site.css
 dist/index.html
+*.sublime-workspace
+*.sublime-project
