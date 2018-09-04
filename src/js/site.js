@@ -252,7 +252,11 @@ const statusUpdate = function()
 			if(xhr.status === 200)
 			{
 				const response = JSON.parse(xhr.response);
-				const values = ["block_height", "genesis_hash", "last_hash", "last_type", "rigidbit_version"];
+				const values = ["block_height", "genesis_hash", "last_hash", "last_type", "last_timestamp", "rigidbit_version"];
+
+				// Update format for timestamp.
+				const date = new Date(parseInt(response["last_timestamp"]) * 1000);
+				response["last_timestamp"] = date.toISOString();
 
 				values.forEach(function(value)
 				{
@@ -273,7 +277,7 @@ const statusUpdate = function()
 
 const statusInit = function()
 {
-	setInterval(statusUpdate, 60 * 1000);
+	setInterval(statusUpdate, 5 * 1000);
 	statusUpdate();
 };
 
