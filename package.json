@@ -27,7 +27,7 @@
   "scripts": {
     "start": "npm run clean && npm run server",
     "clean": "rm -f dist/index.html || del dist\\index.html",
-    "server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --content-base dist --config dev/webpack/webpack.config.development.js",
+    "server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --disableHostCheck --content-base dist --config dev/webpack/webpack.config.development.js",
     "build": "node ./node_modules/webpack/bin/webpack.js --config dev/webpack/webpack.config.production.js"
   },
   "repository": {
