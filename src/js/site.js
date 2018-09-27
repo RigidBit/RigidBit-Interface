@@ -110,6 +110,7 @@ const formGenerateXhr = function(method, url, submitButton=null)
 			{
 				let message = JSON.parse(xhr.response).message;
 				generateNotification("success", message);
+				statusUpdate();
 			}
 			else
 			{
