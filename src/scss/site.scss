@@ -150,11 +150,14 @@ section.logo
 {
 	background: none;
 	border: none;
-	font-family: "Rajdhani";
-	font-size: 36px;
 	margin: $margin-default 0 $margin-default 0;
 	padding: 0;
 	text-align: center;
+
+	img
+	{
+		width: 200px;	
+	}
 }
 
 section.status
