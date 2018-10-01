@@ -1,9 +1,11 @@
 "use strict";
 
+import $ from "jquery";
+import log from "loglevel";
+
 import "../vendor/browserupdate/browserupdate.js";
 import * as Cookies from "../vendor/js-cookie/js-cookie.js";
 import * as iziToast from "../../node_modules/izitoast/dist/js/iziToast.min.js";
-import log from "loglevel";
 require("../../node_modules/setimmediate/setImmediate.js");
 
 (function(){
@@ -241,6 +243,18 @@ const formTimestampInit = function()
 	});
 };
 
+const showHideGenesisInit = function()
+{
+	$("a[href='#showHideGenesis']").on("click", function(e)
+	{
+		e.preventDefault();
+
+		$("form[action='/api/status'] .genesis_hash").toggleClass("hidden");
+
+		statusUpdate();
+	});
+};
+
 const statusUpdate = function()
 {
 	const parentSelector = "form[action='/api/status']";
@@ -261,7 +275,10 @@ const statusUpdate = function()
 
 				values.forEach(function(value)
 				{
-					document.querySelector(parentSelector + " ." + value).innerText = response[value];
+					if(value === "genesis_hash" && $(parentSelector + " ." + value).hasClass("hidden"))
+						document.querySelector(parentSelector + " ." + value).innerText = response[value].replace(/\w/g, "•");
+					else
+						document.querySelector(parentSelector + " ." + value).innerText = response[value];
 				});
 			}
 			else
@@ -321,6 +338,7 @@ document.addEventListener("DOMContentLoaded", function()
 	formFilehashInit();
 	formTextInit();
 	formTimestampInit();
+	showHideGenesisInit();
 	statusInit();
 	statusRefreshInit();
 });
