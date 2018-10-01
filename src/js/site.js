@@ -243,15 +243,26 @@ const formTimestampInit = function()
 	});
 };
 
+const populateGenesisHash = function()
+{
+	const $genesisHash = $("form[action='/api/status'] .genesis_hash");
+	let text = $genesisHash.data("genesis_hash");
+
+	if($genesisHash.hasClass("hidden"))
+		text = text.replace(/\w/g, "•");
+
+	$genesisHash.text(text);
+};
+
 const showHideGenesisInit = function()
 {
 	$("a[href='#showHideGenesis']").on("click", function(e)
 	{
 		e.preventDefault();
 
-		$("form[action='/api/status'] .genesis_hash").toggleClass("hidden");
-
-		statusUpdate();
+		const $genesisHash = $("form[action='/api/status'] .genesis_hash");
+		$genesisHash.toggleClass("hidden");
+		populateGenesisHash();
 	});
 };
 
@@ -275,8 +286,11 @@ const statusUpdate = function()
 
 				values.forEach(function(value)
 				{
-					if(value === "genesis_hash" && $(parentSelector + " ." + value).hasClass("hidden"))
-						document.querySelector(parentSelector + " ." + value).innerText = response[value].replace(/\w/g, "•");
+					if(value === "genesis_hash")
+					{
+						$(parentSelector + " ." + value).data("genesis_hash", response[value]);
+						populateGenesisHash();
+					}
 					else
 						document.querySelector(parentSelector + " ." + value).innerText = response[value];
 				});
