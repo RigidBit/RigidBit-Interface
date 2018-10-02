@@ -34,6 +34,12 @@ module.exports = function(stage = "prod")
 			filename: "[name]",
 			path: path.resolve(__dirname, "../../dist"),
 		},
+		performance:
+		{
+			hints: "warning",
+			maxEntrypointSize: 1024 * 1024 * 1,
+			maxAssetSize: 1024 * 1024 * 1,
+		},
 		plugins:
 		[
 			new ExtractTextPlugin("site.css"),
