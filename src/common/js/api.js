@@ -92,13 +92,14 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 
 		log.debug("Fetch JSON:", json);
 
-		if(code !== 200 && "error" in json)
-			return handleFetchError(json.error, onError);
-
 		lscache.set(cacheKey, JSON.stringify(json), CACHE_EXPIRATION);
 
 		return json;
-	});
+	})
+	.catch(function(error)
+	{
+		throw reformatError(error);
+	})
 
 	return promise;
 }
