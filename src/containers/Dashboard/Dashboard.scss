@@ -1,0 +1,35 @@
+section.dashboard
+{
+	@include contentMixin;
+
+	.statusContainer
+	{
+		margin-bottom: $margin-default;
+		position: relative;
+
+		h2
+		{
+			position: relative;
+
+			.refresh
+			{
+				position: absolute;
+				right: 0;
+			}
+		}
+
+		table
+		{
+			td.metric
+			{
+				padding-right: $padding-default;
+				white-space: nowrap;
+			}
+
+			td.value
+			{
+				font-family: "Courier New", "Lucida Console";
+			}
+		}
+	}
+}

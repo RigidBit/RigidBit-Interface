@@ -1,0 +1,17 @@
+$height: 20px;
+
+footer.main
+{
+	border-top: 1px solid #cccccc;
+	font-size: 0.8rem;
+	height: $footer-height;
+	padding: $padding-default;
+	text-align: center;
+
+	&.floating
+	{
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+	}
+}

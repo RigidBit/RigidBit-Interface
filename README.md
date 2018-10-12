@@ -4,13 +4,21 @@ This is the primary web based interface for the RigidBit app.
 
 ## Prerequisites
 
-Before developing on this application you should have working knowledge of the following:
+Before developing on this application you should have working knowledge of the following technologies and toolchains:
 
 * HTML 5 / CSS 3 / Javascript (ECMAScript 6)
 * SASS (https://sass-lang.com/)
 * Node.js (https://nodejs.org/en/docs/)
 * Npm (https://www.npmjs.com/)
 * Webpack (https://webpack.js.org/)
+
+You should also have working experience with the following frameworks and libraries:
+
+* React (https://reactjs.org/)
+* MobX (https://mobx.js.org/)
+* jQuery (http://jquery.com/)
+* Router5 (https://router5.js.org/)
+* Lodash (https://lodash.com/)
 
 You must have the following installed in your development environment:
 

@@ -1,0 +1,43 @@
+$height: 34px;
+
+nav.main
+{
+	background: $background-color-box;
+	margin-bottom: $margin-default;
+	text-align: center;
+
+	ul
+	{
+		display: inline-block;
+		height: $height;
+		padding: 0 $padding-thin 0 $padding-thin;
+		margin: 0 auto 0 auto;
+		// width: 100%;
+
+		li
+		{
+			display: inline-block;
+			list-style-type: none;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+
+			&.active a
+			{
+				border-bottom: 2px solid $border-color-default;
+			}
+
+			a
+			{
+				border: 2px solid transparent;
+				color: $font-color-default;
+				display: inline-block;
+				font-size: 0.85rem;
+				height: $height;
+				line-height: $height;
+				padding: 0 $padding-default/2 0 $padding-default/2;
+				text-decoration: none;
+				width: 100%;
+			}
+		}
+	}
+}

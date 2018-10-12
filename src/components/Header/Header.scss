@@ -1,0 +1,30 @@
+$height: 20px;
+
+header.main
+{
+	background: #dfdfdf;
+	height: $header-height;
+	padding: $padding-default;
+	position: relative;
+
+	.logo
+	{
+		height: $height;
+		left: $padding-default;
+		position: absolute;
+		top: $padding-default;
+
+		img
+		{
+			width: 100px;
+		}
+	}
+
+	.top-menu
+	{
+		height: $height;
+		position: absolute;
+		right: $padding-default;
+		top: $padding-default;
+	}
+}

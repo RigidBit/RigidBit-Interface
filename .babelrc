@@ -1,0 +1,10 @@
+{
+	"presets":
+	[
+		"mobx"
+	],
+	"plugins":
+	[
+		"transform-runtime"
+	]
+}

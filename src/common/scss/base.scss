@@ -1,0 +1,118 @@
+html
+{
+	box-sizing: border-box;
+	color: $font-color-default;
+	font-family: "Open Sans";
+	font-size: 14px;
+	word-break: break-word;
+}
+
+*, *:before, *:after
+{
+	box-sizing: inherit;
+}
+
+body
+{
+	background: $background-color-default;
+}
+
+h1, h2, h3
+{
+}
+
+h1
+{
+	font-size: 24px;
+	font-weight: 600;
+	margin: 0 0 .4em 0;
+}
+
+h2
+{
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0 0 .3em 0;
+}
+
+h3
+{
+	font-weight: 600;
+}
+
+p
+{
+	margin: 0 0 1em 0;
+}
+
+a
+{
+	color: #777777;
+}
+
+table
+{
+	border-collapse: collapse;
+	border-radius: $border-radius-default;
+	overflow: hidden;
+	width: 100%;
+}
+
+tr, td, th
+{
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+tr
+{
+	td, th
+	{
+		font-size: 1rem;
+		font-weight: normal;
+		padding: $padding-thin $padding-default $padding-thin $padding-default;
+		text-align: left;
+
+		&:last-child
+		{
+			text-align: right;
+		}
+	}
+
+	th
+	{
+		background: #dfdfdf;
+		font-weight: bold;
+	}
+
+	td
+	{
+		background: #eeeeee;
+	}
+
+	&:first-child
+	{
+		td
+		{
+			padding-top: $padding-default;
+		}
+	}
+
+	&:last-child
+	{
+		td
+		{
+			padding-bottom: $padding-default;		
+		}
+	}
+
+}
+
+tr:hover
+{
+	td
+	{
+		background: #dfdfdf;
+	}
+}

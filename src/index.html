@@ -12,75 +12,7 @@
 </head>
 
 <body>
-	<div id="content-wrapper">
-
-		<section class="logo">
-			<a href="/"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPwAAAAsCAMAAAB2SyV6AAAAKlBMVEUAAAB3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3dALpnnAAAADnRSTlMAQMCA4KBw0DAQIJBg/5WxDPAAAAFTSURBVGje7ZfRboQgEEUHtygi/f8PrYprV+wDNtlJJojG7Kbl3hczu+DMEZwr6pP29RUvfOgQKFfKsbBfs8dU3f7dx4WIiG72cM0VFSzAAx7wgC9GHzycHvFXI43tWdRMkkWRZC2GzzQ+28bECnQj/df0+/O7JHyI9ipbOLfnKb9mnwwPKFbwLcKP2PaABzzgAZ9rdSo+DCV2UP6g2kFqtlZKYmYW1swo/HZ+M9lLpX/9Jjxbk+PFiobl1xR8y8Ml4ZJDaijX3SW+F0JIuGvSpx8MxXfSkZakXNj2gAc84Eu3Oh/bYbV1/dt+J3+posPoeqs9PB/GDsjeRfg1MJ+3Cdt4h2J18wa/fRmMh9fGO2x7wAMe8GVb3XmpsxP1zI5qGUk0XZTrMnh3dmJdvyCJnAvvPOABD3jAlyB11X24C40LVh7wgAc84AH/v9QqJvsniv4B2wNQbtB0x5IAAAAASUVORK5CYII=" alt="RigidBit Logo"></a>
-		</section>
-
-		<section class="file form">
-			<h2>Save a File</h2>
-			<p class="description">Upload and store a file of any type in the blockchain.</p>
-			<form action="/api/file" method="post" enctype="multipart/form-data">
-				<label class="file">
-					<input type="file" name="file">
-					<i class="fas fa-file-upload"></i>
-					<span class="filename"></span>
-				</label>
-				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
-			</form>
-		</section>
-
-		<section class="filehash form">
-			<h2>Save a Filehash</h2>
-			<p class="description">
-				Upload a file and store the hash but not the data itself.
-				The original file must be stored indefinitely in an external location, or existance will not be able to be proven.
-				If you don't understand the difference, use "Save a File" instead.
-			</p>
-			<form action="/api/filehash" method="post" enctype="multipart/form-data">
-				<label class="file">
-					<input type="file" name="file">
-					<i class="fas fa-file-upload"></i>
-					<span class="filename"></span>
-				</label>
-				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
-			</form>
-		</section>
-
-		<section class="text form">
-			<h2>Save a Text Message</h2>
-			<p class="description">Save a plain text message in the blockchain.</p>
-			<form action="/api/text" method="post" enctype="multipart/form-data">
-				<div class="textarea">
-					<textarea name="text" maxlength="100000"></textarea>
-					<span class="counter"></span>
-				</div>
-				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
-			</form>
-		</section>
-
-		<section class="timestamp form">
-			<h2>Save a Timestamp</h2>
-			<p class="description">Create a manual timestamp entry in the blockchain.</p>
-			<form action="/api/timestamp" method="post" enctype="multipart/form-data">
-				<button class="submit"><i class="far fa-save"></i><span>Save</span></button>
-			</form>
-		</section>
-
-		<section class="status">
-			<h2>Status<a href="#refresh" class="refresh"><i class="fas fa-sync-alt"></i></a></h2>
-			<form action="/api/status" method="get">
-				<div><span class="label">Genesis Hash:</span> <span class="genesis_hash value hidden"></span> <a href="#showHideGenesis"><i class="far fa-eye-slash"></i></a></div>
-				<div><span class="label">Current Block Height:</span> <span class="block_height value"></span></div>
-				<div><span class="label">Last Block Hash:</span> <span class="last_hash value"></span></div>
-				<div><span class="label">Last Block Type:</span> <span class="last_type value"></span></div>
-				<div><span class="label">Last Block Time:</span> <span class="last_timestamp value"></span></div>
-				<div><span class="label">RigidBit Version:</span> <span class="rigidbit_version value"></span></div>
-			</form>
-		</section>
-
-	</div>
+	<div id="root"></div>
 </body>
 
 </html>

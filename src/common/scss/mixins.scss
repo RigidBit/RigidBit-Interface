@@ -1,0 +1,19 @@
+@mixin contentMixin
+{
+	.content
+	{
+		margin: 0 auto 0 auto;
+		max-width: 960px;
+		padding: $padding-default;
+
+		.loadingText
+		{
+			padding: $padding-default;
+		}
+
+		section
+		{
+			margin: $margin-thick 0 $margin-thick 0;
+		}
+	}
+}
