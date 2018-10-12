@@ -51,8 +51,8 @@ module.exports = function(stage = "prod")
 		performance:
 		{
 			hints: "warning",
-			maxEntrypointSize: 1024 * 1024 * 3,
-			maxAssetSize: 1024 * 1024 * 3,
+			maxEntrypointSize: 1024 * 1024 * 5,
+			maxAssetSize: 1024 * 1024 * 5,
 		},
 		stats:
 		{
