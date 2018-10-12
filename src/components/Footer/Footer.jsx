@@ -3,7 +3,7 @@
 	@observable floatFooter = false; // State for floating the footer.
 	handleResize = null; // A debouced handler for resizing.
 	checkTimer = null; // The interval timer for checking for document body size changes.
-	checkDelay = 1000; // The check interval for the checkTimer.
+	checkDelay = config.footerResizeTimerInterval; // The check interval for the checkTimer.
 
 	componentDidMount()
 	{
@@ -11,10 +11,7 @@
 		this.handleResize = _.debounce(this.handleResizeReal, config.debouceDelayDefault);
 
 		// Add the resize listener to the window.
-		$(window).on("resize", null, () =>
-		{
-			this.handleResize();
-		});
+		$(window).on("resize", null, this.handleResize);
 		this.handleResizeReal();
 
 		// Start the check timer.
