@@ -1,3 +1,5 @@
+import iziToast from "../../../node_modules/izitoast/dist/js/iziToast.min.js";
+
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
@@ -80,6 +82,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.updateData(data);
 
 			$("section.statusContainer").removeClass("loading");
+		})
+		.catch(function(error)
+		{
+			log.error(error);
+			iziToast.error({title: "Error", message: error});
 		});
 	};
 
@@ -91,6 +98,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const metrics =
 		[
+			["connection", "Connection"],
 			["genesis_hash", "Genesis Hash"],
 			["block_height", "Block Height"],
 			["last_hash", "Last Block Hash"],
@@ -106,17 +114,22 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			let label = metric[1];
 			let value = _this.data[metric[0]];
 
-			if(key === "genesis_hash" && !_this.showGenesisHash)
-				value = value.replace(/\w/g, "•");
-
 			if(key === "genesis_hash")
-				value = <span>{value} <a href="#showHideGenesis" onClick={_this.showHideGenesisClicked}><i className="far fa-eye-slash"></i></a></span>;
+			{
+				if(!_this.showGenesisHash)
+					value = value.replace(/\w/g, "•");
 
-			if(key === "last_timestamp")
+				value = <span>{value} <a href="#showHideGenesis" onClick={_this.showHideGenesisClicked}><i className="far fa-eye-slash"></i></a></span>;
+			}
+
+			else if(key === "last_timestamp")
 				value = new Date(parseInt(value) * 1000).toISOString();
 
-			if(key === "block_height" || key === "last_hash")
-				value = <a href={"#/block/" + value} onClick={_this.handleViewBlock}>{value}</a>
+			else if(key === "block_height" || key === "last_hash")
+				value = <a href={"#/block/" + value} onClick={_this.handleViewBlock}>{value}</a>;
+
+			else if(key === "connection")
+				value = <span>Established. <i className="fas fa-bolt"></i></span>;
 
 			const html =
 			(
@@ -133,8 +146,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="statusContainer">
-		        <h2>Status<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
-		        <table>
+		        <h2>General Status<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+		        <table className="reverse-row-colors">
 		        	<tbody>
     		        	{tableRows}
     		        </tbody>
