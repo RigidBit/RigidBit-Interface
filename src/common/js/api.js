@@ -51,8 +51,8 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 	const cacheKey = cacheKeyGenerate(url, method, data);
 	const apiUrl = apiUrlFromRelativePath(url);
 
-	log.debug("URL:", apiUrl);
-	log.debug("Data:", data);
+	log.debug("FETCH URL:", apiUrl);
+	log.debug("FETCH DATA:", data);
 
 	// Check for cached response.
 	if(useCache)
@@ -68,18 +68,24 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 		}
 	}
 
+	let formData = null;
+	if(data)
+	{
+		formData = new FormData();
+		Object.keys(data).forEach(function(key)
+		{
+			formData.append(key, data[key]);
+		});
+	}
+
 	const config =
 	{
 		method,
 		cache: "no-cache",
 		credentials: "include",
-		headers:
-		{
-			"Content-Type": "application/json",
-		},
 		redirect: "follow",
 		referrer: "no-referrer",
-		body: (data) ? JSON.stringify(data) : data,
+		body: formData,
 	};
 
 	const promise = fetch(apiUrl, config)
