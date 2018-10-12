@@ -6,7 +6,9 @@ $border-color-default: #cccccc;
 $border-color-light: #dddddd;
 $border-default: 1px solid $border-color-default;
 $border-radius-default: 10px;
+$border-radius-input: 5px;
 $font-color-default: #777777;
+$font-color-disabled: rgba(#b2b9bf, 0.3);
 $font-family-default: "Open Sans";
 $font-family-monospace: "Courier New", "Lucida Console";
 $margin-default: 10px;
@@ -15,12 +17,15 @@ $margin-thin: $margin-default / 2;
 $padding-default: 10px;
 $padding-thick: $padding-default * 2;
 $padding-thin: $padding-default / 2;
+$padding-input: 8px;
 
 // Colors
 $color-blue: #007bff;
 $color-blue-dark: darken($color-blue, 10%);
+$color-blue-light: lighten($color-blue, 10%);
 $color-grey: #6c757d;
 $color-grey-dark: darken($color-grey, 10%);
+$color-grey-light: lighten($color-grey, 10%);
 $color-green: #28a745;
 $color-red: #dc3545;
 $color-yellow: #ffc107;

@@ -1,4 +1,29 @@
 section.text
 {
 	@include contentMixin;
+
+	.textContainer
+	{
+		@include sectionContainerDefaultMixin;
+
+		div.textarea
+		{
+			position: relative;
+
+			textarea
+			{
+				margin-bottom: $margin-default;
+				min-height: 100px;
+				width: 100%;
+			}
+
+			span.counter
+			{
+				bottom: 0;
+				font-size: .8rem;
+				position: absolute;
+				right: 0;
+			}
+		}
+	}
 }

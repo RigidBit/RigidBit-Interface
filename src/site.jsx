@@ -3,6 +3,7 @@
 import "./vendor/browserupdate/browserupdate.js";
 import * as Cookies from "./vendor/js-cookie/js-cookie.js";
 import * as iziToast from "izitoast";
+import "../node_modules/form-serializer/dist/jquery.serialize-object.min.js"; // Global jQuery scope. Does not need reimport.
 require("../node_modules/setimmediate/setImmediate.js");
 import {configure as mobxConfigure, autorun} from "mobx";
 

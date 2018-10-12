@@ -1,0 +1,122 @@
+$background: white;
+$background-active: rgba(255, 255, 255, 0.2);
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus
+{
+	box-shadow: 0 0 0 2px $background-active;
+	outline: none;
+}
+
+button,
+input,
+select,
+textarea
+{
+	color: $font-color-default;
+}
+
+input::placeholder
+{
+	color: $background-active;
+}
+
+input[type="checkbox"]
+{
+	position: relative;
+	top: 2px;
+}
+
+input[type="text"],
+input[type="password"],
+select,
+textarea
+{
+	background: $background;
+	border: $border-default;
+	border-radius: $border-radius-input;
+	padding: $padding-input $padding-input * 1.5;
+	width: 100%;
+
+	&:active,
+	&:hover
+	{
+		background: $background-active;
+	}
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+{
+	background: white;
+	border: $border-default;
+	border-radius: $border-radius-input;
+	color: $color-grey-light;
+	cursor: pointer;
+	display: inline-block;
+	padding: $padding-input*0.75 $padding-input $padding-input*0.75 $padding-input;
+	user-select: none;
+
+	&:hover
+	{
+		background: $color-grey-dark;
+		border-color: $color-grey-dark;
+		color: white;
+	}
+
+	&:active
+	{
+		background: $color-grey-light;
+		border-color: $color-grey-light;
+	}
+
+	&:disabled,
+	&.disabled
+	{
+		color: $font-color-disabled;
+
+		&:active,
+		&:hover
+		{
+			background: $background;
+		}
+	}
+
+	&.highlight
+	{
+		@keyframes blink
+		{
+			0% { box-shadow: 0 0 0 2px #555555; } 
+			10% { box-shadow: 0 0 0 2px #655352; } 
+			20% { box-shadow: 0 0 0 2px #75514f; } 
+			30% { box-shadow: 0 0 0 2px #85504c; } 
+			40% { box-shadow: 0 0 0 2px #954e49; } 
+			50% { box-shadow: 0 0 0 2px #a54c46; } 
+			60% { box-shadow: 0 0 0 2px #b44a42; } 
+			70% { box-shadow: 0 0 0 2px #c4483f; } 
+			80% { box-shadow: 0 0 0 2px #d4473c; } 
+			90% { box-shadow: 0 0 0 2px #e44539; } 
+			100% { box-shadow: 0 0 0 2px #f44336; } 
+		}
+
+		animation: blink 1s step-end infinite alternate;
+
+		&:hover
+		{
+			animation: none;
+		}
+	}
+
+	.icon
+	{
+		margin-right: 0.3em;
+	}
+}
+
+select option
+{
+	padding: 0;
+}
