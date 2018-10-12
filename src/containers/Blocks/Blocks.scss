@@ -4,6 +4,8 @@ section.blocks
 
 	.blocksContainer
 	{
+		@include sectionContainerDefaultMixin;
+
 		margin-bottom: $margin-default;
 		position: relative;
 

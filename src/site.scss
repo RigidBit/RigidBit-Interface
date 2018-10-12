@@ -2,9 +2,9 @@
 @import "../node_modules/include-media/dist/_include-media.scss";
 @import "../node_modules/izitoast/dist/css/iziToast.min.css";
 @import "./common/scss/variables.scss";
+@import "./common/scss/mixins.scss";
 @import "./common/scss/base.scss";
 @import "./common/scss/form.scss";
-@import "./common/scss/mixins.scss";
 
 @import "./containers/**/*.scss";
 @import "./components/**/*.scss";

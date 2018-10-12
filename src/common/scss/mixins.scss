@@ -1,3 +1,4 @@
+
 @mixin contentMixin
 {
 	.content
@@ -14,6 +15,129 @@
 		section
 		{
 			margin: $margin-thick 0 $margin-thick 0;
+		}
+	}
+}
+
+@mixin sectionHoverMixin
+{
+	&:hover
+	{
+		background: $background-color-box-light;
+		border: $border-default;
+		border-radius: $border-radius-default;
+	}
+}
+
+@mixin sectionContainerDefaultMixin
+{
+	@include sectionHoverMixin;
+
+	&
+	{
+		border: 1px solid transparent;
+		padding: $padding-default;
+	}
+}
+
+@mixin tableColorsMixin
+{
+	table
+	{
+		border: 1px solid green;
+
+		tr > th
+		{
+			background: darken(#f6f6f6, 10%);
+		}
+
+		tr:nth-child(even) > td
+		{
+			background: darken(#f6f6f6, 5%);		
+		}
+
+		tr:nth-child(odd) > td
+		{
+			background: #f6f6f6;		
+		}
+
+		tr:hover > td
+		{
+			background: #dfdfdf;
+		}
+	}
+
+	table.reverse-row-colors
+	{
+		tr:nth-child(even) > td
+		{
+			background: #f6f6f6;		
+		}
+
+		tr:nth-child(odd) > td
+		{
+			background: darken(#f6f6f6, 5%);		
+		}
+	}
+}
+
+@mixin tableMixinDefault
+{
+	@include tableColorsMixin;
+
+	table
+	{
+		border-collapse: collapse;
+		border-radius: $border-radius-default;
+		overflow: hidden;
+		width: 100%;
+
+		tr, td, th
+		{
+			margin: 0;
+			padding: 0;
+		}
+
+		tr
+		{
+			td, th
+			{
+				font-size: 1rem;
+				font-weight: normal;
+				padding: $padding-thin $padding-default $padding-thin $padding-default;
+				text-align: left;
+
+				&:last-child
+				{
+					text-align: right;
+				}
+			}
+
+			th
+			{
+				font-weight: bold;
+			}
+
+			td
+			{
+			}
+
+			&:first-child
+			{
+				td
+				{
+					padding-top: $padding-default;
+				}
+			}
+
+			&:last-child
+			{
+				td
+				{
+					padding-bottom: $padding-default;
+				}
+			}
+
 		}
 	}
 }

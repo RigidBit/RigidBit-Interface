@@ -4,6 +4,8 @@ section.dashboard
 
 	.statusContainer
 	{
+		@include sectionContainerDefaultMixin;
+
 		margin-bottom: $margin-default;
 		position: relative;
 
