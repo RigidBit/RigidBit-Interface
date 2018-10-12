@@ -24,7 +24,7 @@
 	&:hover
 	{
 		background: $background-color-box-light;
-		border: $border-default;
+		border: 1px solid $border-color-light;
 		border-radius: $border-radius-default;
 	}
 }
@@ -33,11 +33,8 @@
 {
 	@include sectionHoverMixin;
 
-	&
-	{
-		border: 1px solid transparent;
-		padding: $padding-default;
-	}
+	border: 1px solid transparent;
+	padding: $padding-default;
 }
 
 @mixin tableColorsMixin

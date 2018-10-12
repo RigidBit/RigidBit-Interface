@@ -1,4 +1,5 @@
 import iziToast from "../../../node_modules/izitoast/dist/js/iziToast.min.js";
+import {Doughnut as DoughnutChart} from "react-chartjs-2";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -49,6 +50,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("block", {id: $(e.target).text()});
 	};
 
+	isDataReady = () =>
+	{
+		return (Object.keys(this.data).length > 0);
+	};
+
 	showHideGenesisClicked = action((e) =>
 	{
 		e.preventDefault();
@@ -88,6 +94,77 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			log.error(error);
 			iziToast.error({title: "Error", message: error});
 		});
+	};
+
+	renderBlockTypeCounts = () =>
+	{
+		const chartData =
+		{
+			labels: [],
+			datasets:
+			[
+				{
+					data: [],
+					backgroundColor: ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526"],
+				}
+			]
+		};
+		this.data.block_type_count.forEach(function(item)
+		{
+			chartData.labels.push(item.block_type);
+			chartData.datasets[0].data.push(item.count);
+		});
+
+		const chartDataFiltered =
+		{
+			labels: [],
+			datasets:
+			[
+				{
+					data: [],
+					backgroundColor: ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526"],
+				}
+			]
+		};
+		this.data.block_type_count.forEach(function(item)
+		{
+			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
+			{
+				chartDataFiltered.labels.push(item.block_type);
+				chartDataFiltered.datasets[0].data.push(item.count);
+			}
+		});
+
+		const chartOptions =
+		{
+			animation: false,
+			title:
+			{
+				display: true,
+				text: "hello",
+			},
+			legend:
+			{
+				position: "bottom",
+			}
+		};
+
+		const chartHeight = 200;
+
+		const html =
+		(
+			<section className="blockTypeCountsContainer">
+				<h2>Block Type Breakdowns<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+				<div className="blockTypeCountsChart chart">
+					<DoughnutChart data={chartData} options={chartOptions} redraw />
+				</div>
+				<div className="blockTypeCountsFilteredChart chart">
+					<DoughnutChart data={chartDataFiltered} options={chartOptions} redraw />
+				</div>
+			</section>
+		);
+
+		return html;
 	};
 
 	renderStatus = () =>
@@ -146,12 +223,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="statusContainer">
-		        <h2>General Status<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
-		        <table className="reverse-row-colors">
-		        	<tbody>
-    		        	{tableRows}
-    		        </tbody>
-		        </table>
+				<h2>General Status<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+				<table className="reverse-row-colors">
+					<tbody>
+						{tableRows}
+					</tbody>
+				</table>
 			</section>
 		);
 
@@ -160,15 +237,18 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	render()
 	{
+		let blockTypeCounts;
 		let status;
 
-		if(Object.keys(this.data).length === 0)
+		if(!this.isDataReady())
 		{
 			status = <div className="loadingText">Loading...</div>;
+			blockTypeCounts = null;
 		}
 		else
 		{
 			status = this.renderStatus();
+			blockTypeCounts = this.renderBlockTypeCounts()
 		}
 
 		const html =
@@ -180,6 +260,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<div className="content">
 					<h1>Dashboard</h1>
 					{status}
+					{blockTypeCounts}
 				</div>
 
 				<Footer />
