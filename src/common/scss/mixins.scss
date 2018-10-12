@@ -1,4 +1,3 @@
-
 @mixin contentMixin
 {
 	.content
@@ -34,7 +33,20 @@
 	@include sectionHoverMixin;
 
 	border: 1px solid transparent;
+	margin-bottom: $margin-default;
 	padding: $padding-default;
+	position: relative;
+
+	h2
+	{
+		position: relative;
+
+		.refresh
+		{
+			position: absolute;
+			right: 0;
+		}
+	}
 }
 
 @mixin tableColorsMixin

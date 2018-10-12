@@ -6,33 +6,12 @@ section.blocks
 	{
 		@include sectionContainerDefaultMixin;
 
-		margin-bottom: $margin-default;
-		position: relative;
-
-		h2
-		{
-			position: relative;
-
-			.refresh
-			{
-				position: absolute;
-				right: 0;
-			}
-		}
-
 		table
 		{
-			width: 100%;
-
 			td
 			{
-				font-family: "Courier New";
+				font-family: $font-family-monospace;
 				font-size: 0.9rem;
-
-				.item
-				{
-					display: block;
-				}
 			}
 		}
 	}

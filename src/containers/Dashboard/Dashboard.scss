@@ -6,31 +6,16 @@ section.dashboard
 	{
 		@include sectionContainerDefaultMixin;
 
-		margin-bottom: $margin-default;
-		position: relative;
-
-		h2
-		{
-			position: relative;
-
-			.refresh
-			{
-				position: absolute;
-				right: 0;
-			}
-		}
-
 		table
 		{
 			td.metric
 			{
 				padding-right: $padding-default;
-				white-space: nowrap;
 			}
 
 			td.value
 			{
-				font-family: "Courier New", "Lucida Console";
+				font-family: $font-family-monospace;
 			}
 		}
 	}
@@ -39,34 +24,7 @@ section.dashboard
 	{
 		@include sectionContainerDefaultMixin;
 
-		margin-bottom: $margin-default;
 		padding-bottom: 50px; // This is a workaround for react-chartjs-2 not detecting the box height properly.
-		position: relative;
-
-		h2
-		{
-			position: relative;
-
-			.refresh
-			{
-				position: absolute;
-				right: 0;
-			}
-		}
-
-		table
-		{
-			td.metric
-			{
-				padding-right: $padding-default;
-				white-space: nowrap;
-			}
-
-			td.value
-			{
-				font-family: "Courier New", "Lucida Console";
-			}
-		}
 
 		.chart
 		{

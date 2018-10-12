@@ -2,7 +2,7 @@ html
 {
 	box-sizing: border-box;
 	color: $font-color-default;
-	font-family: "Open Sans";
+	font-family: $font-family-default;
 	font-size: 14px;
 	word-break: break-word;
 }
