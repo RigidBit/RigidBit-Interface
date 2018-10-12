@@ -98,7 +98,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderBlockTypeCounts = () =>
 	{
-		const chartData =
+		const chartDataBase =
 		{
 			labels: [],
 			datasets:
@@ -109,33 +109,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				}
 			]
 		};
-		this.data.block_type_count.forEach(function(item)
-		{
-			chartData.labels.push(item.block_type);
-			chartData.datasets[0].data.push(item.count);
-		});
-
-		const chartDataFiltered =
-		{
-			labels: [],
-			datasets:
-			[
-				{
-					data: [],
-					backgroundColor: ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526"],
-				}
-			]
-		};
-		this.data.block_type_count.forEach(function(item)
-		{
-			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
-			{
-				chartDataFiltered.labels.push(item.block_type);
-				chartDataFiltered.datasets[0].data.push(item.count);
-			}
-		});
-
-		const chartOptions =
+		const chartOptionsBase =
 		{
 			animation: false,
 			title:
@@ -149,17 +123,38 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			}
 		};
 
-		const chartHeight = 200;
+		const chartDataFiltered = _.cloneDeep(chartDataBase);
+		this.data.block_type_count.forEach(function(item)
+		{
+			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
+			{
+				chartDataFiltered.labels.push(item.block_type);
+				chartDataFiltered.datasets[0].data.push(item.count);
+			}
+		});
+
+		const chartData = _.cloneDeep(chartDataBase);
+		this.data.block_type_count.forEach(function(item)
+		{
+			chartData.labels.push(item.block_type);
+			chartData.datasets[0].data.push(item.count);
+		});
+
+		const chartOptions = _.cloneDeep(chartOptionsBase);
+		chartOptions.title.text = "All Blocks";
+
+		const chartOptionsFiltered = _.cloneDeep(chartOptionsBase);
+		chartOptionsFiltered.title.text = "User Blocks";
 
 		const html =
 		(
 			<section className="blockTypeCountsContainer">
 				<h2>Block Type Breakdowns<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+				<div className="blockTypeCountsFilteredChart chart">
+					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
+				</div>
 				<div className="blockTypeCountsChart chart">
 					<DoughnutChart data={chartData} options={chartOptions} redraw />
-				</div>
-				<div className="blockTypeCountsFilteredChart chart">
-					<DoughnutChart data={chartDataFiltered} options={chartOptions} redraw />
 				</div>
 			</section>
 		);
