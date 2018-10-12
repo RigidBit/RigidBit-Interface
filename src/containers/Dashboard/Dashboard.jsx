@@ -1,6 +1,7 @@
 import iziToast from "../../../node_modules/izitoast/dist/js/iziToast.min.js";
 import {Doughnut as DoughnutChart} from "react-chartjs-2";
 
+import * as charts from "../../common/js/charts.js";
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
@@ -98,32 +99,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderBlockTypeCounts = () =>
 	{
-		const chartDataBase =
-		{
-			labels: [],
-			datasets:
-			[
-				{
-					data: [],
-					backgroundColor: ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526"],
-				}
-			]
-		};
-		const chartOptionsBase =
-		{
-			animation: false,
-			title:
-			{
-				display: true,
-				text: "hello",
-			},
-			legend:
-			{
-				position: "bottom",
-			}
-		};
-
-		const chartDataFiltered = _.cloneDeep(chartDataBase);
+		const chartDataFiltered = _.cloneDeep(charts.dataBase);
 		this.data.block_type_count.forEach(function(item)
 		{
 			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
@@ -133,17 +109,17 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			}
 		});
 
-		const chartData = _.cloneDeep(chartDataBase);
+		const chartData = _.cloneDeep(charts.dataBase);
 		this.data.block_type_count.forEach(function(item)
 		{
 			chartData.labels.push(item.block_type);
 			chartData.datasets[0].data.push(item.count);
 		});
 
-		const chartOptions = _.cloneDeep(chartOptionsBase);
+		const chartOptions = _.cloneDeep(charts.optionsBase);
 		chartOptions.title.text = "All Blocks";
 
-		const chartOptionsFiltered = _.cloneDeep(chartOptionsBase);
+		const chartOptionsFiltered = _.cloneDeep(charts.optionsBase);
 		chartOptionsFiltered.title.text = "User Blocks";
 
 		const html =
@@ -154,7 +130,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
 				</div>
 				<div className="blockTypeCountsChart chart">
-					<DoughnutChart data={chartData} options={chartOptions} redraw />
+					<DoughnutChart data={chartData} options={chartOptions} />
 				</div>
 			</section>
 		);
