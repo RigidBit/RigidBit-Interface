@@ -16,12 +16,12 @@ class Component extends React.Component
 	{
 		const html =
 		(
-			<section className="message">
+			<section className="text">
 				<Header />
 				<Navigation />
 
 				<div className="content">
-					<h1>Message</h1>
+					<h1>Text</h1>
 				</div>
 
 				<Footer />

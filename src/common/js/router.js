@@ -10,9 +10,9 @@ export const routes =
 	{ name: "blocks", path: "/blocks/:count/:offset" },
 	{ name: "dashboard", path: "/dashboard" },
 	{ name: "file", path: "/file" },
-	{ name: "filehash", path: "/filehash" },
-	{ name: "timestamp", path: "/timestamp" },
-	{ name: "message", path: "/message" }
+	// { name: "filehash", path: "/filehash" },
+	{ name: "text", path: "/text" },
+	// { name: "timestamp", path: "/timestamp" },
 ];
 
 let storeUpdatePlugin = function(router, dependencies)

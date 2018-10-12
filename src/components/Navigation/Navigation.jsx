@@ -22,7 +22,7 @@ class Component extends React.Component
 		[
 			["#dashboard", "Dashboard"],
 			["#file", "File"],
-			["#message", "Message"],
+			["#text", "Text"],
 			[["#blocks", "#block"], "Blocks"],
 		];
 
