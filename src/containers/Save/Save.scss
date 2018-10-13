@@ -2,6 +2,20 @@ section.save
 {
 	@include contentMixin;
 
+	.fileContainer,
+	.textContainer
+	{
+		div.buttonContainer
+		{
+			text-align: right;
+		}
+	}
+
+	.fileContainer
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
 	.textContainer
 	{
 		@include sectionContainerDefaultMixin;
@@ -12,18 +26,93 @@ section.save
 
 			textarea
 			{
-				margin-bottom: $margin-default;
 				min-height: 100px;
 				width: 100%;
 			}
 
 			span.counter
 			{
-				bottom: 0;
-				font-size: .8rem;
+				font-size: .7rem;
+				height: 12px;
+				line-height: 12px;
 				position: absolute;
-				right: 0;
+				right: 1px;
+				text-align: right;
+				top: -12px;
+				width: 39px;
 			}
 		}
 	}
+
+
+
+
+
+
+	label.file
+	{
+		display: block;
+		height: 80px;
+		margin: 0 auto 6px auto;
+		overflow: hidden;
+		position: relative;
+		width: 300px;
+
+		&.file-selected i.fas
+		{
+			color: $color-blue;
+		}
+
+		input[type="file"]
+		{
+			height: 1px;
+			left: -100%;
+			position: absolute;
+			top: -100%;
+			width: 1px;
+		}
+
+		i.fas
+		{
+			border: 3px solid transparent;
+			cursor: pointer;
+			font-size: 50px;
+			left: 50%;
+			position: absolute;
+			top: 0px;
+			transform: translateX(-50%);
+
+			&:hover
+			{
+				color: $color-blue-dark;
+			}
+
+			&:active
+			{
+				background: $color-blue-dark;
+				border-color: $color-blue-dark;
+				color: #ffffff;
+			}
+
+		}
+
+		span.filename
+		{
+			bottom: $margin-default;
+			display: block;
+			font-size: .8rem;
+			position: absolute;
+			text-align: center;
+			white-space: nowrap;
+			width: 100%;
+		}
+	}
+
+
+
+
+
+
+
+
 }

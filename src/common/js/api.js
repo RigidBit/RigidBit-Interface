@@ -71,11 +71,17 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 	let formData = null;
 	if(data)
 	{
-		formData = new FormData();
-		Object.keys(data).forEach(function(key)
+		// If formData is not a FormData instance, assume it is a JSON compatible object.
+		if(data instanceof FormData)
+			formData = data;
+		else
 		{
-			formData.append(key, data[key]);
-		});
+			formData = new FormData();
+			Object.keys(data).forEach(function(key)
+			{
+				formData.append(key, data[key]);
+			});
+		}
 	}
 
 	const config =
