@@ -14,6 +14,76 @@ section.save
 	.fileContainer
 	{
 		@include sectionContainerDefaultMixin;
+
+		form
+		{
+			padding-top: 40px; // This is added to match the button container at the bottom.
+
+			&.dragging
+			{
+				box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.5);
+			}
+
+			label.file
+			{
+				display: block;
+				height: 80px;
+				margin: 0 auto 6px auto;
+				overflow: hidden;
+				position: relative;
+				width: 300px;
+
+				&.file-selected i.fas
+				{
+					color: $color-blue;
+				}
+
+				input[type="file"]
+				{
+					display: none;
+					height: 1px;
+					left: -100%;
+					position: absolute;
+					top: -100%;
+					width: 1px;
+				}
+
+				i.fas
+				{
+					border: 3px solid transparent;
+					cursor: pointer;
+					font-size: 50px;
+					left: 50%;
+					position: absolute;
+					top: 0px;
+					transform: translateX(-50%);
+
+					&:hover
+					{
+						color: $color-blue-dark;
+					}
+
+					&:active
+					{
+						background: $color-blue-dark;
+						border-color: $color-blue-dark;
+						color: #ffffff;
+					}
+
+				}
+
+				span.filename
+				{
+					bottom: $margin-default;
+					display: block;
+					font-size: .8rem;
+					position: absolute;
+					text-align: center;
+					white-space: nowrap;
+					width: 100%;
+				}
+			}
+		}
 	}
 
 	.textContainer
@@ -43,76 +113,4 @@ section.save
 			}
 		}
 	}
-
-
-
-
-
-
-	label.file
-	{
-		display: block;
-		height: 80px;
-		margin: 0 auto 6px auto;
-		overflow: hidden;
-		position: relative;
-		width: 300px;
-
-		&.file-selected i.fas
-		{
-			color: $color-blue;
-		}
-
-		input[type="file"]
-		{
-			height: 1px;
-			left: -100%;
-			position: absolute;
-			top: -100%;
-			width: 1px;
-		}
-
-		i.fas
-		{
-			border: 3px solid transparent;
-			cursor: pointer;
-			font-size: 50px;
-			left: 50%;
-			position: absolute;
-			top: 0px;
-			transform: translateX(-50%);
-
-			&:hover
-			{
-				color: $color-blue-dark;
-			}
-
-			&:active
-			{
-				background: $color-blue-dark;
-				border-color: $color-blue-dark;
-				color: #ffffff;
-			}
-
-		}
-
-		span.filename
-		{
-			bottom: $margin-default;
-			display: block;
-			font-size: .8rem;
-			position: absolute;
-			text-align: center;
-			white-space: nowrap;
-			width: 100%;
-		}
-	}
-
-
-
-
-
-
-
-
 }

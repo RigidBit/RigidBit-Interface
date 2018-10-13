@@ -65,7 +65,45 @@ class Component extends React.Component
 			filename.innerText = file.value.replace(/.*[\/\\]/, "");
 		}
 		else
-			filename.innerText = "Choose a file.";
+			filename.innerText = "Choose a file, or drag it here.";
+	};
+
+	handleFileDragLeave = (e) =>
+	{
+		e.preventDefault();
+		e.stopPropagation();
+
+		this.handleFileDragToggle($(e.target).closest("form"), false);
+	};
+
+	handleFileDragOver = (e) =>
+	{
+		e.preventDefault();
+		e.stopPropagation();
+
+		this.handleFileDragToggle($(e.target).closest("form"), true);
+	};
+
+	handleFileDrop = (e) =>
+	{
+		e.preventDefault();
+		e.stopPropagation();
+
+		this.handleFileDragToggle($(e.target).closest("form"), false);
+		this.handleFileChange();
+
+		const file = this.file.current;
+		const files = e.dataTransfer.files;
+
+		if(files.length > 0)
+		{
+			file.files = files;
+		}
+	};
+
+	handleFileDragToggle = (target, isDragging) =>
+	{
+		$(target).toggleClass("dragging", isDragging);
 	};
 
 	handleFormSubmit = (e) =>
@@ -160,7 +198,7 @@ class Component extends React.Component
 						<p className="description">
 							Upload and store a file of any type in the blockchain.
 						</p>
-						<form ref={this.fileForm} action="/api/file" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+						<form ref={this.fileForm} action="/api/file" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit} onDrop={this.handleFileDrop} onDragOver={this.handleFileDragOver} onDragLeave={this.handleFileDragLeave} onDragExit={this.handleFileDragLeave}>
 							<label className="file">
 								<input ref={this.file} type="file" name="file" />
 								<i className="fas fa-file-upload"></i>
