@@ -2,7 +2,7 @@ import Block from "../Block/Block.jsx";
 import Blocks from "../Blocks/Blocks.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import Login from "../Login/Login.jsx";
-import Save from "../Save/Save.jsx";
+import Upload from "../Upload/Upload.jsx";
 
 @observer class App extends React.Component
 {
@@ -23,8 +23,8 @@ import Save from "../Save/Save.jsx";
 			case "login":
 				html = <Login />;
 				break;
-			case "save":
-				html = <Save />;
+			case "upload":
+				html = <Upload />;
 				break;
 			default:
 				html = "Invalid route";

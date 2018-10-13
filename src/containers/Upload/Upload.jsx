@@ -186,12 +186,12 @@ class Component extends React.Component
 	{
 		const html =
 		(
-			<section className="save">
+			<section className="upload">
 				<Header />
 				<Navigation />
 
 				<div className="content">
-					<h1>Save to the Blockchain</h1>
+					<h1>Upload</h1>
 
 					<div className="fileContainer">
 						<h2>File</h2>

@@ -21,7 +21,7 @@ class Component extends React.Component
 		const linkData =
 		[
 			["#dashboard", "Dashboard"],
-			["#save", "Save"],
+			["#upload", "Upload"],
 			[["#blocks", "#block"], "Blocks"],
 		];
 
