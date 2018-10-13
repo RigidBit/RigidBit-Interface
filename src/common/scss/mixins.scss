@@ -24,7 +24,6 @@
 	{
 		background: $background-color-box-light;
 		border: 1px solid $border-color-light;
-		border-radius: $border-radius-default;
 	}
 }
 
@@ -32,10 +31,13 @@
 {
 	@include sectionHoverMixin;
 
-	border: 1px solid transparent;
+	background: rgba($background-color-box-light, 0.25);
+	border: 1px solid rgba($border-color-light, 0.25);
+	border-radius: $border-radius-default;
 	margin-bottom: $margin-default;
 	padding: $padding-default;
 	position: relative;
+	transition: background $transition-duration-default, border $transition-duration-default;
 
 	h2
 	{
