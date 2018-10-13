@@ -16,6 +16,7 @@ class Component extends React.Component
 		this.fileHash = React.createRef();
 		this.textForm = React.createRef();
 		this.textArea = React.createRef();
+		this.timestampForm = React.createRef();
 		this.counter = React.createRef();
 	}
 
@@ -189,6 +190,23 @@ class Component extends React.Component
 		});
 	}
 
+	handleTimestampSubmitButtonClick = (e) =>
+	{
+		if(e)
+			e.preventDefault();
+
+		api.postUrl("/api/timestamp", null, false)
+		.then(function(data)
+		{
+			iziToast.success({title: "Success", message: data.message});
+		})
+		.catch(function(error)
+		{
+			log.error(error);
+			iziToast.error({title: "Error", message: error});
+		});
+	}
+
 	render()
 	{
 		const html =
@@ -233,6 +251,18 @@ class Component extends React.Component
 							</div>
 							<div className="buttonContainer">
 								<button className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+							</div>
+						</form>
+					</div>
+
+					<div className="timestampContainer">
+						<h2>Timestamp</h2>
+						<div className="description">
+							Create a manual timestamp entry in the blockchain.
+						</div>
+						<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+							<div className="buttonContainer">
+								<button className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
 							</div>
 						</form>
 					</div>

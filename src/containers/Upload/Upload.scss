@@ -3,19 +3,13 @@ section.upload
 	@include contentMixin;
 
 	.fileContainer,
-	.textContainer
+	.textContainer,
+	.timestampContainer
 	{
 		div.buttonContainer
 		{
 			position: relative;
 			text-align: right;
-
-			label.filehash
-			{
-				float: left;
-				height: 30px;
-				line-height: 30px;
-			}
 		}
 	}
 
@@ -153,5 +147,10 @@ section.upload
 				width: 39px;
 			}
 		}
+	}
+
+	.timestampContainer
+	{
+		@include sectionContainerDefaultMixin;
 	}
 }
