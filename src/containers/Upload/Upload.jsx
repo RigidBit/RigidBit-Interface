@@ -23,13 +23,13 @@ class Component extends React.Component
 	{
 		this.handleFileChange();
 		this.handleTextAreaChange();
-		this.textArea.current.focus();
 		this.fileInit();
 	}
 
-	filehashCheckboxChanged = (e) =>
+	fileHashCheckboxChanged = (e) =>
 	{
 		const checked = e.target.checked;
+		console.log(checked);
 		$(".filehashWarning").toggleClass("visible", checked);
 	};
 
@@ -213,9 +213,9 @@ class Component extends React.Component
 								<input ref={this.file} type="file" name="file" />
 								<i className="fas fa-file-upload"></i>
 								<span ref={this.filename} className="filename"></span>
+								<label className="filehash"><input ref={this.fileHash} type="checkbox" name="filehash" value="1" onChange={this.fileHashCheckboxChanged} /> Store file hash only</label>
 							</label>
 							<div className="buttonContainer">
-								<label className="filehash"><input ref={this.fileHash} type="checkbox" name="filehash" value="1" onChange={this.fileHashCheckboxChanged} /> Store file hash only</label>
 								<button className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
 							</div>
 						</form>
