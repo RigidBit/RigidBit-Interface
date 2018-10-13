@@ -7,13 +7,37 @@ section.upload
 	{
 		div.buttonContainer
 		{
+			position: relative;
 			text-align: right;
+
+			label.filehash
+			{
+				height: 30px;
+				line-height: 30px;
+				float: left;
+			}
 		}
 	}
 
 	.fileContainer
 	{
 		@include sectionContainerDefaultMixin;
+
+		.filehashWarning
+		{
+			margin-top: $margin-default;
+			display: none;
+
+			&.visible
+			{
+				display: block;
+			}
+
+			.warning
+			{
+				font-weight: bold;
+			}
+		}
 
 		form
 		{

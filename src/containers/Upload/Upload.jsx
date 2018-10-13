@@ -13,6 +13,7 @@ class Component extends React.Component
 		this.file = React.createRef();
 		this.filename = React.createRef();
 		this.fileForm = React.createRef();
+		this.fileHash = React.createRef();
 		this.textForm = React.createRef();
 		this.textArea = React.createRef();
 		this.counter = React.createRef();
@@ -25,6 +26,12 @@ class Component extends React.Component
 		this.textArea.current.focus();
 		this.fileInit();
 	}
+
+	filehashCheckboxChanged = (e) =>
+	{
+		const checked = e.target.checked;
+		$(".filehashWarning").toggleClass("visible", checked);
+	};
 
 	fileInit = () =>
 	{
@@ -133,7 +140,7 @@ class Component extends React.Component
 		}
 
 		const formData = new FormData();
-		const url = "/api/file";
+		const url = (!this.fileHash.current.checked) ? "/api/file" : "/api/filehash";
 
 		_this.formDataSppendFiles(formData, _this.file.current);
 
@@ -195,9 +202,12 @@ class Component extends React.Component
 
 					<div className="fileContainer">
 						<h2>File</h2>
-						<p className="description">
+						<div className="description">
 							Upload and store a file of any type in the blockchain.
-						</p>
+							<p className="filehashWarning">
+								<span className="warning">Warning:</span> You have specified that you only want to store the hash of the file, but not the file data itself. The original file must be stored indefinitely in an external location or existance will not be able to be proven. If you don't understand the difference, uncheck this option.
+							</p>
+						</div>
 						<form ref={this.fileForm} action="/api/file" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit} onDrop={this.handleFileDrop} onDragOver={this.handleFileDragOver} onDragLeave={this.handleFileDragLeave} onDragExit={this.handleFileDragLeave}>
 							<label className="file">
 								<input ref={this.file} type="file" name="file" />
@@ -205,6 +215,7 @@ class Component extends React.Component
 								<span ref={this.filename} className="filename"></span>
 							</label>
 							<div className="buttonContainer">
+								<label className="filehash"><input ref={this.fileHash} type="checkbox" name="filehash" value="1" onChange={this.fileHashCheckboxChanged} /> Store file hash only</label>
 								<button className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
 							</div>
 						</form>
@@ -212,9 +223,9 @@ class Component extends React.Component
 
 					<div className="textContainer">
 						<h2>Text Message</h2>
-						<p className="description">
+						<div className="description">
 							Save a plain text message in the blockchain.
-						</p>
+						</div>
 						<form ref={this.textForm} action="/api/text" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
 							<div className="textarea">
 								<textarea ref={this.textArea} name="text" maxLength="100000" onChange={this.handleTextAreaChange} onKeyUp={this.handleKeyPress}></textarea>
