@@ -94,7 +94,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		(
 			<section className="blockContainer">
 		        <h2>Block Info</h2>
-		        <table>
+		        <table className="reverse-row-colors">
 		        	<tbody>
     		        	{tableRows}
     		        </tbody>
