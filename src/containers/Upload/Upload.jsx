@@ -151,7 +151,8 @@ class Component extends React.Component
 			_this.handleFileChange();
 			_this.fileHashCheckboxChanged();
 
-			iziToast.success({title: "Success", message: data.message});
+			const noun = (url === "/api/file") ? "File" : "Filehash";
+			iziToast.success({title: "Success", message: `${noun} has been saved.`});
 		})
 		.catch(function(error)
 		{
@@ -181,7 +182,7 @@ class Component extends React.Component
 			_this.textForm.current.reset();
 			_this.handleTextAreaChange();
 
-			iziToast.success({title: "Success", message: data.message});
+			iziToast.success({title: "Success", message: "Text has been saved."});
 		})
 		.catch(function(error)
 		{
@@ -198,7 +199,7 @@ class Component extends React.Component
 		api.postUrl("/api/timestamp", null, false)
 		.then(function(data)
 		{
-			iziToast.success({title: "Success", message: data.message});
+			iziToast.success({title: "Success", message: "Timestamp has been created."});
 		})
 		.catch(function(error)
 		{
