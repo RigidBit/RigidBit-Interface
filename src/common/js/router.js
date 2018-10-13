@@ -11,7 +11,7 @@ export const routes =
 	{ name: "dashboard", path: "/dashboard" },
 	{ name: "file", path: "/file" },
 	// { name: "filehash", path: "/filehash" },
-	{ name: "text", path: "/text" },
+	{ name: "save", path: "/save" },
 	// { name: "timestamp", path: "/timestamp" },
 ];
 

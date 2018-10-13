@@ -68,12 +68,12 @@ class Component extends React.Component
 	{
 		const html =
 		(
-			<section className="text">
+			<section className="save">
 				<Header />
 				<Navigation />
 
 				<div className="content">
-					<h1>Text</h1>
+					<h1>Save to the Blockchain</h1>
 					<div className="textContainer">
 						<h2>Text Message</h2>
 						<p className="description">
