@@ -11,6 +11,7 @@ section.dashboard
 			td.metric
 			{
 				padding-right: $padding-default;
+				white-space: nowrap;
 			}
 
 			td.value
@@ -26,12 +27,23 @@ section.dashboard
 
 		padding-bottom: 50px; // This is a workaround for react-chartjs-2 not detecting the box height properly.
 
+		@include media("<tablet")
+		{
+			padding-bottom: $padding-default;
+		}
+
 		.chart
 		{
 			display: inline-block;
 			height: 200px;
 			position: relative;
 			width: 50%;
+
+			@include media("<tablet")
+			{
+				width: 100%;
+				height: 50%;
+			}
 		}
 	}
 }
