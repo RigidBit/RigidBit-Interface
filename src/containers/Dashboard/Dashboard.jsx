@@ -125,7 +125,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="blockTypeCountsContainer">
-				<h2>Block Type Breakdowns<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+				<h2>Block Types<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
 				<div className="blockTypeCountsFilteredChart chart">
 					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
 				</div>
