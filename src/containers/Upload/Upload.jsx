@@ -29,8 +29,7 @@ class Component extends React.Component
 
 	fileHashCheckboxChanged = (e) =>
 	{
-		const checked = e.target.checked;
-		console.log(checked);
+		const checked = this.fileHash.current.checked;
 		$(".filehashWarning").toggleClass("visible", checked);
 	};
 
@@ -150,6 +149,7 @@ class Component extends React.Component
 		{
 			_this.fileForm.current.reset();
 			_this.handleFileChange();
+			_this.fileHashCheckboxChanged();
 
 			iziToast.success({title: "Success", message: data.message});
 		})
