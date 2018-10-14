@@ -92,6 +92,11 @@
 		{
 			background: darken(#f6f6f6, 5%);		
 		}
+
+		tr:hover > td
+		{
+			background: #dfdfdf;
+		}
 	}
 }
 
@@ -118,7 +123,7 @@
 			{
 				font-size: 1rem;
 				font-weight: normal;
-				padding: $padding-thin $padding-default $padding-thin $padding-default;
+				padding: $padding-default;
 				text-align: left;
 
 				&:last-child
@@ -131,27 +136,6 @@
 			{
 				font-weight: bold;
 			}
-
-			td
-			{
-			}
-
-			&:first-child
-			{
-				td
-				{
-					padding-top: $padding-default;
-				}
-			}
-
-			&:last-child
-			{
-				td
-				{
-					padding-bottom: $padding-default;
-				}
-			}
-
 		}
 	}
 }
