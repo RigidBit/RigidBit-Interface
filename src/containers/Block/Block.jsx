@@ -1,4 +1,5 @@
 import {decimalArrayToAscii} from "../../common/js/misc.js";
+import iziToast from "izitoast";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -7,10 +8,21 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 @observer class Component extends React.Component
 {
 	@observable data = {};
+	autorun = null;
 
 	componentDidMount()
 	{
-		this.refreshData();
+		this.autorun = mobx.autorun(()=>
+		{
+			this.refreshData();
+		});
+	}
+
+	componentWillUnmount()
+	{
+		console.log(this.autorun);
+		if(this.autorun)
+			this.autorun();
 	}
 
 	handleViewBlockClick = (e) =>
@@ -39,12 +51,22 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		const _this = this;
 
+		if(!("id" in store.routeParams))
+			return false;
+
 		api.getUrl(`/api/block-complete/${store.routeParams.id}`, true)
 		.then(function(data)
 		{
 			_this.updateData(data);
 
 			$("section.statusContainer").removeClass("loading");
+		})
+		.catch(function(error)
+		{
+			_this.updateData({});
+
+			log.error(error);
+			iziToast.error({title: "Error", message: "The specified block was not found."});
 		});
 	};
 
