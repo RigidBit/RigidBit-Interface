@@ -20,7 +20,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	componentWillUnmount()
 	{
-		console.log(this.autorun);
 		if(this.autorun)
 			this.autorun();
 	}
