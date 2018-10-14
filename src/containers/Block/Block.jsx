@@ -62,7 +62,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		})
 		.catch(function(error)
 		{
-			_this.updateData({});
+			_this.updateData({block: null, data: null, meta: null});
 
 			log.error(error);
 			iziToast.error({title: "Error", message: "The specified block was not found."});
@@ -74,8 +74,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const _this = this;
 		const data = _this.data.block;
 
+		const containerClassName = "blockContainer";
+		const containerTitle = "Block Info";
+
 		if(!_this.isDataReady())
 			return this.renderLoading();
+
+		if(data === null)
+			return this.renderEmptyContainer(containerClassName, containerTitle, "The specified block was not found.");
 
 		const metrics =
 		[
@@ -85,7 +91,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			["prev_hash", "Previous Hash"],
 			["block_type", "Block Type"],
 			["timestamp", "Block Time"],
-			["version", "Block Version"],
+			// ["version", "Block Version"],
 		];
 
 		const tableRows = [];
@@ -113,7 +119,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		});
 
-		return this.renderContainerWithTable("blockContainer", "Block Info", tableRows);
+		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
 	renderBlockData = () =>
@@ -186,7 +192,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return this.renderLoading();
 
-		if(data.length === 0)
+		if(data === null || data.length === 0)
 			return this.renderEmptyContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const metrics =
@@ -229,14 +235,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		});
 
 		return this.renderContainer(containerClassName, containerTitle, tables);
-	};
-
-	renderBlockTitle = () =>
-	{
-		if(!this.isDataReady())
-			return null;
-
-		return `Block #${this.data.block.id}`;
 	};
 
 	renderContainer = (containerClassName, title, content) =>
@@ -289,9 +287,20 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return <div className="loadingText">Loading...</div>;
 	};
 
+	renderTitle = () =>
+	{
+		if(!this.isDataReady())
+			return null;
+
+		if(this.data.block === null)
+			return "Block N/A";
+
+		return `Block #${this.data.block.id}`;
+	};
+
 	render()
 	{
-		const blockTitle = this.renderBlockTitle();
+		const blockTitle = this.renderTitle();
 		const block = this.renderBlock();
 		const blockData = this.renderBlockData();
 		const blockMeta = this.renderBlockMeta();
