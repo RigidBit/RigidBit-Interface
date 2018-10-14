@@ -1,5 +1,4 @@
 import {createRouter} from "router5";
-import loggerPlugin from "router5/plugins/logger"; 
 import browserPlugin from "router5/plugins/browser";
 
 import store from "./store.js";
@@ -10,12 +9,10 @@ export const routes =
 	{ name: "blocks", path: "/blocks/:count/:offset" },
 	{ name: "dashboard", path: "/dashboard" },
 	{ name: "file", path: "/file" },
-	// { name: "filehash", path: "/filehash" },
 	{ name: "upload", path: "/upload" },
-	// { name: "timestamp", path: "/timestamp" },
 ];
 
-let storeUpdatePlugin = function(router, dependencies)
+const storeUpdatePlugin = function(router, dependencies)
 {
 	const pluginObj =
 	{
@@ -31,6 +28,42 @@ let storeUpdatePlugin = function(router, dependencies)
 	return pluginObj;
 };
 storeUpdatePlugin.pluginName = "STORE_UPDATE_PLUGIN";
+
+// We are rewriting the logger plugin to not use grouped console logging.
+const loggerPlugin = function()
+{
+    console.info("Router started.");
+
+    const obj =
+	{
+        onStop()
+        {
+            console.info("Router stopped.");
+        },
+        onTransitionStart(toState, fromState)
+        {
+            console.log("Transition started from state:");
+            console.log(fromState);
+            console.log("To state:");
+            console.log(toState);
+        },
+        onTransitionCancel()
+        {
+            console.warn("Transition cancelled.");
+        },
+        onTransitionError(toState, fromState, err)
+        {
+            console.warn("Transition error with code: " + err.code);
+        },
+        onTransitionSuccess()
+        {
+            console.log("Transition success.");
+        }
+    };
+
+    return obj;
+};
+loggerPlugin.pluginName = "LOGGER_PLUGIN";
 
 export const router = createRouter(routes, {defaultRoute: "dashboard"});
 
