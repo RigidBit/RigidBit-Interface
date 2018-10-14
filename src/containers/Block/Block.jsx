@@ -198,54 +198,46 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(data === null || data.length === 0)
 			return this.renderEmptyContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
-		const metrics =
-		[
-			// ["id", "ID"],
-			// ["block_hash", "Block Hash"],
-			["name", "Name"],
-			["value", "Value"],
-			["timestamp", "Timestamp"],
-		];
-
-		const tables = [];
+		const tableRows = [];
 		data.forEach(function(meta, m)
 		{
-			const tableRows = [];
-			metrics.forEach(function(metric, i)
+			const label = meta["name"];
+			let value = meta["value"];
+
+			if("name" in meta && meta["name"] === "filesize")
 			{
-				const key = metric[0];
-				const label = metric[1];
-				let value = meta[metric[0]];
+				if(parseInt(value) >= 1024)
+					value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
+				else
+					value = filesize(value);
+			}
 
-				if(key === "timestamp")
-					value = new Date(parseInt(value) * 1000).toISOString();
+			if(value === null)
+				value = <i>null</i>;
 
-				if(key === "value" && "name" in meta && meta["name"] === "filesize")
-				{
-					if(parseInt(value) >= 1024)
-						value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
-					else
-						value = filesize(value);
-				}
-
-				if(value === null)
-					value = <i>null</i>;
-
-				const html =
-				(
-					<tr key={i}>
-						<td className={key + " metric"}>{label}:</td>
-						<td className={key + " value"}>{value}</td>
-						<td className="empty" />
-					</tr>
-				);
-				tableRows.push(html);
-			});
-
-			tables.push(_this.renderTableWithRows(tableRows, m));
+			const html =
+			(
+				<tr key={m}>
+					<td className="metric">{label}:</td>
+					<td className="value">{value}</td>
+					<td className="empty" />
+				</tr>
+			);
+			tableRows.push(html);
 		});
 
-		return this.renderContainer(containerClassName, containerTitle, tables);
+		// Add a single timestamp to the end. Use the first meta data entry for this.
+		const html =
+		(
+			<tr key="timestamp">
+				<td className="metric">Timestamp:</td>
+				<td className="value">{new Date(parseInt(data[0]["timestamp"]) * 1000).toISOString()}</td>
+				<td className="empty" />
+			</tr>
+		);
+		tableRows.push(html);
+
+		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
 	renderBlockVerify = () =>

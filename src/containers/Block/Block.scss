@@ -45,14 +45,9 @@ section.block
 
 	.blockMetaContainer
 	{
-		table
+		table td.metric
 		{
-			margin-bottom: $margin-default;
-
-			&:last-child
-			{
-				margin-bottom: 0;
-			}
+			text-transform: capitalize;
 		}
 	}
 }
