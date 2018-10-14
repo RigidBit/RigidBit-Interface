@@ -7,7 +7,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 @observer class Component extends React.Component
 {
 	@observable data = {};
-	@observable routeParams = store.routeParams;
 
 	componentDidMount()
 	{
