@@ -1,4 +1,4 @@
-import iziToast from "../../../node_modules/izitoast/dist/js/iziToast.min.js";
+import iziToast from "izitoast";
 import {Doughnut as DoughnutChart} from "react-chartjs-2";
 
 import * as charts from "../../common/js/charts.js";
