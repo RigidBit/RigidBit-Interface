@@ -57,8 +57,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		.then(function(data)
 		{
 			_this.updateData(data);
-
-			$("section.statusContainer").removeClass("loading");
 		})
 		.catch(function(error)
 		{
@@ -92,6 +90,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			["block_type", "Block Type"],
 			["timestamp", "Block Time"],
 			// ["version", "Block Version"],
+			["verified", "Verify"],
 		];
 
 		const tableRows = [];
@@ -106,6 +105,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 			if(key === "timestamp")
 				value = new Date(parseInt(value) * 1000).toISOString();
+
+			if(key === "verified")
+				value = _this.renderBlockVerify();
 
 			const html =
 			(
@@ -178,7 +180,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		});
 
-		return this.renderContainerWithTable("blockDataContainer", "Block Data", tableRows);
+		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
 	renderBlockMeta = () =>
@@ -235,6 +237,25 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		});
 
 		return this.renderContainer(containerClassName, containerTitle, tables);
+	};
+
+	renderBlockVerify = () =>
+	{
+		if(!("block" in this.data))
+			return null;
+
+		const results =
+		{
+			valid: <span className="success">Success</span>,
+			invalid: <span className="failure">Failed</span>,
+			pending: <a href="#verify" onClick={this.verifyBlock}>Click to Verify</a>,
+		};
+
+		let status = "pending";
+		if("verified" in this.data.block)
+			status = (this.data.block.verified === true) ? "valid" : "invalid";
+
+		return results[status];
 	};
 
 	renderContainer = (containerClassName, title, content) =>
@@ -296,6 +317,25 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return "Block N/A";
 
 		return `Block #${this.data.block.id}`;
+	};
+
+	verifyBlock = (e) =>
+	{
+		e.preventDefault();
+
+		const _this = this;
+
+		api.getUrl(`/api/verify/${_this.data.block.id}`, false)
+		.then(function(data)
+		{
+			const newData = _.merge({block: {verified: data}}, mobx.toJS(_this.data));
+			_this.updateData(newData);
+		})
+		.catch(function(error)
+		{
+			log.error(error);
+			iziToast.error({title: "Error", message: error});
+		});
 	};
 
 	render()

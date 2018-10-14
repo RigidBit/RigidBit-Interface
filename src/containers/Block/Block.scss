@@ -20,7 +20,8 @@ section.block
 
 	.blockContainer,
 	.blockDataContainer,
-	.blockMetaContainer
+	.blockMetaContainer,
+	.blockVerifyContainer	
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -28,6 +29,18 @@ section.block
 		position: relative;
 
 		@include _tableMixin;
+	}
+
+	.blockContainer
+	{
+		.failure
+		{
+			color: $color-red;
+		}
+		.success
+		{
+			color: $color-green;
+		}
 	}
 
 	.blockMetaContainer
