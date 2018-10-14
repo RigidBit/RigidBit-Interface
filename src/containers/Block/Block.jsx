@@ -1,4 +1,5 @@
 import {decimalArrayToAscii} from "../../common/js/misc.js";
+import filesize from "filesize";
 import iziToast from "izitoast";
 
 import Footer from "../../components/Footer/Footer.jsx";
@@ -218,6 +219,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 				if(key === "timestamp")
 					value = new Date(parseInt(value) * 1000).toISOString();
+
+				if(key === "value" && "name" in meta && meta["name"] === "filesize")
+				{
+					if(parseInt(value) >= 1024)
+						value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
+					else
+						value = filesize(value);
+				}
 
 				if(value === null)
 					value = <i>null</i>;
