@@ -141,7 +141,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			// ["id", "ID"],
 			// ["block_hash", "Block Hash"],
 			["archive", "Archived"],
-			["external", "External"],
+			// ["external", "External"],
 			["data", "Data"],
 			["data_hash", "Data Hash"],
 			["timestamp", "Timestamp"],
