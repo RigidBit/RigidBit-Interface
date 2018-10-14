@@ -6,11 +6,28 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 {
 	@observable data = [];
 	@observable showGenesisHash = false;
+	refreshTimer = null;
 
 	componentDidMount()
 	{
+		this.clearTimer();
 		this.refreshData();
+		this.startTimer();
 	}
+
+	componentWillUnmount()
+	{
+		this.clearTimer();
+	}
+
+	clearTimer = () =>
+	{
+		if(this.refreshTimer)
+		{
+			clearInterval(this.refreshTimer);
+			this.refreshTimer = null;
+		}
+	};
 
 	handleViewBlockClick = (e) =>
 	{
@@ -34,6 +51,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		this.showGenesisHash = !this.showGenesisHash;
 	});
+
+	startTimer = () =>
+	{
+		this.refreshTimer = setInterval(this.timerTick, config.dashboardStatusRefreshInterval);
+	};
+
+	timerTick = () =>
+	{
+		this.refreshData();
+	};
 
 	updateData = action((data) =>
 	{
