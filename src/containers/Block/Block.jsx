@@ -47,14 +47,22 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		log.debug("UPDATE DATA:", this.data);
 	});
 
-	refreshData = () =>
+	refreshClicked = (e) =>
+	{
+		if(e)
+			e.preventDefault();
+
+		this.refreshData(false);
+	};
+
+	refreshData = (useCache=true) =>
 	{
 		const _this = this;
 
 		if(!("id" in store.routeParams))
 			return false;
 
-		api.getUrl(`/api/block-complete/${store.routeParams.id}`, true)
+		api.getUrl(`/api/block-complete/${store.routeParams.id}`, useCache)
 		.then(function(data)
 		{
 			_this.updateData(data);
@@ -351,9 +359,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			<section className="block">
 				<Header />
 				<Navigation />
-
 				<div className="content">
-					<h1>{blockTitle}</h1>
+					<h1>{blockTitle}<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h1>
 					{block}
 					{blockData}
 					{blockMeta}

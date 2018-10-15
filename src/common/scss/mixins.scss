@@ -11,6 +11,18 @@
 			padding: $padding-default;
 		}
 
+		h1
+		{
+			position: relative;
+			margin-bottom: $margin-default;
+
+			.refresh
+			{
+				position: absolute;
+				right: 0;
+			}
+		}
+
 		section
 		{
 			margin: $margin-thick 0 $margin-thick 0;
