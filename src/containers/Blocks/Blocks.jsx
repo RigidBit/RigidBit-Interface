@@ -90,7 +90,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isDataReady = () =>
 	{
-		return (this.data.hasOwnProperty("blocks") && this.data.hasOwnProperty("block_count"));
+		return (this.data.hasOwnProperty("blocks") && this.data.hasOwnProperty("block_type_count"));
 	};
 
 	refreshClicked = action((e) =>
@@ -132,10 +132,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		let block_type = ("type" in store.routeParams) ? store.routeParams.type : "all";
 
-		api.getUrl("/api/count", false)
+		api.getUrl("/api/count-by-type", false)
 		.then(function(data)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), data);
+			const dataNew = _.mapValues(_.keyBy(data.block_type_count, (i)=>i.block_type.toLowerCase()), "block_count");
+			dataNew.all = data.block_count;
+
+			const newData = _.merge(mobx.toJS(_this.data), {block_type_count: null}, {block_type_count: dataNew});
 			_this.updateData(newData);
 		})
 		.catch(function(error)
@@ -215,12 +218,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderControls = () =>
 	{
+		const countOrZero = (collection, key) => (key in collection) ? collection[key] : 0;
+
 		const block_type = ("type" in store.routeParams) ? store.routeParams.type : "all";
-		const block_count = this.data.block_count;
+		const block_type_count = this.data.block_type_count;
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
-		const pages = Math.ceil(block_count / count);
+		const pages = Math.ceil(countOrZero(block_type_count, block_type) / count);
 		const page = Math.ceil(offset / count) + 1;
 
 		const disablePrevPageFast = (page <= 1);
@@ -235,12 +240,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<label>
 						<span className="text">Block Type</span>
 						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange}>
-							<option value="all">All</option>
-							<option value="file">File</option>
-							<option value="filehash">Filehash</option>
-							<option value="genesis">Genesis</option>
-							<option value="text">Text</option>
-							<option value="timestamp">Timestamp</option>
+							<option value="all">All ({countOrZero(block_type_count, "all")})</option>
+							<option value="file">File ({countOrZero(block_type_count, "file")})</option>
+							<option value="filehash">Filehash ({countOrZero(block_type_count, "filehash")})</option>
+							<option value="genesis">Genesis ({countOrZero(block_type_count, "genesis")})</option>
+							<option value="text">Text ({countOrZero(block_type_count, "text")})</option>
+							<option value="timestamp">Timestamp ({countOrZero(block_type_count, "timestamp")})</option>
 						</select>
 					</label>
 				</div>
