@@ -101,7 +101,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
 			{
 				chartDataFiltered.labels.push(item.block_type);
-				chartDataFiltered.datasets[0].data.push(item.count);
+				chartDataFiltered.datasets[0].data.push(item.block_count);
 			}
 		});
 
@@ -109,7 +109,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.data.block_type_count.forEach(function(item)
 		{
 			chartData.labels.push(item.block_type);
-			chartData.datasets[0].data.push(item.count);
+			chartData.datasets[0].data.push(item.block_count);
 		});
 
 		const chartOptions = _.cloneDeep(charts.optionsBase);
