@@ -82,6 +82,7 @@ input[type="submit"],
 		&:hover
 		{
 			background: $background;
+			border: $border-default;
 		}
 	}
 
