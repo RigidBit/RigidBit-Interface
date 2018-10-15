@@ -53,6 +53,7 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 
 	log.debug("FETCH URL:", apiUrl);
 	log.debug("FETCH DATA:", data);
+	log.debug("USE CACHE:", useCache);
 
 	// Check for cached response.
 	if(useCache)
