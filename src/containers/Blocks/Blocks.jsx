@@ -56,7 +56,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			type: this.controlType.current.value,
 		};
 
-		if(e.target === this.controlCount.current)
+		if(e.target === this.controlCount.current || e.target === this.controlType.current)
 			params.offset = 0;
 
 		router.navigate("blocks", params);
