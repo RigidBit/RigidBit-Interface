@@ -106,7 +106,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	startTimer = () =>
 	{
-		this.refreshTimer = setInterval(this.timerTick, config.dashboardStatusRefreshInterval);
+		this.refreshTimer = setInterval(this.timerTick, config.blocksRefreshInterval);
 	};
 
 	timerTick = () =>

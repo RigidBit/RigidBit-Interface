@@ -6,9 +6,7 @@ class Component extends React.Component
 
 		const route = e.target.href.split("#")[1];
 
-		let params = null;
-		if(route === "blocks")
-			params = {count: 20, offset: 0};
+		const params = (route === "blocks") ? config.navigationDefaultBlocksParams : null;
 
 		router.navigate(route, params);
 	}
