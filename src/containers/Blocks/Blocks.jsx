@@ -41,8 +41,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		e.preventDefault();
 
 		this.refreshData();
-
-		$("section.statusContainer").addClass("loading");
 	});
 
 	showHideGenesisClicked = action((e) =>
@@ -77,7 +75,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			_this.updateData(data);
 
-			$("section.statusContainer").removeClass("loading");
 		});
 	};
 

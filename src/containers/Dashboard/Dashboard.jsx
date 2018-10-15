@@ -40,8 +40,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.clearTimer();
 		this.refreshData();
 		this.startTimer();
-
-		$("section.statusContainer").addClass("loading");
 	});
 
 	handleViewBlockClick = (e) =>
@@ -87,8 +85,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		.then(function(data)
 		{
 			_this.updateData(data);
-
-			$("section.statusContainer").removeClass("loading");
 		})
 		.catch(function(error)
 		{
