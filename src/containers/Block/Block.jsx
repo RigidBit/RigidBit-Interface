@@ -59,6 +59,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		const _this = this;
 
+		if(store.route !== "block")
+			return false;
+
 		if(!("id" in store.routeParams))
 			return false;
 
