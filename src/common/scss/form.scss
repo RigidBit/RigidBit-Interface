@@ -116,7 +116,12 @@ input[type="submit"],
 	}
 }
 
-select option
+select
 {
-	padding: 0;
+	padding: $padding-input / 2;
+
+	option
+	{
+		padding: 0;
+	}
 }
