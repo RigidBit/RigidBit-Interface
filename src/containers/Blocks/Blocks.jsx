@@ -1,5 +1,7 @@
 import iziToast from "izitoast";
 
+import * as misc from "../../common/js/misc.js";
+
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
@@ -77,13 +79,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			offset: parseInt(store.routeParams.offset),
 			type: this.controlType.current.value,
 		};
+
+		const block_type_count_current = misc.valueOrZero(this.data.block_type_count, params.type);
+
 		params.offset += modifier;
 
 		if(params.offset < 0)
 			params.offset = 0;
 
-		if(params.offset >= this.data.block_count)
-			params.offset = ((Math.floor(this.data.block_count / params.count) - 0) * params.count);
+		if(params.offset >= block_type_count_current)
+			params.offset = (Math.floor(block_type_count_current / params.count) * params.count);
 
 		router.navigate("blocks", params);
 	};
@@ -171,26 +176,27 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return "Loading...";
 
-		if(this.data.blocks.length === 0)
-			return "No block data available.";
-
 		const tableRows = [];
-		this.data.blocks.forEach(function(row, r)
-		{
-			const linkId = "#/block/" + row.id;
-			const linkHash = "#/block/" + row.hash;
 
-			const html =
-			(
-				<tr key={r}>
-					<td className="id item"><a href={linkId} onClick={_this.handleViewBlockClick}>{row.id}</a></td>
-					<td className="hash item"><a href={linkHash} onClick={_this.handleViewBlockClick}>{row.hash}</a></td>
-					<td className="block_type item">{row.block_type}</td>
-					<td className="timestamp item">{new Date(parseInt(row.timestamp) * 1000).toISOString()}</td>
-				</tr>
-			);
-			tableRows.push(html);
-		});
+		if(this.data.blocks.length === 0)
+			tableRows.push(<tr key={0}><td className="empty-table" colSpan={4}>No data available to display.</td></tr>);
+		else
+			this.data.blocks.forEach(function(row, r)
+			{
+				const linkId = "#/block/" + row.id;
+				const linkHash = "#/block/" + row.hash;
+
+				const html =
+				(
+					<tr key={r}>
+						<td className="id item"><a href={linkId} onClick={_this.handleViewBlockClick}>{row.id}</a></td>
+						<td className="hash item"><a href={linkHash} onClick={_this.handleViewBlockClick}>{row.hash}</a></td>
+						<td className="block_type item">{row.block_type}</td>
+						<td className="timestamp item">{new Date(parseInt(row.timestamp) * 1000).toISOString()}</td>
+					</tr>
+				);
+				tableRows.push(html);
+			});
 
 		const html =
 		(
@@ -218,15 +224,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderControls = () =>
 	{
-		const countOrZero = (collection, key) => (key in collection) ? collection[key] : 0;
-
 		const block_type = ("type" in store.routeParams) ? store.routeParams.type : "all";
 		const block_type_count = this.data.block_type_count;
+		const block_type_count_current = misc.valueOrZero(block_type_count, block_type);
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
-		const pages = Math.ceil(countOrZero(block_type_count, block_type) / count);
-		const page = Math.ceil(offset / count) + 1;
+		const pages = Math.ceil(block_type_count_current / count);
+		const page = (block_type_count_current > 0) ? Math.ceil(offset / count) + 1 : 0;
 
 		const disablePrevPageFast = (page <= 1);
 		const disablePrevPage = (page <= 1);
@@ -240,12 +245,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<label>
 						<span className="text">Block Type</span>
 						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange}>
-							<option value="all">All ({countOrZero(block_type_count, "all")})</option>
-							<option value="file">File ({countOrZero(block_type_count, "file")})</option>
-							<option value="filehash">Filehash ({countOrZero(block_type_count, "filehash")})</option>
-							<option value="genesis">Genesis ({countOrZero(block_type_count, "genesis")})</option>
-							<option value="text">Text ({countOrZero(block_type_count, "text")})</option>
-							<option value="timestamp">Timestamp ({countOrZero(block_type_count, "timestamp")})</option>
+							<option value="all">All ({misc.valueOrZero(block_type_count, "all")})</option>
+							<option value="file">File ({misc.valueOrZero(block_type_count, "file")})</option>
+							<option value="filehash">Filehash ({misc.valueOrZero(block_type_count, "filehash")})</option>
+							<option value="genesis">Genesis ({misc.valueOrZero(block_type_count, "genesis")})</option>
+							<option value="text">Text ({misc.valueOrZero(block_type_count, "text")})</option>
+							<option value="timestamp">Timestamp ({misc.valueOrZero(block_type_count, "timestamp")})</option>
 						</select>
 					</label>
 				</div>

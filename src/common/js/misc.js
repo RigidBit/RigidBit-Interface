@@ -47,3 +47,13 @@ export function decimalArrayToAscii(decimalArray)
 	return hexToAscii(decimalArrayToHex(decimalArray));
 }
 
+/**
+ * Return the value from the specified collection at the specified key, or zero if the key does not exist.
+ * @param  {Object} collection The object to be queried.
+ * @param  {String} key        The desired key.
+ * @return {*}            The value matching the specificed key, or 0.
+ */
+export function valueOrZero(collection, key)
+{
+	return (key in collection) ? collection[key] : 0;
+}
