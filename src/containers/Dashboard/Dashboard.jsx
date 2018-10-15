@@ -173,7 +173,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = <a href={"#/block/" + value} onClick={_this.handleViewBlock}>{value}</a>;
 
 			else if(key === "connection")
-				value = <span>Established. <i className="fas fa-bolt"></i></span>;
+				value = <span>Active <i className="fas fa-bolt"></i></span>;
 
 			const html =
 			(
