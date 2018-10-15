@@ -6,7 +6,7 @@ import store from "./store.js";
 export const routes =
 [
 	{ name: "block", path: "/block/:id" },
-	{ name: "blocks", path: "/blocks/:count/:offset" },
+    { name: "blocks", path: "/blocks/:count/:offset?:type" },
 	{ name: "dashboard", path: "/dashboard" },
 	{ name: "file", path: "/file" },
 	{ name: "upload", path: "/upload" },
