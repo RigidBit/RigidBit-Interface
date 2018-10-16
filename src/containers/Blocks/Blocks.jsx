@@ -216,7 +216,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="blocksContainer">
-		        <h2>Recent Blocks<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+		        <h2>Recent Blocks</h2>
 		        <table>
 		        	<thead>
 		        		<tr>
@@ -305,7 +305,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<Navigation />
 
 				<div className="content">
-					<h1>Blocks</h1>
+					<h1>Blocks<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h1>
 					{blocks}
 				</div>
 

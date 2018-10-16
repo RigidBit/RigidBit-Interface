@@ -135,7 +135,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="blockTypeCountsContainer">
-				<h2>Block Types<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+				<h2>Block Types</h2>
 				<div className="blockTypeCountsFilteredChart chart">
 					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
 				</div>
@@ -207,7 +207,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="statusContainer">
-				<h2>General Status<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h2>
+				<h2>General Status</h2>
 				<table className="reverse-row-colors">
 					<tbody>
 						{tableRows}
@@ -242,7 +242,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<Navigation />
 
 				<div className="content">
-					<h1>Dashboard</h1>
+					<h1>Dashboard<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h1>
 					{status}
 					{blockTypeCounts}
 				</div>
