@@ -25,20 +25,40 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.autorun();
 	}
 
+	handleNextPrevButtonClick = (e) =>
+	{
+		e.preventDefault();
+
+		const modifier = e.currentTarget.dataset.modifier;
+		let id = parseInt(this.data.block.id) + parseInt(modifier);
+
+		if(id < 1)
+			id = 1;
+
+		if(id > this.data.block_count)
+			id = this.data.block_count;
+
+		router.navigate("block", {id: id});
+	}
+
 	handleViewBlockClick = (e) =>
 	{
 		e.preventDefault();
 
-		router.navigate("block", {id: $(e.target).text()});
-		this.refreshData();
+		router.navigate("block", {id: $(e.currentTarget).text()});
 	};
 
 	isDataReady = () =>
 	{
-		if(this.data.hasOwnProperty("block"))
+		if(this.data.hasOwnProperty("block") && this.data.hasOwnProperty("block_count"))
 			return true;
 
 		return false;
+	};
+
+	isDataValid = () =>
+	{
+		return this.isDataReady() && typeof this.data.block === "object" && this.data.block !== null && typeof this.data.block_count === "number";
 	};
 
 	updateData = action((data) =>
@@ -65,14 +85,31 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!("id" in store.routeParams))
 			return false;
 
-		api.getUrl(`/api/block-complete/${store.routeParams.id}`, useCache)
+		api.getUrl(`/api/count`, false)
 		.then(function(data)
 		{
-			_this.updateData(data);
+			const newData = _.merge(mobx.toJS(_this.data), data);
+			_this.updateData(newData);
 		})
 		.catch(function(error)
 		{
-			_this.updateData({block: null, data: null, meta: null});
+			const newData = _.merge(mobx.toJS(_this.data), {block_count: null});
+			_this.updateData(newData);
+
+			log.error(error);
+			iziToast.error({title: "Error", message: "Unable to get the block count."});
+		});
+
+		api.getUrl(`/api/block-complete/${store.routeParams.id}`, useCache)
+		.then(function(data)
+		{
+			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null}, data);
+			_this.updateData(newData);
+		})
+		.catch(function(error)
+		{
+			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null});
+			_this.updateData(newData);
 
 			log.error(error);
 			iziToast.error({title: "Error", message: "The specified block was not found."});
@@ -90,7 +127,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return this.renderLoading();
 
-		if(data === null)
+		if(!_this.isDataValid())
 			return this.renderEmptyContainer(containerClassName, containerTitle, "The specified block was not found.");
 
 		const metrics =
@@ -147,7 +184,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return this.renderLoading();
 
-		if(data === null)
+		if(!_this.isDataValid() || data === null)
 			return this.renderEmptyContainer(containerClassName, containerTitle, "No data is available for this block.");
 
 		const metrics =
@@ -220,7 +257,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return this.renderLoading();
 
-		if(data === null || data.length === 0)
+		if(!_this.isDataValid() || data.length === 0)
 			return this.renderEmptyContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
@@ -284,6 +321,30 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return results[status];
 	};
 
+	renderControls = () =>
+	{
+		let prevButton = null;
+		let nextButton = null;
+
+		if(this.isDataReady() && this.isDataValid())
+		{
+			const disablePrevBlock = (this.data.block.id === 1);
+			const disableNextBlock = (this.data.block.id === this.data.block_count); 
+			prevButton = <button className="prev-block" data-modifier={-1} onClick={this.handleNextPrevButtonClick} disabled={disablePrevBlock}><i className="fas fa-angle-left"></i></button>;
+			nextButton = <button className="next-block" data-modifier={1} onClick={this.handleNextPrevButtonClick} disabled={disableNextBlock}><i className="fas fa-angle-right"></i></button>;
+		}
+
+		const html =
+		(
+			<div className="controls">
+				{prevButton}
+				{nextButton}
+				<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a>
+			</div>
+		);
+		return html;
+	};
+
 	renderContainer = (containerClassName, title, content) =>
 	{
 		const html =
@@ -339,7 +400,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		if(this.data.block === null)
+		if(!this.isDataValid())
 			return "Block N/A";
 
 		return `Block #${this.data.block.id}`;
@@ -370,6 +431,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const block = this.renderBlock();
 		const blockData = this.renderBlockData();
 		const blockMeta = this.renderBlockMeta();
+		const controls = this.renderControls();
 
 		const html =
 		(
@@ -377,7 +439,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<Header />
 				<Navigation />
 				<div className="content">
-					<h1>{blockTitle}<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h1>
+					<h1>
+						{blockTitle}
+						{controls}
+					</h1>
 					{block}
 					{blockData}
 					{blockMeta}

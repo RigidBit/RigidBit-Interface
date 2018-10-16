@@ -16,7 +16,26 @@
 			position: relative;
 			margin-bottom: $margin-default;
 
-			.refresh
+			.controls
+			{
+				position: absolute;
+				right: 0;
+				top: 0;
+
+				button
+				{
+					font-size: 0.7em;
+					padding-bottom: 4px;
+					padding-top: 4px;
+				}
+
+				> *
+				{
+					margin-left: $margin-button;
+				}
+			}
+
+			> .refresh
 			{
 				position: absolute;
 				right: 0;
