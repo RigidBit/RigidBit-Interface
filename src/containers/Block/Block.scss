@@ -43,6 +43,25 @@ section.block
 		}
 	}
 
+	.blockDataContainer
+	{
+		.metric
+		{
+			white-space: nowrap;
+		}
+
+		.value
+		{
+			.data-container
+			{
+				overflow: auto;
+				max-height: 200px;
+				word-break: break-all;
+				width: 100%;
+			}
+		}
+	}
+
 	.blockMetaContainer
 	{
 		table td.metric

@@ -172,7 +172,21 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = (value) ? "true" : "false";
 
 			if(key === "data" && value !== null)
-				value = uintToString(value);
+			{
+				value = uintToString(value).replace(/\r/g, "");
+				value = value.split("\n").map((item, key) =>
+				{
+					const html =
+					(
+						<span key={key}>
+							{item}
+							<br />
+						</span>
+					);
+					return html;
+				});
+				value = <div className="data-container">{value}</div>;
+			}
 
 			if(key === "timestamp")
 				value = new Date(parseInt(value) * 1000).toISOString();
