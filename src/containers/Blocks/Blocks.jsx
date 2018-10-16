@@ -98,11 +98,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		params.offset += modifier;
 
+		// This could result in an offset below zero. It must come before the "< 0" check. 
+		if(params.offset >= block_type_count_current)
+			params.offset = ((Math.ceil(block_type_count_current / params.count) - 1) * params.count);
+
 		if(params.offset < 0)
 			params.offset = 0;
-
-		if(params.offset >= block_type_count_current)
-			params.offset = (Math.floor(block_type_count_current / params.count) * params.count);
 
 		router.navigate("blocks", params);
 	};
