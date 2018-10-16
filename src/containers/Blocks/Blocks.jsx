@@ -260,9 +260,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<div className="type control">
 					<label>
 						<span className="text">Block Type</span>
-						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange}>
+						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange} title="Filter by Block Type">
 							<option value="all">All ({valueOrZero(block_type_count, "all")})</option>
-							<option value="user">User ({valueOrZero(block_type_count, "user")})</option>
+							<option value="user">All User ({valueOrZero(block_type_count, "user")})</option>
 							<option value="file">File ({valueOrZero(block_type_count, "file")})</option>
 							<option value="filehash">Filehash ({valueOrZero(block_type_count, "filehash")})</option>
 							<option value="genesis">Genesis ({valueOrZero(block_type_count, "genesis")})</option>
@@ -272,16 +272,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</label>
 				</div>
 				<div className="offset control">
-					<button className="prev-page-fast" onClick={()=>{this.handleOffsetUpdate(-10 * count);}} disabled={disablePrevPageFast}><i className="fas fa-angle-double-left"></i></button>
-					<button className="prev-page" onClick={()=>{this.handleOffsetUpdate(-1 * count);}} disabled={disablePrevPage}><i className="fas fa-angle-left"></i></button>
+					<button className="prev-page-fast" onClick={()=>{this.handleOffsetUpdate(-10 * count);}} disabled={disablePrevPageFast} title="Back 10 Pages"><i className="fas fa-angle-double-left"></i></button>
+					<button className="prev-page" onClick={()=>{this.handleOffsetUpdate(-1 * count);}} disabled={disablePrevPage} title="Previous Page"><i className="fas fa-angle-left"></i></button>
 					<span className="text">{page} of {pages}</span>
-					<button className="next-page" onClick={()=>{this.handleOffsetUpdate(1 * count);}} disabled={disableNextPage}><i className="fas fa-angle-right"></i></button>
-					<button className="next-page-fast" onClick={()=>{this.handleOffsetUpdate(10 * count);}} disabled={disableNextPageFast}><i className="fas fa-angle-double-right"></i></button>
+					<button className="next-page" onClick={()=>{this.handleOffsetUpdate(1 * count);}} disabled={disableNextPage} title="Next Page"><i className="fas fa-angle-right"></i></button>
+					<button className="next-page-fast" onClick={()=>{this.handleOffsetUpdate(10 * count);}} disabled={disableNextPageFast} title="Forward 10 Pages"><i className="fas fa-angle-double-right"></i></button>
 				</div>
 				<div className="count control">
 					<label>
 						<span className="text">Show</span>
-						<select ref={this.controlCount} value={count} onChange={this.handleControlChange}>
+						<select ref={this.controlCount} value={count} onChange={this.handleControlChange} title="Max Rows Per Page">
 							<option value="10">10</option>
 							<option value="25">25</option>
 							<option value="50">50</option>
@@ -307,7 +307,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<Navigation />
 
 				<div className="content">
-					<h1>Blocks<a href="#refresh" className="refresh" onClick={this.refreshClicked}><i className="fas fa-sync-alt"></i></a></h1>
+					<h1>Blocks<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a></h1>
 					{blocks}
 				</div>
 
