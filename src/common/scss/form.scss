@@ -128,3 +128,8 @@ select
 		padding: 0;
 	}
 }
+
+textarea
+{
+	padding: $padding-input;
+}
