@@ -71,18 +71,20 @@ input[type="submit"],
 	{
 		background: $color-grey-light;
 		border-color: $color-grey-light;
+		color: white;
 	}
 
 	&:disabled,
 	&.disabled
 	{
+		border-color: $border-color-disabled;
 		color: $font-color-disabled;
 
 		&:active,
 		&:hover
 		{
 			background: $background;
-			border: $border-default;
+			border-color: $border-color-disabled;
 		}
 	}
 
