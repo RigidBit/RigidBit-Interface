@@ -256,7 +256,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<div className="controls">
+			<div className="bottomControls">
 				<div className="type control">
 					<label>
 						<span className="text">Block Type</span>
