@@ -1,4 +1,4 @@
-import {decimalArrayToAscii} from "../../common/js/misc.js";
+import {uintToString} from "../../common/js/misc.js";
 import filesize from "filesize";
 import iziToast from "izitoast";
 
@@ -172,7 +172,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = (value) ? "true" : "false";
 
 			if(key === "data" && value !== null)
-				value = decimalArrayToAscii(value);
+				value = uintToString(value);
 
 			if(key === "timestamp")
 				value = new Date(parseInt(value) * 1000).toISOString();

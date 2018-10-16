@@ -48,6 +48,22 @@ export function decimalArrayToAscii(decimalArray)
 }
 
 /**
+ * Converts an array of uint into a UTF-8 compatible string.
+ *
+ * Source: // https://stackoverflow.com/a/17192845/9979
+ * 
+ * @param  {Array} uintArray An array of uints.
+ * @return {String}          A UTF-8 string.
+ */
+export function uintToString(uintArray)
+{
+    const encodedString = String.fromCharCode.apply(null, uintArray);
+    const decodedString = decodeURIComponent(escape(encodedString));
+
+    return decodedString;
+}
+
+/**
  * Return the value from the specified collection at the specified key, or zero if the key does not exist.
  * @param  {Object} collection The object to be queried.
  * @param  {String} key        The desired key.
