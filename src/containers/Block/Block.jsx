@@ -1,6 +1,8 @@
-import {uintToString, timestampToDate} from "../../common/js/misc.js";
 import filesize from "filesize";
 import iziToast from "izitoast";
+
+import * as api from "../../common/js/api.js"; 
+import {uintToString, timestampToDate} from "../../common/js/misc.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -167,7 +169,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				</tr>
 			);
 			tableRows.push(html);
-
 		});
 
 		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
@@ -240,8 +241,22 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				</tr>
 			);
 			tableRows.push(html);
-
 		});
+
+		if(data.archive === true)
+		{
+			const html =
+			(
+				<tr key="download">
+					<td className={"download metric"}>Download:</td>
+					<td className={"download value"}>
+						<a href={api.apiUrlFromRelativePath("/api/file-download/"+data.id)} target="_blank">Click to Download</a>
+					</td>
+					<td className="empty" />
+				</tr>
+			);
+			tableRows.push(html);
+		}
 
 		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
