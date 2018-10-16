@@ -293,7 +293,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		(
 			<tr key="timestamp">
 				<td className="metric">Timestamp:</td>
-				<td className="value">{new Date(parseInt(data[0]["timestamp"]) * 1000).toISOString().replace("T", "T"+zeroWidthSpace())}</td>
+				<td className="value">{timestampToDate(data[0]["timestamp"])}</td>
 				<td className="empty" />
 			</tr>
 		);
