@@ -71,6 +71,20 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("block", {id: $(e.target).text()});
 	};
 
+	handleViewTypeClick = (e) =>
+	{
+		e.preventDefault();
+
+		const params =
+		{
+			count: parseInt(store.routeParams.count),
+			offset: parseInt(store.routeParams.offset),
+			type: String(e.target.dataset.type).toLowerCase(),
+		};
+
+		router.navigate("blocks", params);
+	};
+
 	handleOffsetUpdate = (modifier) =>
 	{
 		const params =
@@ -183,6 +197,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		else
 			this.data.blocks.forEach(function(row, r)
 			{
+				const linkBlockType = `#/blocks/${store.routeParams.count}/${store.routeParams.offset}?type=${row.block_type.toLowerCase()}`;
 				const linkId = "#/block/" + row.id;
 				const linkHash = "#/block/" + row.hash;
 
@@ -191,7 +206,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<tr key={r}>
 						<td className="id item"><a href={linkId} onClick={_this.handleViewBlockClick}>{row.id}</a></td>
 						<td className="hash item"><a href={linkHash} onClick={_this.handleViewBlockClick}>{row.hash}</a></td>
-						<td className="block_type item">{row.block_type}</td>
+						<td className="block_type item"><a href={linkBlockType} data-type={row.block_type} onClick={_this.handleViewTypeClick}>{row.block_type}</a></td>
 						<td className="timestamp item">{new Date(parseInt(row.timestamp) * 1000).toISOString()}</td>
 					</tr>
 				);

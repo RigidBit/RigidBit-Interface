@@ -42,11 +42,25 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.startTimer();
 	});
 
-	handleViewBlockClick = (e) =>
+	handleViewBlockClickedClick = (e) =>
 	{
 		e.preventDefault();
 
 		router.navigate("block", {id: $(e.target).text()});
+	};
+
+	handleViewTypeClicked = (e) =>
+	{
+		e.preventDefault();
+
+		const params =
+		{
+			count: config.navigationDefaultBlocksParams.count,
+			offset: config.navigationDefaultBlocksParams.offset,
+			type: String(e.target.dataset.type).toLowerCase(),
+		};
+
+		router.navigate("blocks", params);
 	};
 
 	isDataReady = () =>
@@ -170,7 +184,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = new Date(parseInt(value) * 1000).toISOString();
 
 			else if(key === "block_height" || key === "last_hash")
-				value = <a href={"#/block/" + value} onClick={_this.handleViewBlock}>{value}</a>;
+				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClicked}>{value}</a>;
+
+			else if(key === "last_type")
+				value = <a href={`#/blocks/${config.navigationDefaultBlocksParams.count}/${config.navigationDefaultBlocksParams.offset}?type=${value.toLowerCase()}`} data-type={value} onClick={_this.handleViewTypeClicked}>{value}</a>;
 
 			else if(key === "connection")
 				value = <span>Active <i className="fas fa-bolt"></i></span>;
