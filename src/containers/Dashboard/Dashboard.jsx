@@ -2,6 +2,8 @@ import iziToast from "izitoast";
 import {Doughnut as DoughnutChart} from "react-chartjs-2";
 
 import * as charts from "../../common/js/charts.js";
+import {timestampToDate} from "../../common/js/misc.js";
+
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
@@ -181,7 +183,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			}
 
 			else if(key === "last_timestamp")
-				value = new Date(parseInt(value) * 1000).toISOString();
+				value = timestampToDate(value);
 
 			else if(key === "block_height" || key === "last_hash")
 				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClicked}>{value}</a>;

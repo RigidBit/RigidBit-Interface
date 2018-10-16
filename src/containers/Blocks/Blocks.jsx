@@ -1,6 +1,6 @@
 import iziToast from "izitoast";
 
-import * as misc from "../../common/js/misc.js";
+import {timestampToDate, valueOrZero} from "../../common/js/misc.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -94,7 +94,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			type: this.controlType.current.value,
 		};
 
-		const block_type_count_current = misc.valueOrZero(this.data.block_type_count, params.type);
+		const block_type_count_current = valueOrZero(this.data.block_type_count, params.type);
 
 		params.offset += modifier;
 
@@ -208,7 +208,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<td className="id item"><a href={linkId} onClick={_this.handleViewBlockClick}>{row.id}</a></td>
 						<td className="hash item"><a href={linkHash} onClick={_this.handleViewBlockClick}>{row.hash}</a></td>
 						<td className="block_type item"><a href={linkBlockType} data-type={row.block_type} onClick={_this.handleViewTypeClick}>{row.block_type}</a></td>
-						<td className="timestamp item">{new Date(parseInt(row.timestamp) * 1000).toISOString()}</td>
+						<td className="timestamp item">{timestampToDate(row.timestamp)}</td>
 					</tr>
 				);
 				tableRows.push(html);
@@ -242,7 +242,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		const block_type = ("type" in store.routeParams) ? store.routeParams.type : "all";
 		const block_type_count = this.data.block_type_count;
-		const block_type_count_current = misc.valueOrZero(block_type_count, block_type);
+		const block_type_count_current = valueOrZero(block_type_count, block_type);
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
@@ -261,13 +261,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<label>
 						<span className="text">Block Type</span>
 						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange}>
-							<option value="all">All ({misc.valueOrZero(block_type_count, "all")})</option>
-							<option value="user">User ({misc.valueOrZero(block_type_count, "user")})</option>
-							<option value="file">File ({misc.valueOrZero(block_type_count, "file")})</option>
-							<option value="filehash">Filehash ({misc.valueOrZero(block_type_count, "filehash")})</option>
-							<option value="genesis">Genesis ({misc.valueOrZero(block_type_count, "genesis")})</option>
-							<option value="text">Text ({misc.valueOrZero(block_type_count, "text")})</option>
-							<option value="timestamp">Timestamp ({misc.valueOrZero(block_type_count, "timestamp")})</option>
+							<option value="all">All ({valueOrZero(block_type_count, "all")})</option>
+							<option value="user">User ({valueOrZero(block_type_count, "user")})</option>
+							<option value="file">File ({valueOrZero(block_type_count, "file")})</option>
+							<option value="filehash">Filehash ({valueOrZero(block_type_count, "filehash")})</option>
+							<option value="genesis">Genesis ({valueOrZero(block_type_count, "genesis")})</option>
+							<option value="text">Text ({valueOrZero(block_type_count, "text")})</option>
+							<option value="timestamp">Timestamp ({valueOrZero(block_type_count, "timestamp")})</option>
 						</select>
 					</label>
 				</div>

@@ -73,3 +73,17 @@ export function valueOrZero(collection, key)
 {
 	return (key in collection) ? collection[key] : 0;
 }
+
+/**
+ * Returns a zero width space character.
+ * @return {String} A single zero width space character.
+ */
+export function zeroWidthSpace()
+{
+	return "​";
+}
+
+export function timestampToDate(timestamp)
+{
+	return new Date(parseInt(timestamp) * 1000).toISOString().replace("T", zeroWidthSpace()+"T").replace(".000Z", "Z");
+}

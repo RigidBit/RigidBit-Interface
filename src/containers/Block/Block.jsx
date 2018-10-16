@@ -1,4 +1,4 @@
-import {uintToString} from "../../common/js/misc.js";
+import {uintToString, timestampToDate} from "../../common/js/misc.js";
 import filesize from "filesize";
 import iziToast from "izitoast";
 
@@ -153,7 +153,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClick}>{value}</a>
 
 			if(key === "timestamp")
-				value = new Date(parseInt(value) * 1000).toISOString();
+				value = timestampToDate(value);
 
 			if(key === "verified")
 				value = _this.renderBlockVerify();
@@ -226,7 +226,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			}
 
 			if(key === "timestamp")
-				value = new Date(parseInt(value) * 1000).toISOString();
+				value = timestampToDate(value);
 
 			if(value === null)
 				value = <i>null</i>;
@@ -293,7 +293,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		(
 			<tr key="timestamp">
 				<td className="metric">Timestamp:</td>
-				<td className="value">{new Date(parseInt(data[0]["timestamp"]) * 1000).toISOString()}</td>
+				<td className="value">{new Date(parseInt(data[0]["timestamp"]) * 1000).toISOString().replace("T", "T"+zeroWidthSpace())}</td>
 				<td className="empty" />
 			</tr>
 		);

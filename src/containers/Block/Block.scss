@@ -20,8 +20,7 @@ section.block
 
 	.blockContainer,
 	.blockDataContainer,
-	.blockMetaContainer,
-	.blockVerifyContainer	
+	.blockMetaContainer
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -29,6 +28,14 @@ section.block
 		position: relative;
 
 		@include _tableMixin;
+
+		table
+		{
+			td.metric
+			{
+				white-space: nowrap;
+			}
+		}
 	}
 
 	.blockContainer
@@ -45,11 +52,6 @@ section.block
 
 	.blockDataContainer
 	{
-		.metric
-		{
-			white-space: nowrap;
-		}
-
 		.value
 		{
 			.data-container
