@@ -156,6 +156,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			const dataNew = _.mapValues(_.keyBy(data.block_type_count, (i)=>i.block_type.toLowerCase()), "block_count");
 			dataNew.all = data.block_count;
+			dataNew.user = data.block_count_user;
 
 			const newData = _.merge(mobx.toJS(_this.data), {block_type_count: null}, {block_type_count: dataNew});
 			_this.updateData(newData);
@@ -261,6 +262,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<span className="text">Block Type</span>
 						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange}>
 							<option value="all">All ({misc.valueOrZero(block_type_count, "all")})</option>
+							<option value="user">User ({misc.valueOrZero(block_type_count, "user")})</option>
 							<option value="file">File ({misc.valueOrZero(block_type_count, "file")})</option>
 							<option value="filehash">Filehash ({misc.valueOrZero(block_type_count, "filehash")})</option>
 							<option value="genesis">Genesis ({misc.valueOrZero(block_type_count, "genesis")})</option>
