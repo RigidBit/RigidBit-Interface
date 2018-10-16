@@ -158,7 +158,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		[
 			["connection", "Connection"],
 			["genesis_hash", "Genesis Hash"],
-			["block_height", "Block Height"],
+			["block_height", "Last Block ID"],
 			["last_hash", "Last Block Hash"],
 			["last_type", "Last Block Type"],
 			["last_timestamp", "Last Block Time"],
