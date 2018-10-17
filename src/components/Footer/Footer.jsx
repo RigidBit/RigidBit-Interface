@@ -12,7 +12,7 @@
 
 		// Add the resize listener to the window.
 		$(window).on("resize", null, this.handleResize);
-		this.handleResizeReal();
+		setTimeout(() => { this.handleResizeReal(); }, 500);
 
 		// Start the check timer.
 		this.checkTimer = setInterval(() =>
@@ -48,10 +48,14 @@
 		const footerHeight = $footer.outerHeight();
 		const windowHeight = $window.height();
 
-		action(function(_this)
+		const shouldFloat = (windowHeight > bodyHeight + footerHeight);
+		if(this.floatFooter != shouldFloat)
 		{
-			_this.floatFooter = (windowHeight > bodyHeight + footerHeight);
-		})(this);
+			action(function(_this)
+			{
+				_this.floatFooter = shouldFloat;
+			})(this);
+		}
 	};
 
 	render()
