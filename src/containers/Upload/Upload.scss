@@ -2,22 +2,22 @@ section.upload
 {
 	@include contentMixin;
 
-	.fileContainer,
-	.textContainer,
-	.timestampContainer
+	.file-container,
+	.text-container,
+	.timestamp-container
 	{
-		div.buttonContainer
+		div.button-container
 		{
 			position: relative;
 			text-align: right;
 		}
 	}
 
-	.fileContainer
+	.file-container
 	{
 		@include sectionContainerDefaultMixin;
 
-		.filehashWarning
+		.filehash-warning
 		{
 			margin-top: $margin-default;
 			display: none;
@@ -121,7 +121,7 @@ section.upload
 		}
 	}
 
-	.textContainer
+	.text-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -150,7 +150,7 @@ section.upload
 		}
 	}
 
-	.timestampContainer
+	.timestamp-container
 	{
 		@include sectionContainerDefaultMixin;
 	}

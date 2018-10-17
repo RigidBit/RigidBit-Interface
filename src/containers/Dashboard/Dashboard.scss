@@ -2,7 +2,7 @@ section.dashboard
 {
 	@include contentMixin;
 
-	.statusContainer
+	.status-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -21,7 +21,7 @@ section.dashboard
 		}
 	}
 
-	.blockTypeCountsContainer
+	.block-type-counts-container
 	{
 		@include sectionContainerDefaultMixin;
 

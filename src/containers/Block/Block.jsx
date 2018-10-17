@@ -170,7 +170,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const _this = this;
 		const data = _this.data.block;
 
-		const containerClassName = "blockContainer";
+		const containerClassName = "block-container";
 		const containerTitle = "Block Info";
 
 		if(!_this.isDataReady())
@@ -226,7 +226,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const _this = this;
 		const data = _this.data.data;
 
-		const containerClassName = "blockDataContainer";
+		const containerClassName = "block-data-container";
 		const containerTitle = "Block Data";
 
 		if(!_this.isDataReady())
@@ -313,7 +313,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const _this = this;
 		const data = _this.data.meta;
 
-		const containerClassName = "blockMetaContainer";
+		const containerClassName = "block-meta-container";
 		const containerTitle = "Block Meta Data";
 
 		if(!_this.isDataReady())
@@ -368,7 +368,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		const data = this.data;
 
-		const containerClassName = "blockPreviewContainer";
+		const containerClassName = "block-preview-container";
 		const containerTitle = "Block Data Preview";
 		const imageExtensions = this.validDataPreviewExtensions;
 
@@ -489,7 +489,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderLoading = () =>
 	{
-		return <div className="loadingText">Loading...</div>;
+		return <div className="loading-text">Loading...</div>;
 	};
 
 	renderTitle = () =>

@@ -2,7 +2,7 @@ section.blocks
 {
 	@include contentMixin;
 
-	.blocksContainer
+	.blocks-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -43,7 +43,7 @@ section.blocks
 			}
 		}
 
-		.bottomControls
+		.bottom-controls
 		{
 			@include media("<tablet")
 			{

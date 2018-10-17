@@ -217,7 +217,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="blocksContainer">
+			<section className="blocks-container">
 		        <h2>Recent Blocks</h2>
 		        <table>
 		        	<thead>
@@ -257,7 +257,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<div className="bottomControls">
+			<div className="bottom-controls">
 				<div className="type control">
 					<label>
 						<span className="text">Block Type</span>

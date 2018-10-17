@@ -136,7 +136,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="blockTypeCountsContainer">
+			<section className="block-type-counts-container">
 				<h2>Block Types</h2>
 				<div className="blockTypeCountsFilteredChart chart">
 					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
@@ -208,7 +208,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="statusContainer">
+			<section className="status-container">
 				<h2>General Status</h2>
 				<table className="reverse-row-colors">
 					<tbody>
@@ -228,7 +228,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		if(!this.isDataReady())
 		{
-			status = <div className="loadingText">Loading...</div>;
+			status = <div className="loading-text">Loading...</div>;
 			blockTypeCounts = null;
 		}
 		else

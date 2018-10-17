@@ -18,10 +18,10 @@ section.block
 {
 	@include contentMixin;
 
-	.blockContainer,
-	.blockDataContainer,
-	.blockMetaContainer,
-	.blockPreviewContainer
+	.block-container,
+	.block-data-container,
+	.block-meta-container,
+	.block-preview-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -39,7 +39,7 @@ section.block
 		}
 	}
 
-	.blockContainer
+	.block-container
 	{
 		.failure
 		{
@@ -51,7 +51,7 @@ section.block
 		}
 	}
 
-	.blockDataContainer
+	.block-data-container
 	{
 		.value
 		{
@@ -65,7 +65,7 @@ section.block
 		}
 	}
 
-	.blockMetaContainer
+	.block-meta-container
 	{
 		table td.metric
 		{
@@ -73,7 +73,7 @@ section.block
 		}
 	}
 
-	.blockPreviewContainer
+	.block-preview-container
 	{
 		.image-container
 		{
