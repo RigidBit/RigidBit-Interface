@@ -20,7 +20,8 @@ section.block
 
 	.blockContainer,
 	.blockDataContainer,
-	.blockMetaContainer
+	.blockMetaContainer,
+	.blockPreviewContainer
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -69,6 +70,31 @@ section.block
 		table td.metric
 		{
 			text-transform: capitalize;
+		}
+	}
+
+	.blockPreviewContainer
+	{
+		.image-container
+		{
+			height: 200px;
+			margin-top: $margin-default;
+			overflow: hidden;
+			text-align: center;
+
+			&.expanded
+			{
+				height: auto;
+			}
+
+			img
+			{
+				border: $border-default;
+				cursor: pointer;
+				max-width: 100%;
+				max-height: 100%;
+				object-fit: fill;
+			}
 		}
 	}
 }

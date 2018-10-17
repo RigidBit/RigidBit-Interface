@@ -83,7 +83,31 @@ export function zeroWidthSpace()
 	return "​";
 }
 
+/**
+ * Convert a Unix timestamp to a formatted date.
+ * @param  {Number} timestamp A Unix timestamp. 
+ * @return {String}           A formatted date string.
+ */
 export function timestampToDate(timestamp)
 {
 	return new Date(parseInt(timestamp) * 1000).toISOString().replace("T", zeroWidthSpace()+"T").replace(".000Z", "Z");
+}
+
+/**
+ * Find the extension of a filename.
+ * 
+ * Source: https://stackoverflow.com/a/680982/9979
+ * 
+ * @param  {String} filename The filename to process.
+ * @return {String|null}     The filename extension if found, or null if no extension was found.
+ */
+export function filenameExtension(filename)
+{
+	const re = /(?:\.([^.]+))?$/;
+	const result = re.exec(filename)[1];
+
+	if(typeof result === "undefined")
+		return null;
+
+	return result;
 }

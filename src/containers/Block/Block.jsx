@@ -2,6 +2,7 @@ import filesize from "filesize";
 import iziToast from "izitoast";
 
 import * as api from "../../common/js/api.js"; 
+import * as misc from "../../common/js/misc.js"; 
 import {uintToString, timestampToDate} from "../../common/js/misc.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
@@ -11,7 +12,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 @observer class Component extends React.Component
 {
 	@observable data = {};
+	@observable expandDataPreviewImage = false;
 	autorun = null;
+	validDataPreviewExtensions = ["png", "jpg", "jpeg", "gif", "svg"];
 
 	componentDidMount()
 	{
@@ -27,6 +30,17 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.autorun();
 	}
 
+	handleBlockDataPreviewImageClick = (e) =>
+	{
+		e.preventDefault();
+
+		action(()=>
+		{
+			this.expandDataPreviewImage = !this.expandDataPreviewImage;
+			console.log(this.expandDataPreviewImage);
+		})();
+	};
+
 	handleNextPrevButtonClick = (e) =>
 	{
 		e.preventDefault();
@@ -41,7 +55,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			id = this.data.block_count;
 
 		router.navigate("block", {id: id});
-	}
+	};
 
 	handleViewBlockClick = (e) =>
 	{
@@ -63,10 +77,43 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return this.isDataReady() && typeof this.data.block === "object" && this.data.block !== null && typeof this.data.block_count === "number";
 	};
 
+	isDataPreviewAvailable = () =>
+	{
+		const data = this.data;
+		const validExtensions = this.validDataPreviewExtensions;
+
+		if(!this.isDataReady())
+			return false;
+
+		if(!this.isDataValid())
+			return false;
+
+		if(data.block.block_type.toLowerCase() != "file" || data.data.archive !== true || data.meta === null || data.meta.length === 0)
+			return false;
+
+		let extension = null;
+		for(let i = 0; i < data.meta.length; ++i)
+		{
+			if("name" in data.meta[i] && data.meta[i].name === "filename")
+			{
+				extension = misc.filenameExtension(data.meta[i].value);
+				break;
+			}
+		}
+
+		if(!extension || !_.includes(validExtensions, extension))
+			return false;
+
+		return true;
+	};
+
 	updateData = action((data) =>
 	{
 		this.data = data;
 		log.debug("UPDATE DATA:", this.data);
+
+		// Set the default expand to false every time data is changed.
+		this.expandDataPreviewImage = false;
 	});
 
 	refreshClicked = (e) =>
@@ -317,6 +364,41 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
+	renderBlockDataPreview = () =>
+	{
+		const data = this.data;
+
+		const containerClassName = "blockPreviewContainer";
+		const containerTitle = "Block Data Preview";
+		const imageExtensions = this.validDataPreviewExtensions;
+
+		if(!this.isDataPreviewAvailable())
+			return null;
+
+		let extension = null;
+		for(let i = 0; i < data.meta.length; ++i)
+		{
+			if("name" in data.meta[i] && data.meta[i].name === "filename")
+			{
+				extension = misc.filenameExtension(data.meta[i].value);
+				break;
+			}
+		}
+
+		if(!extension || !_.includes(imageExtensions, extension))
+			return null;
+
+		const imgSrc = api.apiUrlFromRelativePath("/api/file-download/"+data.block.id);
+		const expanded = (this.expandDataPreviewImage) ? " expanded" : "";
+		const html =
+		(
+			<div className={"image-container" + expanded}>
+				<img src={imgSrc} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand" />
+			</div>
+		);
+		return this.renderContainer(containerClassName, containerTitle, html);
+	};
+
 	renderBlockVerify = () =>
 	{
 		if(!("block" in this.data))
@@ -446,6 +528,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const block = this.renderBlock();
 		const blockData = this.renderBlockData();
 		const blockMeta = this.renderBlockMeta();
+		const blockPreview = this.renderBlockDataPreview();
 		const controls = this.renderControls();
 
 		const html =
@@ -461,6 +544,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					{block}
 					{blockData}
 					{blockMeta}
+					{blockPreview}
 				</div>
 
 				<Footer />
