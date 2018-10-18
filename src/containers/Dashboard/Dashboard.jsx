@@ -185,6 +185,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			chartData.datasets[t].fill = false;
 			chartData.datasets[t].data = [];
 
+			if(type === "timestamp")
+				chartData.datasets[t].hidden = true;
+
 			dates.forEach(function(date)
 			{
 				chartData.datasets[t].data.push(block_type_usage[date][type]);
