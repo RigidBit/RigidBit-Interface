@@ -1,6 +1,7 @@
 import iziToast from "izitoast";
 import {Doughnut as DoughnutChart} from "react-chartjs-2";
 import {Line as LineChart} from "react-chartjs-2";
+import {Bar as BarChart} from "react-chartjs-2";
 
 import * as charts from "../../common/js/charts.js";
 import * as misc from "../../common/js/misc.js";
@@ -155,14 +156,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return html;
 	};
 
-	renderBlockTypeUsage = () =>
+	renderBlockTypeUsageDaily = () =>
 	{
 		if(!this.isDataReady())
 			return null;
 
 		const types = ["file", "filehash", "text", "timestamp"];
-		const dates = Object.keys(this.data.block_type_usage).sort();
-		const block_type_usage = _.mapValues(mobx.toJS(this.data.block_type_usage), function(date)
+		const dates = Object.keys(this.data.block_type_usage_daily).sort();
+		const block_type_usage_daily = _.mapValues(mobx.toJS(this.data.block_type_usage_daily), function(date)
 		{
 			const block_type_count = _.keyBy(date, function(block_type_count)
 			{
@@ -190,7 +191,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 			dates.forEach(function(date)
 			{
-				chartData.datasets[t].data.push(block_type_usage[date][type]);
+				chartData.datasets[t].data.push(block_type_usage_daily[date][type]);
 			});
 		});
 
@@ -199,10 +200,64 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="block-type-usage-container">
+			<section className="block-type-usage-daily-container">
 				<h2>Block Types by Date</h2>
-				<div className="blockTypeUsageChart chart">
+				<div className="chart">
 					<LineChart data={chartData} options={chartOptions} height={100} />
+				</div>
+			</section>
+		);
+		return html;
+	};
+
+	renderBlockTypeUsageHourly = () =>
+	{
+		if(!this.isDataReady())
+			return null;
+
+		const types = ["file", "filehash", "text", "timestamp"];
+		const dates = Object.keys(this.data.block_type_usage_hourly).sort();
+		const block_type_usage_hourly = _.mapValues(mobx.toJS(this.data.block_type_usage_hourly), function(date)
+		{
+			const block_type_count = _.keyBy(date, function(block_type_count)
+			{
+				return block_type_count.block_type.toLowerCase();
+			});
+			return _.mapValues(block_type_count, "block_count");
+		});
+
+		const chartData = _.cloneDeep(charts.dataBaseSet2);
+		dates.forEach(function(date)
+		{
+			chartData.labels.push(date);
+		});
+		types.forEach(function(type, t)
+		{
+			chartData.datasets[t] = {};
+			chartData.datasets[t].label = misc.ucwords(type);
+			chartData.datasets[t].backgroundColor = charts.colorsDefault[t];
+			chartData.datasets[t].borderColor = charts.colorsDefault[t];
+			chartData.datasets[t].fill = false;
+			chartData.datasets[t].data = [];
+
+			if(type === "timestamp")
+				chartData.datasets[t].hidden = true;
+
+			dates.forEach(function(date)
+			{
+				chartData.datasets[t].data.push(block_type_usage_hourly[date][type]);
+			});
+		});
+
+		const chartOptions = _.cloneDeep(charts.optionsBase);
+		chartOptions.title.display = false;
+
+		const html =
+		(
+			<section className="block-type-usage-daily-container">
+				<h2>Block Types by Hour</h2>
+				<div className="chart">
+					<BarChart data={chartData} options={chartOptions} height={100} />
 				</div>
 			</section>
 		);
@@ -285,7 +340,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		const status = this.renderStatus();
 		const blockTypeCounts = this.renderBlockTypeCounts();
-		const blockTypeUsage = this.renderBlockTypeUsage();
+		const blockTypeUsageDaily = this.renderBlockTypeUsageDaily();
+		const blockTypeUsageHourly = this.renderBlockTypeUsageHourly();
 
 		const html =
 		(
@@ -297,7 +353,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<h1>Dashboard<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a></h1>
 					{status}
 					{blockTypeCounts}
-					{blockTypeUsage}
+					{blockTypeUsageDaily}
+					{blockTypeUsageHourly}
 				</div>
 
 				<Footer />

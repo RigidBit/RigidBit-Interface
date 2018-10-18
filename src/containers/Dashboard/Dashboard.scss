@@ -22,7 +22,8 @@ section.dashboard
 	}
 
 	.block-type-counts-container,
-	.block-type-usage-container
+	.block-type-usage-daily-container,
+	.block-type-usage-hourly-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -47,7 +48,8 @@ section.dashboard
 		}
 	}
 
-	.block-type-usage-container
+	.block-type-usage-daily-container,
+	.block-type-usage-hourly-container
 	{
 		.chart
 		{
