@@ -54,12 +54,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const params =
 		{
 			count: parseInt(this.controlCount.current.value),
-			offset: parseInt(store.routeParams.offset),
+			offset: (e.target === this.controlOffset.current) ? parseInt(store.routeParams.offset) : 0,
 			type: this.controlType.current.value,
 		};
-
-		if(e.target === this.controlCount.current || e.target === this.controlType.current)
-			params.offset = 0;
 
 		router.navigate("blocks", params);
 	};
@@ -78,7 +75,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const params =
 		{
 			count: parseInt(store.routeParams.count),
-			offset: parseInt(store.routeParams.offset),
+			offset: 0,
 			type: String(e.target.dataset.type).toLowerCase(),
 		};
 
