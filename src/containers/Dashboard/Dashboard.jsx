@@ -1,7 +1,9 @@
 import iziToast from "izitoast";
 import {Doughnut as DoughnutChart} from "react-chartjs-2";
+import {Line as LineChart} from "react-chartjs-2";
 
 import * as charts from "../../common/js/charts.js";
+import * as misc from "../../common/js/misc.js";
 import {timestampToDate} from "../../common/js/misc.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
@@ -111,7 +113,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderBlockTypeCounts = () =>
 	{
-		const chartDataFiltered = _.cloneDeep(charts.dataBase);
+		if(!this.isDataReady())
+			return null;
+
+		const chartDataFiltered = _.cloneDeep(charts.dataBaseSet1);
 		this.data.block_type_count.forEach(function(item)
 		{
 			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
@@ -121,7 +126,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			}
 		});
 
-		const chartData = _.cloneDeep(charts.dataBase);
+		const chartData = _.cloneDeep(charts.dataBaseSet1);
 		this.data.block_type_count.forEach(function(item)
 		{
 			chartData.labels.push(item.block_type);
@@ -150,9 +155,63 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return html;
 	};
 
+	renderBlockTypeUsage = () =>
+	{
+		if(!this.isDataReady())
+			return null;
+
+		const types = ["file", "filehash", "text", "timestamp"];
+		const dates = Object.keys(this.data.block_type_usage).sort();
+		const block_type_usage = _.mapValues(mobx.toJS(this.data.block_type_usage), function(date)
+		{
+			const block_type_count = _.keyBy(date, function(block_type_count)
+			{
+				return block_type_count.block_type.toLowerCase();
+			});
+			return _.mapValues(block_type_count, "block_count");
+		});
+
+		const chartData = _.cloneDeep(charts.dataBaseSet2);
+		dates.forEach(function(date)
+		{
+			chartData.labels.push(date);
+		});
+		types.forEach(function(type, t)
+		{
+			chartData.datasets[t] = {};
+			chartData.datasets[t].label = misc.ucwords(type);
+			chartData.datasets[t].backgroundColor = charts.colorsDefault[t];
+			chartData.datasets[t].borderColor = charts.colorsDefault[t];
+			chartData.datasets[t].fill = false;
+			chartData.datasets[t].data = [];
+
+			dates.forEach(function(date)
+			{
+				chartData.datasets[t].data.push(block_type_usage[date][type]);
+			});
+		});
+
+		const chartOptions = _.cloneDeep(charts.optionsBase);
+		chartOptions.title.display = false;
+
+		const html =
+		(
+			<section className="block-type-usage-container">
+				<h2>Block Types by Date</h2>
+				<div className="blockTypeUsageChart chart">
+					<LineChart data={chartData} options={chartOptions} height={100} />
+				</div>
+			</section>
+		);
+		return html;
+	};
+
 	renderStatus = () =>
 	{
 		const _this = this;
+
+		if(!this.isDataReady())
+			return <div className="loading-text">Loading...</div>;
 
 		const genesis_hash = (this.showGenesisHash) ? this.data.genesis_hash : this.data.genesis_hash.replace(/\w/g, "•");
 
@@ -203,7 +262,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				</tr>
 			);
 			tableRows.push(html);
-
 		});
 
 		const html =
@@ -217,25 +275,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				</table>
 			</section>
 		);
-
 		return html;
 	};
 
 	render()
 	{
-		let blockTypeCounts;
-		let status;
-
-		if(!this.isDataReady())
-		{
-			status = <div className="loading-text">Loading...</div>;
-			blockTypeCounts = null;
-		}
-		else
-		{
-			status = this.renderStatus();
-			blockTypeCounts = this.renderBlockTypeCounts()
-		}
+		const status = this.renderStatus();
+		const blockTypeCounts = this.renderBlockTypeCounts();
+		const blockTypeUsage = this.renderBlockTypeUsage();
 
 		const html =
 		(
@@ -247,6 +294,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<h1>Dashboard<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a></h1>
 					{status}
 					{blockTypeCounts}
+					{blockTypeUsage}
 				</div>
 
 				<Footer />

@@ -21,11 +21,12 @@ section.dashboard
 		}
 	}
 
-	.block-type-counts-container
+	.block-type-counts-container,
+	.block-type-usage-container
 	{
 		@include sectionContainerDefaultMixin;
 
-		padding-bottom: 50px; // This is a workaround for react-chartjs-2 not detecting the box height properly.
+		padding-bottom: 10px; // This is a workaround for react-chartjs-2 not detecting the box height properly.
 
 		@include media("<tablet")
 		{
@@ -42,8 +43,15 @@ section.dashboard
 			@include media("<tablet")
 			{
 				width: 100%;
-				height: 50%;
 			}
+		}
+	}
+
+	.block-type-usage-container
+	{
+		.chart
+		{
+			width: 100%;
 		}
 	}
 }

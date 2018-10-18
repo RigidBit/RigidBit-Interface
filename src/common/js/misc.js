@@ -111,3 +111,20 @@ export function filenameExtension(filename)
 
 	return result;
 }
+
+/**
+ * Takes a string and uppercases the first letter of each word.
+ *
+ * Source: https://github.com/kvz/locutus/blob/master/src/php/strings/ucwords.js
+ * 
+ * @param  {String} str The string to be processed.
+ * @return {String}     The resulting string.
+ */
+export function ucwords(str)
+{
+	return (str + '')
+		.replace(/^(.)|\s+(.)/g, function ($1)
+		{
+			return $1.toUpperCase()
+		});
+}
