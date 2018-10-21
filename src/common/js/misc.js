@@ -1,3 +1,5 @@
+import moment from "moment";
+
 /**
  * Convert a hex string into an ASCII string.
  *
@@ -90,7 +92,8 @@ export function zeroWidthSpace()
  */
 export function timestampToDate(timestamp)
 {
-	return new Date(parseInt(timestamp) * 1000).toISOString().replace("T", zeroWidthSpace()+"T").replace(".000Z", "Z");
+	const zws = zeroWidthSpace();
+	return moment(new Date(parseInt(timestamp) * 1000)).format("YYYY-MM-DDT"+zws+"HH:mm:ss");
 }
 
 /**
