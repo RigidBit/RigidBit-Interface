@@ -325,15 +325,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const tableRows = [];
 		data.forEach(function(meta, m)
 		{
-			const label = meta["name"];
+			const label = meta["name"].replace("_", " ");
 			let value = meta["value"];
 
 			if("name" in meta && meta["name"] === "filesize")
 			{
-				if(parseInt(value) >= 1024)
-					value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
-				else
-					value = filesize(value);
+				value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
 			}
 
 			if(value === null)
