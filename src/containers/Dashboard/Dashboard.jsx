@@ -201,7 +201,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="block-type-usage-daily-container">
-				<h2>Block Types by Date</h2>
+				<h2>Block Types by Date (30d)</h2>
 				<div className="chart">
 					<LineChart data={chartData} options={chartOptions} height={100} />
 				</div>
@@ -255,7 +255,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<section className="block-type-usage-daily-container">
-				<h2>Block Types by Hour</h2>
+				<h2>Block Types by Hour (30d)</h2>
 				<div className="chart">
 					<BarChart data={chartData} options={chartOptions} height={100} />
 				</div>
