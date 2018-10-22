@@ -33,6 +33,11 @@ section.blocks
 					{
 						min-width: 275px;
 						word-break: break-all;
+
+						@include media("<=tablet")
+						{
+							word-break: normal;
+						}
 					}
 
 					&.timestamp

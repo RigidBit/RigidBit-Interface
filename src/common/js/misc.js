@@ -59,10 +59,10 @@ export function decimalArrayToAscii(decimalArray)
  */
 export function uintToString(uintArray)
 {
-    const encodedString = String.fromCharCode.apply(null, uintArray);
-    const decodedString = decodeURIComponent(escape(encodedString));
+	const encodedString = String.fromCharCode.apply(null, uintArray);
+	const decodedString = decodeURIComponent(escape(encodedString));
 
-    return decodedString;
+	return decodedString;
 }
 
 /**
@@ -130,4 +130,36 @@ export function ucwords(str)
 		{
 			return $1.toUpperCase()
 		});
+}
+
+
+/**
+ * The splice() method changes the content of a string by removing a range of
+ * characters and/or adding new characters.
+ *
+ * Source: https://stackoverflow.com/a/4314050/9979
+ *
+ * @param {number} start Index at which to start changing the string.
+ * @param {number} delCount An integer indicating the number of old chars to remove.
+ * @param {string} newSubStr The String that is spliced in.
+ * @return {string} A new string with the spliced substring.
+ */
+
+if(!String.prototype.splice)
+{
+	String.prototype.splice = function(start, delCount, newSubStr)
+	{
+		return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
+	};
+}
+
+/**
+ * Inserts a zero width space at the specified string index.
+ * @param  {String} string The input string.
+ * @param  {Number} index  The index to insert the zero width space.
+ * @return {String}        The resulting string.
+ */
+export function insertZeroWidthSpaceAt(string, index)
+{
+	return String(string).splice(index, 0, zeroWidthSpace());
 }
