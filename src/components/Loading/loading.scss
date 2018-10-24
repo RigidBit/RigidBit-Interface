@@ -6,8 +6,13 @@
 
 	&.tingle-modal--hiding
 	{
-		transition: opacity 0.2s;
+		transition: opacity 0.3s;
 		opacity: 0;
+
+		img
+		{
+			transform: scale(0);
+		}
 	}
 
 	.tingle-modal-box
@@ -19,6 +24,11 @@
 
 			background: transparent;
 			text-align: center;
+
+			img
+			{
+				transition: transform 0.3s;
+			}
 		}
 	}
 }

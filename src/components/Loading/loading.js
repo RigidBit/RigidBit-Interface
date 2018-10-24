@@ -48,7 +48,7 @@ export function hide()
 				// TODO: Reinvestigate NOT destorying the modal.
 				// This is done because of a bug in Tingle.js. https://github.com/robinparisi/tingle/issues/57
 				_modal.destroy();
-			}, 1210);
+			}, 310);
 		}
 	}
 }
