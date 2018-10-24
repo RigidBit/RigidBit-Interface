@@ -1,8 +1,11 @@
 @import "./vendor/normalize/normalize.css";
 @import "../node_modules/include-media/dist/_include-media.scss";
 @import "../node_modules/izitoast/dist/css/iziToast.min.css";
-@import "./common/scss/variables.scss";
-@import "./common/scss/mixins.scss";
+@import "../node_modules/tingle.js/dist/tingle.min.css";
+
+@import "./common/scss/variables.scss"; // Must be imported first.
+@import "./common/scss/mixins.scss"; // Must be imported after variables.
+@import "./common/scss/misc.scss"; // Must be imported after mixins.scss.
 @import "./common/scss/base.scss";
 @import "./common/scss/form.scss";
 

@@ -1,0 +1,24 @@
+.loading-window
+{
+	@include noSelect
+	
+	background-color: rgba(#000000, 0.3);
+
+	&.tingle-modal--hiding
+	{
+		transition: opacity 0.2s;
+		opacity: 0;
+	}
+
+	.tingle-modal-box
+	{
+		background: transparent;
+
+		.tingle-modal-box__content
+		{
+
+			background: transparent;
+			text-align: center;
+		}
+	}
+}

@@ -1,5 +1,6 @@
 import * as lscache from "lscache";
 import hash from "hash.js";
+import * as loading from "../../components/Loading/loading.js";
 
 import * as config from "./config.js";
 
@@ -55,6 +56,8 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 	log.debug("FETCH DATA:", data);
 	log.debug("USE CACHE:", useCache);
 
+	loading.show();
+
 	// Check for cached response.
 	if(useCache)
 	{
@@ -64,6 +67,8 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 			const json = JSON.parse(cachedResponse);
 
 			log.debug("Cached JSON:", json);
+
+			loading.hide();
 
 			return Promise.resolve(json);
 		}
@@ -107,10 +112,14 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 
 		lscache.set(cacheKey, JSON.stringify(json), CACHE_EXPIRATION);
 
+		loading.hide();
+
 		return json;
 	})
 	.catch(function(error)
 	{
+		loading.hide();
+
 		throw reformatError(error);
 	})
 
