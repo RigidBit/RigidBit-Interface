@@ -165,7 +165,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.updateData({});
 
 			log.error(error);
-			iziToast.error({title: "Error", message: "The specified block was not found."});
+			iziToast.error({title: "Error", message: error});
 		});
 
 		api.getUrl(`/api/blocks/${block_type}/${store.routeParams.count}/${store.routeParams.offset}/1`, false)
@@ -179,7 +179,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.updateData({});
 
 			log.error(error);
-			iziToast.error({title: "Error", message: "The specified block was not found."});
+			iziToast.error({title: "Error", message: error});
 		});
 	};
 
