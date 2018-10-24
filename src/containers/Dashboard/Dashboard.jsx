@@ -4,6 +4,7 @@ import {Line as LineChart} from "react-chartjs-2";
 import {Bar as BarChart} from "react-chartjs-2";
 
 import * as charts from "../../common/js/charts.js";
+import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
 import {timestampToDate} from "../../common/js/misc.js";
 
@@ -140,20 +141,19 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const chartOptionsFiltered = _.cloneDeep(charts.optionsBase);
 		chartOptionsFiltered.title.text = "User Blocks";
 
-		const html =
+		const html1 =
 		(
-			<section className="block-type-counts-container">
-				<h2>Block Types</h2>
-				<div className="blockTypeCountsFilteredChart chart">
-					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
-				</div>
-				<div className="blockTypeCountsChart chart">
-					<DoughnutChart data={chartData} options={chartOptions} />
-				</div>
-			</section>
+			<div className="blockTypeCountsFilteredChart chart">
+				<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
+			</div>
 		);
-
-		return html;
+		const html2 =
+		(
+			<div className="blockTypeCountsChart chart">
+				<DoughnutChart data={chartData} options={chartOptions} />
+			</div>
+		);
+		return htmlHelpers.renderContainer("block-type-counts-container", "Block Types", html1, html2);
 	};
 
 	renderBlockTypeUsageDaily = () =>
@@ -200,14 +200,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="block-type-usage-daily-container">
-				<h2>Block Types by Date (30d)</h2>
-				<div className="chart">
-					<LineChart data={chartData} options={chartOptions} height={100} />
-				</div>
-			</section>
+			<div className="chart">
+				<LineChart data={chartData} options={chartOptions} height={100} />
+			</div>
 		);
-		return html;
+		return htmlHelpers.renderContainer("block-type-usage-daily-container", "Block Types by Date (30d)", html);
 	};
 
 	renderBlockTypeUsageHourly = () =>
@@ -254,14 +251,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="block-type-usage-daily-container">
-				<h2>Block Types by Hour (30d)</h2>
-				<div className="chart">
-					<BarChart data={chartData} options={chartOptions} height={100} />
-				</div>
-			</section>
+			<div className="chart">
+				<BarChart data={chartData} options={chartOptions} height={100} />
+			</div>
 		);
-		return html;
+		return htmlHelpers.renderContainer("block-type-usage-daily-container", "Block Types by Hour (30d)", html);
 	};
 
 	renderStatus = () =>
@@ -269,7 +263,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const _this = this;
 
 		if(!this.isDataReady())
-			return <div className="loading-text">Loading...</div>;
+			return htmlHelpers.renderLoading();
 
 		const genesis_hash = (this.showGenesisHash) ? this.data.genesis_hash : this.data.genesis_hash.replace(/\w/g, "•");
 
@@ -324,16 +318,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="status-container">
-				<h2>General Status</h2>
-				<table className="reverse-row-colors">
-					<tbody>
-						{tableRows}
-					</tbody>
-				</table>
-			</section>
+			<table className="reverse-row-colors">
+				<tbody>
+					{tableRows}
+				</tbody>
+			</table>
 		);
-		return html;
+		return htmlHelpers.renderContainer("status-container", "General Status", html);
 	};
 
 	render()

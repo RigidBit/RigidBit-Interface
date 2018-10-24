@@ -1,9 +1,9 @@
 import filesize from "filesize";
 import iziToast from "izitoast";
 
-import * as api from "../../common/js/api.js"; 
-import * as misc from "../../common/js/misc.js"; 
-import {uintToString, timestampToDate} from "../../common/js/misc.js";
+import * as api from "../../common/js/api.js";
+import * as htmlHelpers from "../../common/js/html.jsx";
+import * as misc from "../../common/js/misc.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -37,7 +37,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		action(()=>
 		{
 			this.expandDataPreviewImage = !this.expandDataPreviewImage;
-			console.log(this.expandDataPreviewImage);
 		})();
 	};
 
@@ -174,10 +173,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const containerTitle = "Block Info";
 
 		if(!_this.isDataReady())
-			return this.renderLoading();
+			return htmlHelpers.renderLoading();
 
 		if(!_this.isDataValid())
-			return this.renderEmptyContainer(containerClassName, containerTitle, "The specified block was not found.");
+			return htmlHelpers.renderContainer(containerClassName, containerTitle, "The specified block was not found.");
 
 		const metrics =
 		[
@@ -202,7 +201,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClick}>{value}</a>
 
 			if(key === "timestamp")
-				value = timestampToDate(value);
+				value = misc.timestampToDate(value);
 
 			if(key === "verified")
 				value = _this.renderBlockVerify();
@@ -218,7 +217,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		});
 
-		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
+		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
 	renderBlockData = () =>
@@ -230,10 +229,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const containerTitle = "Block Data";
 
 		if(!_this.isDataReady())
-			return this.renderLoading();
+			return htmlHelpers.renderLoading();
 
 		if(!_this.isDataValid() || data === null)
-			return this.renderEmptyContainer(containerClassName, containerTitle, "No data is available for this block.");
+			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
 		const metrics =
 		[
@@ -258,7 +257,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 			if(key === "data" && value !== null)
 			{
-				value = uintToString(value).replace(/\r/g, "");
+				value = misc.uintToString(value).replace(/\r/g, "");
 				value = value.split("\n").map((item, key) =>
 				{
 					const html =
@@ -274,7 +273,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			}
 
 			if(key === "timestamp")
-				value = timestampToDate(value);
+				value = misc.timestampToDate(value);
 
 			if(value === null)
 				value = <i>null</i>;
@@ -305,7 +304,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		}
 
-		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
+		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
 	renderBlockMeta = () =>
@@ -317,10 +316,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const containerTitle = "Block Meta Data";
 
 		if(!_this.isDataReady())
-			return this.renderLoading();
+			return htmlHelpers.renderLoading();
 
 		if(!_this.isDataValid() || data.length === 0)
-			return this.renderEmptyContainer(containerClassName, containerTitle, "No meta data is available for this block.");
+			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
 		data.forEach(function(meta, m)
@@ -352,13 +351,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		(
 			<tr key="timestamp">
 				<td className="metric">Timestamp:</td>
-				<td className="value">{timestampToDate(data[0]["timestamp"])}</td>
+				<td className="value">{misc.timestampToDate(data[0]["timestamp"])}</td>
 				<td className="empty" />
 			</tr>
 		);
 		tableRows.push(html);
 
-		return this.renderContainerWithTable(containerClassName, containerTitle, tableRows);
+		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
 
 	renderBlockDataPreview = () =>
@@ -393,7 +392,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<img src={imgSrc} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand" />
 			</div>
 		);
-		return this.renderContainer(containerClassName, containerTitle, html);
+		return htmlHelpers.renderContainer(containerClassName, containerTitle, html);
 	};
 
 	renderBlockVerify = () =>
@@ -423,7 +422,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(this.isDataReady() && this.isDataValid())
 		{
 			const disablePrevBlock = (this.data.block.id === 1);
-			const disableNextBlock = (this.data.block.id === this.data.block_count); 
+			const disableNextBlock = (this.data.block.id === this.data.block_count);
 			prevButton = <button className="prev-block" data-modifier={-1} onClick={this.handleNextPrevButtonClick} disabled={disablePrevBlock} title="Previous Block"><i className="fas fa-angle-left"></i></button>;
 			nextButton = <button className="next-block" data-modifier={1} onClick={this.handleNextPrevButtonClick} disabled={disableNextBlock} title="Next Block"><i className="fas fa-angle-right"></i></button>;
 		}
@@ -437,56 +436,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			</div>
 		);
 		return html;
-	};
-
-	renderContainer = (containerClassName, title, content) =>
-	{
-		const html =
-		(
-			<section className={containerClassName}>
-				<h2>{title}</h2>
-				{content}
-			</section>
-		);
-
-		return html;
-	};
-
-	renderContainerWithTable = (containerClassName, title, tableRows) =>
-	{
-		return this.renderContainer(containerClassName, title, this.renderTableWithRows(tableRows));
-	};
-
-	renderEmptyContainer = (containerClassName, title, content) =>
-	{
-		const html =
-		(
-			<section className={containerClassName}>
-				<h2>{title}</h2>
-				{content}
-			</section>
-		);
-
-		return html;
-	};
-
-	renderTableWithRows = (tableRows, key=null) =>
-	{
-		const html =
-		(
-			<table key={key} className="reverse-row-colors">
-				<tbody>
-					{tableRows}
-				</tbody>
-			</table>
-		);
-
-		return html;
-	};
-
-	renderLoading = () =>
-	{
-		return <div className="loading-text">Loading...</div>;
 	};
 
 	renderTitle = () =>

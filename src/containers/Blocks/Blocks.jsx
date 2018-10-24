@@ -1,5 +1,6 @@
 import iziToast from "izitoast";
 
+import * as htmlHelpers from "../../common/js/html.jsx";
 import {insertZeroWidthSpaceAt, timestampToDate, valueOrZero} from "../../common/js/misc.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
@@ -187,7 +188,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const _this = this;
 
 		if(!this.isDataReady())
-			return "Loading...";
+			return htmlHelpers.renderLoading();
 
 		const tableRows = [];
 
@@ -215,26 +216,21 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<section className="blocks-container">
-		        <h2>Recent Blocks</h2>
-		        <table>
-		        	<thead>
-		        		<tr>
-			        		<th className="id">ID</th>
-			        		<th className="hash">Block Hash</th>
-			        		<th className="block_type">Block Type</th>
-			        		<th className="timestamp">Timestamp</th>
-			        	</tr>
-		        	</thead>
-		        	<tbody>
-    		        	{tableRows}
-    		        </tbody>
-		        </table>
-		        {this.renderControls()}
-			</section>
+			<table>
+				<thead>
+					<tr>
+						<th className="id">ID</th>
+						<th className="hash">Block Hash</th>
+						<th className="block_type">Block Type</th>
+						<th className="timestamp">Timestamp</th>
+					</tr>
+				</thead>
+				<tbody>
+					{tableRows}
+				</tbody>
+			</table>
 		);
-
-		return html;
+		return htmlHelpers.renderContainer("blocks-container", "Recent Blocks", html, this.renderControls());
 	};
 
 	renderControls = () =>

@@ -1,5 +1,7 @@
 import iziToast from "izitoast";
 
+import * as htmlHelpers from "../../common/js/html.jsx";
+
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
@@ -159,7 +161,7 @@ class Component extends React.Component
 			log.error(error);
 			iziToast.error({title: "Error", message: error});
 		});
-	}
+	};
 
 	handleTextSubmitButtonClick = (e) =>
 	{
@@ -189,7 +191,7 @@ class Component extends React.Component
 			log.error(error);
 			iziToast.error({title: "Error", message: error});
 		});
-	}
+	};
 
 	handleTimestampSubmitButtonClick = (e) =>
 	{
@@ -206,10 +208,81 @@ class Component extends React.Component
 			log.error(error);
 			iziToast.error({title: "Error", message: error});
 		});
-	}
+	};
+
+	renderFile = () =>
+	{
+		const html =
+		(
+			<div>
+				<div className="description">
+					Upload and store a file of any type in the blockchain.
+					<p className="filehash-warning">
+						<span className="warning">Warning:</span> You have specified that you only want to store the hash of the file, but not the file data itself. The original file must be stored indefinitely in an external location or existance will not be able to be proven. If you don't understand the difference, uncheck this option.
+					</p>
+				</div>
+				<form ref={this.fileForm} action="/api/file" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit} onDrop={this.handleFileDrop} onDragOver={this.handleFileDragOver} onDragLeave={this.handleFileDragLeave} onDragExit={this.handleFileDragLeave}>
+					<label className="file">
+						<input ref={this.file} type="file" name="file" />
+						<i className="fas fa-file-upload"></i>
+						<span ref={this.filename} className="filename"></span>
+						<label className="filehash"><input ref={this.fileHash} type="checkbox" name="filehash" value="1" onChange={this.fileHashCheckboxChanged} /> Store file hash only</label>
+					</label>
+					<div className="button-container">
+						<button className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
+					</div>
+				</form>
+			</div>
+		);
+		return htmlHelpers.renderContainer("file-container", "File", html);
+	};
+
+	renderText = () =>
+	{
+		const html =
+		(
+			<div>
+				<div className="description">
+					Save a plain text message in the blockchain.
+				</div>
+				<form ref={this.textForm} action="/api/text" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+					<div className="textarea">
+						<textarea ref={this.textArea} name="text" maxLength="100000" onChange={this.handleTextAreaChange} onKeyUp={this.handleKeyPress}></textarea>
+						<span ref={this.counter} className="counter">123</span>
+					</div>
+					<div className="button-container">
+						<button className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+					</div>
+				</form>
+			</div>
+		);
+		return htmlHelpers.renderContainer("text-container", "Text Message", html);
+	};
+
+	renderTimestamp = () =>
+	{
+		const html =
+		(
+			<div>
+				<div className="description">
+					Create a manual timestamp entry in the blockchain.
+				</div>
+				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+					<div className="button-container">
+						<button className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+					</div>
+				</form>
+			</div>
+		);
+		return htmlHelpers.renderContainer("timestamp-container", "Timestamp", html);
+	};
 
 	render()
 	{
+		const file = this.renderFile();
+		const text = this.renderText();
+		const timestamp = this.renderTimestamp();
+
 		const html =
 		(
 			<section className="upload">
@@ -218,56 +291,9 @@ class Component extends React.Component
 
 				<div className="content">
 					<h1>Upload</h1>
-
-					<div className="file-container">
-						<h2>File</h2>
-						<div className="description">
-							Upload and store a file of any type in the blockchain.
-							<p className="filehash-warning">
-								<span className="warning">Warning:</span> You have specified that you only want to store the hash of the file, but not the file data itself. The original file must be stored indefinitely in an external location or existance will not be able to be proven. If you don't understand the difference, uncheck this option.
-							</p>
-						</div>
-						<form ref={this.fileForm} action="/api/file" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit} onDrop={this.handleFileDrop} onDragOver={this.handleFileDragOver} onDragLeave={this.handleFileDragLeave} onDragExit={this.handleFileDragLeave}>
-							<label className="file">
-								<input ref={this.file} type="file" name="file" />
-								<i className="fas fa-file-upload"></i>
-								<span ref={this.filename} className="filename"></span>
-								<label className="filehash"><input ref={this.fileHash} type="checkbox" name="filehash" value="1" onChange={this.fileHashCheckboxChanged} /> Store file hash only</label>
-							</label>
-							<div className="button-container">
-								<button className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
-							</div>
-						</form>
-					</div>
-
-					<div className="text-container">
-						<h2>Text Message</h2>
-						<div className="description">
-							Save a plain text message in the blockchain.
-						</div>
-						<form ref={this.textForm} action="/api/text" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
-							<div className="textarea">
-								<textarea ref={this.textArea} name="text" maxLength="100000" onChange={this.handleTextAreaChange} onKeyUp={this.handleKeyPress}></textarea>
-								<span ref={this.counter} className="counter">123</span>
-							</div>
-							<div className="button-container">
-								<button className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
-							</div>
-						</form>
-					</div>
-
-					<div className="timestamp-container">
-						<h2>Timestamp</h2>
-						<div className="description">
-							Create a manual timestamp entry in the blockchain.
-						</div>
-						<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
-							<div className="button-container">
-								<button className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
-							</div>
-						</form>
-					</div>
-
+					{file}
+					{text}
+					{timestamp}
 				</div>
 
 				<Footer />
