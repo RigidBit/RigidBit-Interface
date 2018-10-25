@@ -164,8 +164,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			_this.updateData({});
 
-			log.error(error);
-			iziToast.error({title: "Error", message: error});
+			_this.refreshDataFailure(error);
 		});
 
 		api.getUrl(`/api/blocks/${block_type}/${store.routeParams.count}/${store.routeParams.offset}/1`, false)
@@ -178,9 +177,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			_this.updateData({});
 
-			log.error(error);
-			iziToast.error({title: "Error", message: error});
+			_this.refreshDataFailure(error);
 		});
+	};
+
+	refreshDataFailure = (error) =>
+	{
+		this.updateData({});
+
+		log.error(error);
+		iziToast.error({title: "Error", message: error});
 	};
 
 	renderBlocks = () =>

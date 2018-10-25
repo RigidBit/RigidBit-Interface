@@ -144,8 +144,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const newData = _.merge(mobx.toJS(_this.data), {block_count: null});
 			_this.updateData(newData);
 
-			log.error(error);
-			iziToast.error({title: "Error", message: "Unable to get the block count."});
+			_this.refreshDataFailure(error);
 		});
 
 		api.getUrl(`/api/block-complete/${store.routeParams.id}`, useCache)
@@ -159,9 +158,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null});
 			_this.updateData(newData);
 
-			log.error(error);
-			iziToast.error({title: "Error", message: "The specified block was not found."});
+			_this.refreshDataFailure(error);
 		});
+	};
+
+	refreshDataFailure = (error) =>
+	{
+		this.updateData({});
+
+		log.error(error);
+		iziToast.error({title: "Error", message: error});
 	};
 
 	renderBlock = () =>
@@ -463,8 +469,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		})
 		.catch(function(error)
 		{
-			log.error(error);
-			iziToast.error({title: "Error", message: error});
+			_this.refreshDataFailure(error);
 		});
 	};
 
