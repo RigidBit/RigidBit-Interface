@@ -106,8 +106,15 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 		log.debug("Fetch response:", response);
 
 		const code = response.status;
-		const json = await response.json();
+		log.debug("Fetch CODE:", code);
 
+		if(code !== 200)
+		{
+			const body = await response.text();
+			throw reformatError(body);
+		}
+
+		const json = await response.json();
 		log.debug("Fetch JSON:", json);
 
 		lscache.set(cacheKey, JSON.stringify(json), CACHE_EXPIRATION);
@@ -133,7 +140,7 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
  */
 export function reformatError(errorObj)
 {
-	if("error" in errorObj && typeof errorObj.error === "string")
+	if(_.isObject(errorObj) && _.has(errorObj, "error") && _.isString(errorObj.error))
 		return errorObj.error;
 
 	let error = String(errorObj);
