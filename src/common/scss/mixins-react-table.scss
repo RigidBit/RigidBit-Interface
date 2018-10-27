@@ -1,0 +1,135 @@
+@mixin reactTableColorsMixin
+{
+	.react-table
+	{
+		.rt-table
+		{
+			.rt-thead > .rt-tr > .rt-th
+			{
+				background: darken(#f6f6f6, 10%);
+			}
+
+			.rt-tr-group:nth-child(even) > .rt-tr > .rt-td
+			{
+				background: darken(#f6f6f6, 5%);		
+			}
+
+			.rt-tr-group:nth-child(odd) > .rt-tr > .rt-td
+			{
+				background: #f6f6f6;		
+			}
+
+			.rt-tr-group:hover > .rt-tr > .rt-td
+			{
+				background: #dfdfdf;
+			}
+		}
+
+		.rt-table.reverse-row-colors
+		{
+			.rt-tr-group:nth-child(even) > .rt-tr > .rt-td
+			{
+				background: #f6f6f6;		
+			}
+
+			.rt-tr-group:nth-child(odd) > .rt-tr > .rt-td
+			{
+				background: darken(#f6f6f6, 5%);		
+			}
+
+			.rt-tr-group:hover > .rt-tr > .rt-td
+			{
+				background: #dfdfdf;
+			}
+		}
+	}
+}
+
+@mixin reactTableMixinDefault
+{
+	@include reactTableColorsMixin;
+
+	.react-table
+	{
+		border: none;
+
+		.rt-table
+		{
+			border-collapse: collapse;
+			border-radius: $border-radius-default;
+			overflow: hidden;
+			width: 100%;
+
+			.rt-thead
+			{
+				box-shadow: none;
+			}
+
+			.rt-thead, .rt-tbody
+			{
+				.rt-tr, .rt-td, .rt-th
+				{
+					border: none;
+					line-height: inherit;
+					margin: 0;
+					padding: 0;
+					vertical-align: top;
+				}
+			}
+
+			.rt-thead, .rt-tbody
+			{
+				.rt-tr
+				{
+					@include reactTableActionsMixin;
+
+					.rt-td, .rt-th
+					{
+						font-size: 1rem;
+						font-weight: normal;
+						padding: $padding-default;
+						text-align: left;
+
+						&:last-child
+						{
+							text-align: right;
+						}
+
+						&.empty-table
+						{
+							text-align: center;
+						}
+
+						&.empty
+						{
+							padding: 0;
+						}
+					}
+
+					.rt-th
+					{
+						font-weight: bold;
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin reactTableActionsMixin
+{
+	.rt-th > .actions,
+	.rt-td > .actions
+	{
+		a
+		{
+			margin-right: $margin-button;
+
+			&:last-child
+			{
+				margin-right: 0;
+			}
+		}
+	}
+}

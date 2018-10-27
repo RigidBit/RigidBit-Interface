@@ -8,7 +8,7 @@ export function init()
 	const settings =
 	{
 		closeMethods: [],
-		cssClass: ["loading-window"],
+		cssClass: ["loading-modal"],
 	};
 	const modal = new tingle.modal(settings);
 
@@ -39,7 +39,7 @@ export function hide()
 
 		if(_modal)
 		{
-			$(".loading-window").addClass("tingle-modal--hiding")
+			$(".loading-modal").addClass("tingle-modal--hiding");
 
 			setTimeout(function()
 			{

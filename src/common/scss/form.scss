@@ -16,11 +16,12 @@ select,
 textarea
 {
 	color: $font-color-default;
+	font-size: 1rem;
 }
 
 input::placeholder
 {
-	color: $background-active;
+	color: $font-color-disabled;
 }
 
 input[type="checkbox"]
@@ -45,6 +46,21 @@ textarea
 	{
 		background: $background-active;
 	}
+}
+
+input[type="text"],
+input[type="password"],
+textarea
+{
+	&:invalid:focus
+	{
+		background: rgba(#ff0000, 0.1);
+	}
+}
+
+input[type="text"]
+{
+	overflow: visible;
 }
 
 button,
@@ -119,6 +135,24 @@ input[type="submit"],
 	}
 }
 
+select,
+textarea
+{
+	&:disabled,
+	&.disabled
+	{
+		border-color: $border-color-disabled;
+		color: $font-color-disabled;
+
+		&:active,
+		&:hover
+		{
+			background: $background;
+			border-color: $border-color-disabled;
+		}
+	}
+}
+
 select
 {
 	padding: $padding-input / 2;
@@ -132,4 +166,10 @@ select
 textarea
 {
 	padding: $padding-input;
+}
+
+label
+{
+	display: block;
+	position: relative;
 }

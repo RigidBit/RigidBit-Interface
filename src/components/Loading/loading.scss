@@ -1,23 +1,12 @@
-.loading-window
+.loading-modal
 {
+	@include tingleModalMixin;
 	@include noSelect
-	
-	background-color: rgba(#000000, 0.3);
-
-	&.tingle-modal--hiding
-	{
-		transition: opacity 0.3s;
-		opacity: 0;
-
-		img
-		{
-			transform: scale(0);
-		}
-	}
 
 	.tingle-modal-box
 	{
 		background: transparent;
+		border-radius: $border-radius-default;
 
 		.tingle-modal-box__content
 		{

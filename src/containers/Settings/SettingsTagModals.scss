@@ -1,0 +1,72 @@
+.add-tag-modal,
+.edit-tag-modal
+{
+	@include tingleModalMixin;
+
+	.tingle-modal-box
+	{
+		text-align: center;
+		max-width: 400px;
+		min-width: 375px;
+		width: 100%;
+
+		.tingle-modal-box__content
+		{
+			label.color
+			{
+				.container
+				{
+					display: flex;
+					width: 100%;
+
+					input.color
+					{
+						flex: 1 0 0;
+						padding-left: 20px;
+						margin-right: $margin-button;
+					}
+
+					.color-preview
+					{
+						border: $border-default;
+						border-radius: $border-radius-input;
+						display: inline-block;
+						flex: 0 0 auto;
+						margin-right: $margin-button;
+						height: 34px;
+						width: 34px;
+
+						input[type='color']
+						{
+							height: 100%;
+							margin: 0;
+							opacity: 0;
+							padding: 0;
+							width: 100%;
+						}
+					}
+
+					.hash
+					{
+						color: lighten($font-color-default, 20%);
+						font-size: 1rem;
+						position: absolute;
+						top: 25px;
+						left: 10px;
+					}
+
+					button.random-color
+					{
+						flex: 0 0 auto;
+						height: 34px;
+						width: 34px;
+					}
+				}
+			}
+		}
+		.tingle-modal-box__footer
+		{
+			text-align: center;
+		}
+	}
+}

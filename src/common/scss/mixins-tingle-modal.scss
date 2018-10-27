@@ -1,0 +1,62 @@
+@mixin tingleModalMixin
+{
+	background: rgba(0, 0, 0, 0.3);
+
+	&.tingle-modal--hiding
+	{
+		transition: opacity 0.3s;
+		opacity: 0;
+	}
+
+	.tingle-modal-box
+	{
+		background: none;
+
+		.tingle-modal-box__content
+		{
+			background: $background-color-default;
+			border-radius: $border-radius-default $border-radius-default 0 0;
+			padding: $padding-default * 2;
+
+			h1
+			{
+				text-align: left;
+			}
+
+			label
+			{
+				font-size: 0.8rem;
+				line-height: 1.4rem;
+				margin-bottom: 1em;
+				text-align: left;
+
+				input[type="text"]
+				{
+					width: 100%;
+				}
+			}
+		}
+
+		.tingle-modal-box__footer
+		{
+			border-radius: 0 0 $border-radius-default $border-radius-default;
+			padding: $padding-default;
+
+			button
+			{
+				margin-left: $margin-button / 2;
+				margin-right: $margin-button / 2;
+
+				&:first-child
+				{
+					margin-left: 0;
+				}
+
+				&:last-child
+				{
+					margin-right: 0;
+				}
+			}
+		}
+	}	
+}

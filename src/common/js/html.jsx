@@ -13,16 +13,20 @@ export function renderContainer(containerClassName, title, content1=null, conten
 	return html;
 }
 
-export function renderContainerWithTable(containerClassName, title, tableRows)
+export function renderContainerWithTable(containerClassName, title, tableRows, tableHeaderRows=null, tableKey=null)
 {
-	return this.renderContainer(containerClassName, title, this.renderTableWithRows(tableRows));
+	return this.renderContainer(containerClassName, title, this.renderTableWithHeaderAndRows(tableHeaderRows, tableRows, tableKey));
 }
 
-export function renderTableWithRows(tableRows, key=null)
+export function renderTableWithHeaderAndRows(tableHeaderRows=null, tableRows=null, tableKey=null)
 {
+	const header = (tableHeaderRows) ? <thead>{tableHeaderRows}</thead> : null;
+	const tableClassName = (tableHeaderRows) ? "" : "reverse-row-colors";
+
 	const html =
 	(
-		<table key={key} className="reverse-row-colors">
+		<table key={tableKey}>
+			{header}
 			<tbody>
 				{tableRows}
 			</tbody>
@@ -30,6 +34,11 @@ export function renderTableWithRows(tableRows, key=null)
 	);
 
 	return html;
+}
+
+export function renderTableWithRows(tableRows, key=null)
+{
+	return renderTableWithHeaderAndRows(null, tableRows, key);
 }
 
 export function renderLoading()

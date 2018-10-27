@@ -8,7 +8,7 @@ export const routes =
 	{ name: "block", path: "/block/:id" },
     { name: "blocks", path: "/blocks/:count/:offset?:type" },
 	{ name: "dashboard", path: "/dashboard" },
-	{ name: "file", path: "/file" },
+    { name: "settings", path: "/settings" },
 	{ name: "upload", path: "/upload" },
 ];
 

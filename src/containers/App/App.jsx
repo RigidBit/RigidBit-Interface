@@ -2,6 +2,7 @@ import Block from "../Block/Block.jsx";
 import Blocks from "../Blocks/Blocks.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import Login from "../Login/Login.jsx";
+import Settings from "../Settings/Settings.jsx";
 import Upload from "../Upload/Upload.jsx";
 
 @observer class App extends React.Component
@@ -22,6 +23,9 @@ import Upload from "../Upload/Upload.jsx";
 				break;
 			case "login":
 				html = <Login />;
+				break;
+			case "settings":
+				html = <Settings />;
 				break;
 			case "upload":
 				html = <Upload />;

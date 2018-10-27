@@ -1,0 +1,37 @@
+section.settings
+{
+	@include contentMixin;
+
+	.cache-container,
+	.tags-container
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
+	.cache-container
+	{
+		div.button-container
+		{
+			position: relative;
+			text-align: center;
+		}
+	}
+
+	.tags-container
+	{
+		.color-preview
+		{
+			text-transform: uppercase;
+
+			.color-preview
+			{
+				border: $border-default;
+				display: inline-block;
+				height: 1em;
+				margin-right: $margin-button;
+				width: 1em;
+				vertical-align: bottom;
+			}
+		}
+	}
+}

@@ -1,0 +1,18 @@
+.confirm-modal
+{
+	@include tingleModalMixin;
+
+	.tingle-modal-box
+	{
+		text-align: center;
+		width: auto;
+
+		.tingle-modal-box__content
+		{
+		}
+		.tingle-modal-box__footer
+		{
+			text-align: center;
+		}
+	}
+}

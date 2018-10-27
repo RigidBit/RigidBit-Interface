@@ -1,0 +1,95 @@
+@mixin tableColorsMixin
+{
+	table
+	{
+		tr > th
+		{
+			background: darken(#f6f6f6, 10%);
+		}
+
+		tr:nth-child(even) > td
+		{
+			background: darken(#f6f6f6, 5%);		
+		}
+
+		tr:nth-child(odd) > td
+		{
+			background: #f6f6f6;		
+		}
+
+		tr:hover > td
+		{
+			background: #dfdfdf;
+		}
+	}
+
+	table.reverse-row-colors
+	{
+		tr:nth-child(even) > td
+		{
+			background: #f6f6f6;		
+		}
+
+		tr:nth-child(odd) > td
+		{
+			background: darken(#f6f6f6, 5%);		
+		}
+
+		tr:hover > td
+		{
+			background: #dfdfdf;
+		}
+	}
+}
+
+@mixin tableMixinDefault
+{
+	@include tableColorsMixin;
+
+	table
+	{
+		border-collapse: collapse;
+		border-radius: $border-radius-default;
+		overflow: hidden;
+		width: 100%;
+
+		tr, td, th
+		{
+			margin: 0;
+			padding: 0;
+			vertical-align: top;
+		}
+
+		tr
+		{
+			td, th
+			{
+				font-size: 1rem;
+				font-weight: normal;
+				padding: $padding-default;
+				text-align: left;
+
+				&:last-child
+				{
+					text-align: right;
+				}
+
+				&.empty-table
+				{
+					text-align: center;
+				}
+
+				&.empty
+				{
+					padding: 0;
+				}
+			}
+
+			th
+			{
+				font-weight: bold;
+				white-space: nowrap;
+			}
+		}
+	}
+}
