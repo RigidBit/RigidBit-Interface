@@ -5,7 +5,7 @@ const config =
 	dashboardStatusRefreshInterval: 5 * 60 * 1000,
 	debouceDelayDefault: 200,
 	footerResizeTimerInterval: 500,
-	navigationDefaultBlocksParams: {count: 10, offset: 0},
+	navigationDefaultBlocksParams: {count: 10, offset: 0, type: "user"},
 };
 
 export default config;
