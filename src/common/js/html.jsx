@@ -25,7 +25,7 @@ export function renderTableWithHeaderAndRows(tableHeaderRows=null, tableRows=nul
 
 	const html =
 	(
-		<table key={tableKey}>
+		<table key={tableKey} className={tableClassName}>
 			{header}
 			<tbody>
 				{tableRows}
