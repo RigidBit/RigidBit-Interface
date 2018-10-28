@@ -93,7 +93,7 @@ import Table from "../../components/Table/Table.jsx";
 	handleEditTagConfirmed = (data) =>
 	{
 		const _this = this;
-console.log("asdasd!@@!@#!#!@#", data);
+
 		api.patchUrl("/api/tags/"+data.id, data, false)
 		.then(function(data)
 		{
