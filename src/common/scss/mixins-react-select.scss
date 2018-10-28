@@ -1,0 +1,36 @@
+@mixin reactSelectMixin
+{
+	.react-select__control
+	{
+		border: $border-default;
+
+		&.react-select__control--is-focused
+		{
+			border: $border-default;
+			box-shadow: none;
+		}
+	}
+
+	.react-select__multi-value__label
+	{
+		border-radius: $border-radius-input 0 0 $border-radius-input;
+	}
+
+	.react-select__multi-value__remove
+	{
+		border-radius: 0 $border-radius-input $border-radius-input 0;
+	}
+
+	.react-select__indicators
+	{
+		.react-select__indicator
+		{
+			color: $font-color-button;
+		}
+
+		.react-select__indicator-separator
+		{
+			background-color: $border-color-default;
+		}
+	}
+}
