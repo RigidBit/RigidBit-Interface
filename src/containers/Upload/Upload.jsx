@@ -1,13 +1,19 @@
 import iziToast from "izitoast";
+import Select from "react-select";
 
 import * as htmlHelpers from "../../common/js/html.jsx";
+import * as reactSelect from "../../common/js/react-select.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
 
-class Component extends React.Component
+@observer class Component extends React.Component
 {
+	@observable data = {};
+	@observable selectedFileTags = [];
+	@observable selectedTextTags = [];
+
 	constructor(props)
 	{
 		super(props);
@@ -24,9 +30,17 @@ class Component extends React.Component
 
 	componentDidMount()
 	{
-		this.handleFileChange();
-		this.handleTextAreaChange();
-		this.fileInit();
+		this.refreshData();
+	}
+
+	componentDidUpdate()
+	{
+		if(this.isDataReady())
+		{
+			this.handleFileChange();
+			this.handleTextAreaChange();
+			this.fileInit();
+		}
 	}
 
 	fileHashCheckboxChanged = (e) =>
@@ -53,10 +67,19 @@ class Component extends React.Component
 		return formData;
 	};
 
-	handleKeyPress = (e) =>
+	generateTagSelectOptions = () =>
 	{
-		if(e.key === 'Enter' && e.ctrlKey)
-			this.handleTextSubmitButtonClick();
+		const selectOptions = this.data.tags.filter((item)=>!item.hidden).map(function(item, i)
+		{
+			const option =
+			{
+				color: item.color,
+				label: item.name,
+				value: item.id,
+			};
+			return option;
+		});
+		return selectOptions;
 	};
 
 	handleFileChange = (e) =>
@@ -115,9 +138,20 @@ class Component extends React.Component
 		$(target).toggleClass("dragging", isDragging);
 	};
 
+	handleFileTagsChange = (data) =>
+	{
+		this.updateSelectedFileTags(data);
+	};
+
 	handleFormSubmit = (e) =>
 	{
 		e.preventDefault();
+	};
+
+	handleKeyPress = (e) =>
+	{
+		if(e.key === 'Enter' && e.ctrlKey)
+			this.handleTextSubmitButtonClick();
 	};
 
 	handleTextAreaChange = (e) =>
@@ -144,12 +178,14 @@ class Component extends React.Component
 		const formData = new FormData();
 		const url = (!this.fileHash.current.checked) ? "/api/file" : "/api/filehash";
 
+		formData.append("tags", _.map(_this.selectedFileTags, "value").join(","));
 		_this.formDataSppendFiles(formData, _this.file.current);
 
 		api.postUrl(url, formData, false)
 		.then(function(data)
 		{
 			_this.fileForm.current.reset();
+			_this.updateSelectedFileTags([]);
 			_this.handleFileChange();
 			_this.fileHashCheckboxChanged();
 
@@ -177,11 +213,13 @@ class Component extends React.Component
 		}
 
 		const data = $(_this.textForm.current).serializeObject();
+		data.tags = _.map(_this.selectedTextTags, "value").join(",");
 
 		api.postUrl("/api/text", data, false)
 		.then(function(data)
 		{
 			_this.textForm.current.reset();
+			_this.updateSelectedTextTags([]);
 			_this.handleTextAreaChange();
 
 			iziToast.success({title: "Success", message: "Text has been saved."});
@@ -191,6 +229,11 @@ class Component extends React.Component
 			log.error(error);
 			iziToast.error({title: "Error", message: error});
 		});
+	};
+
+	handleTextTagsChange = (data) =>
+	{
+		this.updateSelectedTextTags(data);
 	};
 
 	handleTimestampSubmitButtonClick = (e) =>
@@ -210,8 +253,71 @@ class Component extends React.Component
 		});
 	};
 
+	isDataReady = () =>
+	{
+		return (this.data.hasOwnProperty("tags"));
+	};
+
+	updateSelectedFileTags = action((data) =>
+	{
+		this.selectedFileTags = data;
+		log.debug("UPDATE SELECTED FILE TAGS:", data);
+	});
+
+	updateSelectedTextTags = action((data) =>
+	{
+		this.selectedTextTags = data;
+		log.debug("UPDATE SELECTED TEXT TAGS:", data);
+	});
+
+	updateData = action((data) =>
+	{
+		this.data = data;
+		log.debug("UPDATE DATA:", this.data);
+	});
+
+	refreshClicked = (e) =>
+	{
+		e.preventDefault();
+
+		this.refreshData();
+	};
+
+	refreshData = () =>
+	{
+		const _this = this;
+
+		if(store.route !== "upload")
+			return false;
+
+		api.getUrl("/api/tags", true)
+		.then(function(data)
+		{
+			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
+			_this.updateData(newData);
+		})
+		.catch(function(error)
+		{
+			_this.refreshDataFailure(error);
+		});
+	};
+
+	refreshDataFailure = (error) =>
+	{
+		this.updateData({});
+
+		log.error(error);
+		iziToast.error({title: "Error", message: error});
+	};
+
 	renderFile = () =>
 	{
+		if(!this.isDataReady())
+			return htmlHelpers.renderLoading();
+
+		const selectStyles = reactSelect.generateSelectStyles();
+		const selectOptions = this.generateTagSelectOptions();
+
 		const html =
 		(
 			<div>
@@ -229,6 +335,7 @@ class Component extends React.Component
 						<label className="filehash"><input ref={this.fileHash} type="checkbox" name="filehash" value="1" onChange={this.fileHashCheckboxChanged} /> Store file hash only</label>
 					</label>
 					<div className="button-container">
+						<Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedFileTags)} onChange={this.handleFileTagsChange} isMulti placeholder="Select Tags..." />
 						<button className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
 					</div>
 				</form>
@@ -239,6 +346,12 @@ class Component extends React.Component
 
 	renderText = () =>
 	{
+		if(!this.isDataReady())
+			return htmlHelpers.renderLoading();
+
+		const selectStyles = reactSelect.generateSelectStyles();
+		const selectOptions = this.generateTagSelectOptions();
+
 		const html =
 		(
 			<div>
@@ -251,6 +364,7 @@ class Component extends React.Component
 						<span ref={this.counter} className="counter">123</span>
 					</div>
 					<div className="button-container">
+						<Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedTextTags)} onChange={this.handleTextTagsChange} isMulti placeholder="Select Tags..." />
 						<button className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
 					</div>
 				</form>
@@ -261,6 +375,9 @@ class Component extends React.Component
 
 	renderTimestamp = () =>
 	{
+		if(!this.isDataReady())
+			return htmlHelpers.renderLoading();
+
 		const html =
 		(
 			<div>
@@ -290,7 +407,7 @@ class Component extends React.Component
 				<Navigation />
 
 				<div className="content">
-					<h1>Upload</h1>
+					<h1>Upload<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a></h1>
 					{file}
 					{text}
 					{timestamp}

@@ -163,3 +163,63 @@ export function insertZeroWidthSpaceAt(string, index)
 {
 	return String(string).splice(index, 0, zeroWidthSpace());
 }
+
+/**
+ * Convert a hex color string to RGB components.
+ *
+ * Modified from source: https://stackoverflow.com/a/11508164/9979
+ * 
+ * @param  {String} hexColor A six character hex color string.
+ * @return {Object} An object with rgb components.
+ */
+export function hexToRgb(hexColor)
+{
+	const bigint = parseInt(hexColor.replace("#", ""), 16);
+	const r = (bigint >> 16) & 255;
+	const g = (bigint >> 8) & 255;
+	const b = bigint & 255;
+
+	return {r, g, b};
+}
+
+/**
+ * Converts a hex color string to a luminance value.
+ *
+ *	Derived from sources:
+ *	* https://stackoverflow.com/a/3943023/9979
+ *	* https://plnkr.co/edit/OWc1K3?p=preview
+ * 
+ * @param  {String} hexColor A six character hex color string.
+ * @return {Number}          A luminance value.
+ */
+export function calculateLuminance(hexColor)
+{
+	const color = hexToRgb(hexColor);
+
+	const calculateLight = (colorItem) =>
+	{
+		let c = colorItem / 255.0;
+
+		if(c <= 0.03928)
+			c = c / 12.92;
+		else
+			c = Math.pow((c + 0.055) / 1.055, 2.4);
+
+		return c;
+	};
+
+	return 0.2126 * calculateLight(color.r) + 0.7152 * calculateLight(color.g) + 0.0722 * calculateLight(color.b)
+}
+
+/**
+ * Calculates the contrast color based on the supplied hex color.
+ * @param  {String} hexColor A six character hex color string.
+ * @return {String}          A six character hex color string.
+ */
+export function calculateContrastColor(hexColor)
+{
+	if(calculateLuminance(hexColor) > 0.149)
+		return "555555";
+	else
+		return "ffffff";
+}

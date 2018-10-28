@@ -45,3 +45,8 @@ export function renderLoading()
 {
 	return <div className="loading-text">Loading...</div>;
 }
+
+export function clear()
+{
+	return <div style={{clear: "both", lineHeight: 0, height: 0}}>&nbsp;</div>;
+}

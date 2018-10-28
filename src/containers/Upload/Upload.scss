@@ -6,17 +6,37 @@ section.upload
 	.text-container,
 	.timestamp-container
 	{
+		@include sectionContainerDefaultMixin;
+
+		overflow: visible;
+
 		div.button-container
 		{
+			min-height: 30px;
 			position: relative;
-			text-align: right;
+			text-align: left;
+
+			button.submit
+			{
+				position: absolute;
+				bottom: 0;
+				right: 0;
+			}
+
+			@include media("<tablet")
+			{
+				text-align: center;
+
+				button.submit
+				{
+					position: static;
+				}
+			}
 		}
 	}
 
 	.file-container
 	{
-		@include sectionContainerDefaultMixin;
-
 		.filehash-warning
 		{
 			margin-top: $margin-default;
@@ -123,8 +143,6 @@ section.upload
 
 	.text-container
 	{
-		@include sectionContainerDefaultMixin;
-
 		div.textarea
 		{
 			position: relative;
@@ -150,8 +168,50 @@ section.upload
 		}
 	}
 
-	.timestamp-container
+	.react-select
 	{
-		@include sectionContainerDefaultMixin;
+		min-width: 200px;
+		max-width: 325px;
+		width: 100%;
+
+		@include media("<tablet")
+		{
+			margin-bottom: $margin-default;
+			max-width: none;
+		}
+
+		.react-select__control
+		{
+			border: $border-default;
+
+			&.react-select__control--is-focused
+			{
+				border: $border-default;
+				box-shadow: none;
+			}
+		}
+
+		.react-select__multi-value__label
+		{
+			border-radius: $border-radius-input 0 0 $border-radius-input;
+		}
+
+		.react-select__multi-value__remove
+		{
+			border-radius: 0 $border-radius-input $border-radius-input 0;
+		}
+
+		.react-select__indicators
+		{
+			.react-select__indicator
+			{
+				color: $font-color-default;
+			}
+
+			.react-select__indicator-separator
+			{
+				background-color: $border-color-default;
+			}
+		}
 	}
 }

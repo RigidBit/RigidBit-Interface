@@ -72,6 +72,7 @@ module.exports = function(stage = "prod")
 
 				action: ["mobx", "action"],
 				mobx: ["mobx"],
+				computed: ["mobx", "computed"],
 				observable: ["mobx", "observable"],
 				observer: ["mobx-react", "observer"],
 
