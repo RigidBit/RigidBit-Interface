@@ -63,6 +63,30 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("block", {id: $(e.currentTarget).text()});
 	};
 
+	isBlockDataAvailable = () =>
+	{
+		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("data") && this.data.data !== null)
+			return true;
+
+		return false;
+	};
+
+	isBlockMetaAvailable = () =>
+	{
+		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("meta") && _.isArray(mobx.toJS(this.data.meta)) && this.data.meta.length > 0)
+			return true;
+
+		return false;
+	};
+
+	isBlockTagsAvailable = () =>
+	{
+		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("tags") && _.isArray(mobx.toJS(this.data.tags)) && this.data.tags.length > 0)
+			return true;
+
+		return false;
+	};
+
 	isDataReady = () =>
 	{
 		if(this.data.hasOwnProperty("block") && this.data.hasOwnProperty("block_count"))
@@ -150,12 +174,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		api.getUrl(`/api/block-complete/${store.routeParams.id}`, useCache)
 		.then(function(data)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null}, data);
+			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null}, data);
 			_this.updateData(newData);
 		})
 		.catch(function(error)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null});
+			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null});
 			_this.updateData(newData);
 
 			_this.refreshDataFailure(error);
@@ -206,11 +230,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(key === "prev_hash")
 				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClick}>{value}</a>
 
-			if(key === "timestamp")
+			else if(key === "timestamp")
 				value = misc.timestampToDate(value);
 
-			if(key === "verified")
+			else if(key === "verified")
 				value = _this.renderBlockVerify();
+
+			if(value === null)
+				value = <i>null</i>;
 
 			const html =
 			(
@@ -237,7 +264,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		if(!_this.isDataValid() || data === null)
+		if(!_this.isDataValid() || !_this.isBlockDataAvailable())
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
 		const metrics =
@@ -316,7 +343,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	renderBlockMeta = () =>
 	{
 		const _this = this;
-		const data = _this.data.meta;
+		const data = _this.data;
 
 		const containerClassName = "block-meta-container";
 		const containerTitle = "Block Meta Data";
@@ -324,11 +351,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		if(!_this.isDataValid() || data.length === 0)
+		if(!_this.isDataValid() || (!_this.isBlockMetaAvailable() && !_this.isBlockTagsAvailable()))
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
-		data.forEach(function(meta, m)
+		data.meta.forEach(function(meta, m)
 		{
 			const label = meta["name"].replace("_", " ");
 			let value = meta["value"];
@@ -352,16 +379,33 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		});
 
+		// Add tags if available.
+		if(_this.isBlockTagsAvailable())
+		{
+			const html =
+			(
+				<tr key="tags">
+					<td className="metric">Tags:</td>
+					<td className="value">{this.renderBlockTags()}</td>
+					<td className="empty" />
+				</tr>
+			);
+			tableRows.push(html);
+		}
+
 		// Add a single timestamp to the end. Use the first meta data entry for this.
-		const html =
-		(
-			<tr key="timestamp">
-				<td className="metric">Timestamp:</td>
-				<td className="value">{misc.timestampToDate(data[0]["timestamp"])}</td>
-				<td className="empty" />
-			</tr>
-		);
-		tableRows.push(html);
+		if(_this.isBlockMetaAvailable())
+		{
+			const html =
+			(
+				<tr key="timestamp">
+					<td className="metric">Timestamp:</td>
+					<td className="value">{misc.timestampToDate(data.meta[0]["timestamp"])}</td>
+					<td className="empty" />
+				</tr>
+			);
+			tableRows.push(html);
+		} 
 
 		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
@@ -395,10 +439,36 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const html =
 		(
 			<div className={"image-container" + expanded}>
-				<img src={imgSrc} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand" />
+				<img src={imgSrc} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand/Collapse" />
 			</div>
 		);
 		return htmlHelpers.renderContainer(containerClassName, containerTitle, html);
+	};
+
+	renderBlockTags = () =>
+	{
+		if(!("tags" in this.data))
+			return null;
+
+		const tags = [];
+		this.data.tags.forEach(function(tag, t)
+		{
+			const html =
+			(
+				<span key={t} className="tag" style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}}>
+					{tag.name}
+				</span>
+			);
+			tags.push(html);
+		});
+
+		const html =
+		(
+			<div className="tags-container">
+				{tags}
+			</div>
+		);
+		return html;
 	};
 
 	renderBlockVerify = () =>
@@ -494,8 +564,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</h1>
 					{block}
 					{blockData}
-					{blockMeta}
 					{blockPreview}
+					{blockMeta}
 				</div>
 
 				<Footer />

@@ -35,6 +35,12 @@ section.block
 			td.metric
 			{
 				white-space: nowrap;
+				width: 140px;
+
+				@include media("<tablet")
+				{
+					width: auto;
+				}
 			}
 		}
 	}
@@ -70,6 +76,25 @@ section.block
 		table td.metric
 		{
 			text-transform: capitalize;
+		}
+
+		.tags-container
+		{
+			.tag
+			{
+				border-radius: $border-radius-input;
+				display: inline-block;
+				font-family: $font-family-default;
+				font-size: 10px;
+				margin-right: $margin-button;
+				padding: $padding-thin/4 $padding-thin $padding-thin/4 $padding-thin;
+				white-space: nowrap;
+
+				&:last-child
+				{
+					margin-right: 0;
+				}
+			}
 		}
 	}
 
