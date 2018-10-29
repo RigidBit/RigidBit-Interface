@@ -79,7 +79,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			};
 			return option;
 		});
-		return selectOptions;
+		return _.sortBy(selectOptions, "label");
 	};
 
 	handleFileChange = (e) =>

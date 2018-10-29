@@ -450,7 +450,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!("tags" in this.data))
 			return null;
 
-		const data = _.sortBy(this.data.tags, ["name", "id", "color", "hidden"]);
+		const data = _.sortBy(this.data.tags, "name");
 
 		const tags = [];
 		data.forEach(function(tag, t)
