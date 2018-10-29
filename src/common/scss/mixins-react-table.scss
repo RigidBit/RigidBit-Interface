@@ -23,6 +23,13 @@
 			{
 				background: #dfdfdf;
 			}
+
+			.rt-td:focus,
+			.rt-th:focus
+			{
+				outline: none;
+			}
+
 		}
 
 		.rt-table.reverse-row-colors
