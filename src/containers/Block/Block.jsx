@@ -501,8 +501,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			const disablePrevBlock = (this.data.block.id === 1);
 			const disableNextBlock = (this.data.block.id === this.data.block_count);
-			prevButton = <button className="prev-block" data-modifier={-1} onClick={this.handleNextPrevButtonClick} disabled={disablePrevBlock} title="Previous Block"><i className="fas fa-angle-left"></i></button>;
-			nextButton = <button className="next-block" data-modifier={1} onClick={this.handleNextPrevButtonClick} disabled={disableNextBlock} title="Next Block"><i className="fas fa-angle-right"></i></button>;
+			prevButton = <button type="button" className="prev-block" data-modifier={-1} onClick={this.handleNextPrevButtonClick} disabled={disablePrevBlock} title="Previous Block"><i className="fas fa-angle-left"></i></button>;
+			nextButton = <button type="button" className="next-block" data-modifier={1} onClick={this.handleNextPrevButtonClick} disabled={disableNextBlock} title="Next Block"><i className="fas fa-angle-right"></i></button>;
 		}
 
 		const html =

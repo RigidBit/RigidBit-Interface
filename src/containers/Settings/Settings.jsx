@@ -163,7 +163,7 @@ import Table from "../../components/Table/Table.jsx";
 					Clear all local storage caches. During normal operation caches are pruned automatically. However, manual purges may be necessary if you operate more than one RigidBit backend simultaneously on the same host address.
 				</div>
 				<div className="button-container">
-					<button className="clear-cache" onClick={this.handleClearCacheButtonClick}><i className="far fa-trash-alt icon"></i>Clear Cache</button>
+					<button type="button" className="clear-cache" onClick={this.handleClearCacheButtonClick}><i className="far fa-trash-alt icon"></i>Clear Cache</button>
 				</div>
 			</div>
 		);

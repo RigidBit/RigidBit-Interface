@@ -336,7 +336,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</label>
 					<div className="button-container">
 						<Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedFileTags)} onChange={this.handleFileTagsChange} isMulti placeholder="Select Tags..." />
-						<button className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
+						<button type="button" className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
 					</div>
 				</form>
 			</div>
@@ -365,7 +365,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</div>
 					<div className="button-container">
 						<Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedTextTags)} onChange={this.handleTextTagsChange} isMulti placeholder="Select Tags..." />
-						<button className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+						<button type="button" className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
 					</div>
 				</form>
 			</div>
@@ -386,7 +386,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				</div>
 				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
 					<div className="button-container">
-						<button className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
 					</div>
 				</form>
 			</div>
