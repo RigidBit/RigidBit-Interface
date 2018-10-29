@@ -155,19 +155,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return false;
 
 		if(!("id" in store.routeParams))
-			return false;
+			return _this.refreshDataFailure("ID not found in route parameters.");
 
 		api.getUrl(`/api/count`, false)
 		.then(function(data)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), data);
+			const newData = _.merge(mobx.toJS(_this.data), {block_count: null}, data);
 			_this.updateData(newData);
 		})
 		.catch(function(error)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {block_count: null});
-			_this.updateData(newData);
-
 			_this.refreshDataFailure(error);
 		});
 
@@ -179,16 +176,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		})
 		.catch(function(error)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null});
-			_this.updateData(newData);
-
 			_this.refreshDataFailure(error);
 		});
 	};
 
 	refreshDataFailure = (error) =>
 	{
-		this.updateData({});
+		this.updateData({block: null, data: null, meta: null, tags: null, block_count: null});
 
 		log.error(error);
 		iziToast.error({title: "Error", message: error});
@@ -264,7 +258,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		if(!_this.isDataValid() || !_this.isBlockDataAvailable())
+		if(!_this.isDataValid())
+			return null;
+
+		if(!_this.isBlockDataAvailable())
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
 		const metrics =
@@ -351,7 +348,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		if(!_this.isDataValid() || (!_this.isBlockMetaAvailable() && !_this.isBlockTagsAvailable()))
+		if(!_this.isDataValid())
+			return null;
+
+		if(!_this.isBlockMetaAvailable() && !_this.isBlockTagsAvailable())
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
@@ -447,7 +447,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderBlockTags = () =>
 	{
-		if(!("tags" in this.data))
+		if(!this.isBlockTagsAvailable())
 			return null;
 
 		const data = _.sortBy(this.data.tags, "name");
@@ -475,7 +475,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderBlockVerify = () =>
 	{
-		if(!("block" in this.data))
+		if(!this.isDataValid())
 			return null;
 
 		const results =
