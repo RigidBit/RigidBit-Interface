@@ -199,6 +199,7 @@ import Table from "../../components/Table/Table.jsx";
 				className: "color",
 				headerClassName: "color",
 				maxWidth: 100,
+				sortMethod: (a, b) => parseInt(a.props.children[1].replace("#", ""), 16) - parseInt(b.props.children[1].replace("#", ""), 16),
 			},
 			{
 				Header: "Hidden",
@@ -215,6 +216,7 @@ import Table from "../../components/Table/Table.jsx";
 				className: "actions",
 				headerClassName: "actions",
 				maxWidth: 80,
+				sortable: false,
 			}
 		];
 
