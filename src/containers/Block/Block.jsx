@@ -326,7 +326,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<tr key="download">
 					<td className={"download metric"}>Download:</td>
 					<td className={"download value"}>
-						<a href={api.apiUrlFromRelativePath("/api/file-download/"+data.id)} target="_blank">Click to Download</a>
+						<a href={api.apiUrlFromRelativePath("/api/file-download/"+data.id)}>Click to Download</a>
 					</td>
 					<td className="empty" />
 				</tr>
