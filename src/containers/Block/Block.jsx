@@ -323,7 +323,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(key === "data" && value !== null)
 			{
 				if(value.length > _this.textBlockInlineViewThreshold)
-					value = <i>See Block Data Preview</i>;
+					value = <i>see block data preview</i>;
 				else
 					value = _this.dataArrayToFormattedText(value);
 
@@ -347,7 +347,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		});
 
-		if(data.archive === true)
+		if(data.archive === true || this.data.block.block_type.toLowerCase() === "text")
 		{
 			const html =
 			(
