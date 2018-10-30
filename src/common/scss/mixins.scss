@@ -23,22 +23,11 @@
 
 			.controls
 			{
+				@include controlsMixin
+
 				position: absolute;
 				right: 0;
 				top: 0;
-
-				button
-				{
-					border: none;
-					font-size: 0.7em;
-					padding-bottom: 4px;
-					padding-top: 4px;
-				}
-
-				> *
-				{
-					margin-left: $margin-button;
-				}
 			}
 
 			> .refresh
@@ -107,4 +96,33 @@
 	-moz-user-select: none; /* Firefox */
 	-ms-user-select: none; /* Internet Explorer/Edge */
 	user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+@mixin flatButtonMixin
+{
+	background: transparent;
+	border: none;
+
+	&:active,
+	&:hover
+	{
+		background: $color-grey-dark;
+	}
+}
+
+@mixin controlsMixin
+{
+	button
+	{
+		@include flatButtonMixin;
+
+		font-size: 0.7em;
+		padding-bottom: 4px;
+		padding-top: 4px;
+	}
+
+	> *
+	{
+		margin-left: $margin-button;
+	}
 }

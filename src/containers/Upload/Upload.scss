@@ -55,7 +55,7 @@ section.upload
 
 		form
 		{
-			padding-top: 30px; // This is added to match the button container at the bottom.
+			padding-top: $padding-default; // This is added to match the button container at the bottom.
 
 			&.dragging
 			{
@@ -75,6 +75,7 @@ section.upload
 				margin: 0 auto 0 auto;
 				max-width: 320px;
 				overflow: hidden;
+				padding-bottom: $padding-default;
 				position: relative;
 				width: 100%;
 
@@ -130,7 +131,7 @@ section.upload
 
 				label.filehash
 				{
-					bottom: $padding-default;
+					bottom: $padding-default * 2;
 					display: block;
 					font-size: .8rem;
 					left: 50%;

@@ -14,7 +14,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	@observable data = {};
 	@observable expandDataPreviewImage = false;
 	autorun = null;
-	validDataPreviewExtensions = ["png", "jpg", "jpeg", "gif", "svg"];
+	dataPreviewImageExtensions = ["png", "jpg", "jpeg", "gif", "svg"];
+	dataPreviewMovieExtensions = ["mov", "mp4", "m4v", "webm", "mkv", "flv", "ogv", "ogg", "avi", "wmv", "qt", "mpg", "mpeg"];
+	dataPreviewDocumentExtensions = ["txt", "pdf"];
+	validDataPreviewExtensions = _.concat(this.dataPreviewImageExtensions, this.dataPreviewMovieExtensions, this.dataPreviewDocumentExtensions);
+	textBlockInlineViewThreshold = 1024;
 
 	componentDidMount()
 	{
@@ -28,6 +32,36 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		if(this.autorun)
 			this.autorun();
+	}
+
+	dataArrayToFormattedText = (data) =>
+	{
+		const value = misc.uintToString(data).replace(/\r/g, "").split("\n").map((item, key) =>
+		{
+			const html =
+			(
+				<span key={key}>
+					{item}
+					<br />
+				</span>
+			);
+			return html;
+		});
+		return value;
+	};
+
+	filenameExtensionFromBlockMetaData = (metaData) =>
+	{
+		let extension = null;
+		for(let i = 0; i < metaData.length; ++i)
+		{
+			if(metaData[i].hasOwnProperty("name") && metaData[i].name === "filename")
+			{
+				extension = misc.filenameExtension(metaData[i].value);
+				break;
+			}
+		}
+		return extension;
 	}
 
 	handleBlockDataPreviewImageClick = (e) =>
@@ -111,20 +145,21 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataValid())
 			return false;
 
-		if(data.block.block_type.toLowerCase() != "file" || data.data.archive !== true || data.meta === null || data.meta.length === 0)
+		const block_type = data.block.block_type.toLowerCase();
+		if(block_type != "file" && block_type != "text")
 			return false;
 
-		let extension = null;
-		for(let i = 0; i < data.meta.length; ++i)
+		if(block_type == "file" && (data.data.archive !== true || data.meta === null || data.meta.length === 0))
+			return false;
+
+		if(block_type == "file")
 		{
-			if("name" in data.meta[i] && data.meta[i].name === "filename")
-			{
-				extension = misc.filenameExtension(data.meta[i].value);
-				break;
-			}
+			const extension = this.filenameExtensionFromBlockMetaData(data.meta);
+			if(!extension || !_.includes(validExtensions, extension.toLowerCase()))
+				return false;
 		}
 
-		if(!extension || !_.includes(validExtensions, extension))
+		if(block_type == "text" && data.data.data.length <= this.textBlockInlineViewThreshold)
 			return false;
 
 		return true;
@@ -287,18 +322,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 			if(key === "data" && value !== null)
 			{
-				value = misc.uintToString(value).replace(/\r/g, "");
-				value = value.split("\n").map((item, key) =>
-				{
-					const html =
-					(
-						<span key={key}>
-							{item}
-							<br />
-						</span>
-					);
-					return html;
-				});
+				if(value.length > _this.textBlockInlineViewThreshold)
+					value = <i>See Block Data Preview</i>;
+				else
+					value = _this.dataArrayToFormattedText(value);
+
 				value = <div className="data-container">{value}</div>;
 			}
 
@@ -345,13 +373,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const containerClassName = "block-meta-container";
 		const containerTitle = "Block Meta Data";
 
-		if(!_this.isDataReady())
+		if(!this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		if(!_this.isDataValid())
+		if(!this.isDataValid())
 			return null;
 
-		if(!_this.isBlockMetaAvailable() && !_this.isBlockTagsAvailable())
+		if(!this.isBlockMetaAvailable() && !this.isBlockTagsAvailable())
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
@@ -416,32 +444,65 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const containerClassName = "block-preview-container";
 		const containerTitle = "Block Data Preview";
-		const imageExtensions = this.validDataPreviewExtensions;
 
 		if(!this.isDataPreviewAvailable())
 			return null;
 
-		let extension = null;
-		for(let i = 0; i < data.meta.length; ++i)
+		const block_type = data.block.block_type.toLowerCase();
+		const documentExtensions = this.dataPreviewDocumentExtensions;
+		const imageExtensions = this.dataPreviewImageExtensions;
+		const movieExtensions = this.dataPreviewMovieExtensions;
+
+		if(block_type === "text")
 		{
-			if("name" in data.meta[i] && data.meta[i].name === "filename")
-			{
-				extension = misc.filenameExtension(data.meta[i].value);
-				break;
-			}
+			const html =
+			(
+				<div className="text-container">
+					{this.dataArrayToFormattedText(data.data.data)}
+				</div>
+			);
+			return htmlHelpers.renderContainer(containerClassName, containerTitle, html);
 		}
 
-		if(!extension || !_.includes(imageExtensions, extension))
-			return null;
+		const extension = this.filenameExtensionFromBlockMetaData(data.meta);
+		let html;
 
-		const imgSrc = api.apiUrlFromRelativePath("/api/file-download/"+data.block.id);
-		const expanded = (this.expandDataPreviewImage) ? " expanded" : "";
-		const html =
-		(
-			<div className={"image-container" + expanded}>
-				<img src={imgSrc} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand/Collapse" />
-			</div>
-		);
+		if(_.includes(imageExtensions, extension))
+		{
+			const src = api.apiUrlFromRelativePath("/api/file-inline/"+data.block.id);
+			const expanded = (this.expandDataPreviewImage) ? " expanded" : "";
+			html =
+			(
+				<div className={"image-container" + expanded}>
+					<img src={src} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand/Collapse" />
+				</div>
+			);
+		}
+		else if(_.includes(movieExtensions, extension))
+		{
+			// Video has a key because it doesn't always seem to refresh properly.
+			const src = api.apiUrlFromRelativePath("/api/file-inline/"+data.block.id);
+			html =
+			(
+				<div className="movie-container">
+					<video key={data.block.id} controls>
+						<source src={src} />
+							Your browser does not support the video tag.
+					</video>
+				</div>
+			);
+		}
+		else if(_.includes(documentExtensions, extension))
+		{
+			// Object has a key because it doesn't always seem to refresh properly.
+			const src = api.apiUrlFromRelativePath("/api/file-inline/"+data.block.id);
+			html =
+			(
+				<div className="document-container">
+					<object key={data.block.id} data={src} />
+				</div>
+			);
+		}
 		return htmlHelpers.renderContainer(containerClassName, containerTitle, html);
 	};
 
@@ -496,6 +557,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		let prevButton = null;
 		let nextButton = null;
+		let refreshButton = null;
 
 		if(this.isDataReady() && this.isDataValid())
 		{
@@ -503,6 +565,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const disableNextBlock = (this.data.block.id === this.data.block_count);
 			prevButton = <button type="button" className="prev-block" data-modifier={-1} onClick={this.handleNextPrevButtonClick} disabled={disablePrevBlock} title="Previous Block"><i className="fas fa-angle-left"></i></button>;
 			nextButton = <button type="button" className="next-block" data-modifier={1} onClick={this.handleNextPrevButtonClick} disabled={disableNextBlock} title="Next Block"><i className="fas fa-angle-right"></i></button>;
+			refreshButton = <button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>;
 		}
 
 		const html =
@@ -510,7 +573,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			<div className="controls">
 				{prevButton}
 				{nextButton}
-				<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a>
+				{refreshButton}
 			</div>
 		);
 		return html;
@@ -566,8 +629,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</h1>
 					{block}
 					{blockData}
-					{blockPreview}
 					{blockMeta}
+					{blockPreview}
 				</div>
 
 				<Footer />

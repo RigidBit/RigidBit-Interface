@@ -76,6 +76,11 @@ input[type="submit"],
 	padding: $padding-input*0.75 $padding-input $padding-input*0.75 $padding-input;
 	user-select: none;
 
+	&.flat
+	{
+		@include flatButtonMixin;
+	}
+
 	&:hover
 	{
 		background: $color-grey-dark;

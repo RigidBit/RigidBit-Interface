@@ -341,7 +341,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<Navigation />
 
 				<div className="content">
-					<h1>Dashboard<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a></h1>
+					<h1>
+						Dashboard
+						<div className="controls">
+							<button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>
+						</div>
+					</h1>
 					{status}
 					{blockTypeCounts}
 					{blockTypeUsageDaily}

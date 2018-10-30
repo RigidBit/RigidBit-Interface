@@ -220,7 +220,15 @@ import Table from "../../components/Table/Table.jsx";
 			}
 		];
 
-		const title = <div>Tags<div className="controls"><a href="#add" onClick={this.handleAddTagClick}><i className="fas fa-plus"></i></a></div></div>;
+		const title = 
+		(
+			<div>
+				Tags
+				<div className="controls">
+					<button type="button" className="" onClick={this.handleAddTagClick} title="Add Tag"><i className="fas fa-plus"></i></button>
+				</div>
+			</div>
+		);
 		return htmlHelpers.renderContainer("tags-container", title, <Table data={data} columns={columns} />);
 	};
 
@@ -260,7 +268,12 @@ import Table from "../../components/Table/Table.jsx";
 				<Navigation />
 
 				<div className="content">
-					<h1>Settings<a href="#refresh" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></a></h1>
+					<h1>
+						Settings
+						<div className="controls">
+							<button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>
+						</div>
+					</h1>
 					{tags}
 					{cache}
 				</div>
