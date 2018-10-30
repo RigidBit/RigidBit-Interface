@@ -24,6 +24,21 @@ section.settings
 			@include controlsMixin;
 		}
 
+		.react-table
+		{
+			.rt-table
+			{
+				.rt-thead > .rt-tr > .rt-th.uses > div,
+				.rt-tbody > .rt-tr-group > .rt-tr > .rt-td.uses
+				{
+					text-align: right;
+				}
+			}
+			.uses
+			{
+			}
+		}
+
 		.color-preview
 		{
 			text-transform: uppercase;

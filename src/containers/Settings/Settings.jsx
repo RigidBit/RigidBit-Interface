@@ -131,7 +131,7 @@ import Table from "../../components/Table/Table.jsx";
 		if(store.route !== "settings")
 			return false;
 
-		api.getUrl("/api/tags", false)
+		api.getUrl("/api/tags-with-usage", false)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
@@ -208,6 +208,13 @@ import Table from "../../components/Table/Table.jsx";
 				className: "hidden",
 				headerClassName: "hidden",
 				maxWidth: 80,
+			},
+			{
+				Header: "Uses",
+				accessor: "uses",
+				className: "uses",
+				headerClassName: "uses",
+				maxWidth: 60,
 			},
 			{
 				Header: "Actions",
