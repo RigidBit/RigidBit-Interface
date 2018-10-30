@@ -262,7 +262,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		e.preventDefault();
 
-		this.refreshData();
+		this.refreshData(false);
 	};
 
 	refreshData = () =>
@@ -272,7 +272,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(store.route !== "upload")
 			return false;
 
-		api.getUrl("/api/tags", true)
+		api.getUrl("/api/tags", false)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
