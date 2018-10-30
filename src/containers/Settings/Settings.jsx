@@ -182,7 +182,7 @@ import Table from "../../components/Table/Table.jsx";
 					Clear all local storage caches. During normal operation caches are pruned automatically. However, manual purges may be necessary if you operate more than one RigidBit backend simultaneously on the same host address.
 				</div>
 				<div className="button-container">
-					<button type="button" className="clear-cache" onClick={this.handleClearCacheButtonClick}><i className="far fa-trash-alt icon"></i>Clear Cache</button>
+					<button type="button" className="clear-cache" onClick={this.handleClearCacheButtonClick} title="Clear Cache"><i className="far fa-trash-alt icon"></i>Clear Cache</button>
 				</div>
 			</div>
 		);
@@ -251,7 +251,7 @@ import Table from "../../components/Table/Table.jsx";
 			<div>
 				Tags
 				<div className="controls">
-					<button type="button" className="" onClick={this.handleAddTagClick} title="Add Tag"><i className="fas fa-plus"></i></button>
+					<button type="button" onClick={this.handleAddTagClick} title="Add Tag"><i className="fas fa-plus"></i></button>
 				</div>
 			</div>
 		);
@@ -295,7 +295,7 @@ import Table from "../../components/Table/Table.jsx";
 				</div>
 				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
 					<div className="button-container">
-						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Save Timestamp"><i className="far fa-save icon"></i>Save</button>
 					</div>
 				</form>
 			</div>

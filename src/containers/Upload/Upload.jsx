@@ -318,7 +318,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</label>
 					<div className="button-container">
 						<Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedFileTags)} onChange={this.handleFileTagsChange} isMulti placeholder="Select Tags..." />
-						<button type="button" className="submit" onClick={this.handleFileSubmitButtonClick}><i className="far fa-save icon"></i><span>Save</span></button>
+						<button type="button" className="submit" onClick={this.handleFileSubmitButtonClick} title="Save File"><i className="far fa-save icon"></i><span>Save</span></button>
 					</div>
 				</form>
 			</div>
@@ -347,7 +347,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</div>
 					<div className="button-container">
 						<Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedTextTags)} onChange={this.handleTextTagsChange} isMulti placeholder="Select Tags..." />
-						<button type="button" className="submit" onClick={this.handleTextSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+						<button type="button" className="submit" onClick={this.handleTextSubmitButtonClick} title="Save Text"><i className="far fa-save icon"></i>Save</button>
 					</div>
 				</form>
 			</div>

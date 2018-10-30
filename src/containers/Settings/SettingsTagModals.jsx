@@ -216,10 +216,10 @@ function renderAddTagForm()
 		<label class="color">
 			Color
 			<div class="container">
-				<input type="text" class="color" name="color" value="" placeholder="FFFFFF" pattern="^[a-fA-F0-9]+$" minLength=6 maxLength=6 required />
+				<input type="text" class="color" name="color" value="" placeholder="FFFFFF" pattern="^[a-fA-F0-9]+$" minLength=6 maxLength=6 required title="Select Color" />
 				<span class="hash">#</span>
 				<span class="color-preview" title="Color Preview"><input type="color" value=""></span>
-				<button type="button" class="random-color"><i class="fas fa-random"></i></button>
+				<button type="button" class="random-color" title="Random Color"><i class="fas fa-random"></i></button>
 			</div>
 		</label>
 	`;
@@ -256,10 +256,10 @@ function renderEditTagForm(data)
 		<label class="color">
 			Color
 			<div class="container">
-				<input type="text" class="color" name="color" value="${data.color}" placeholder="FFFFFF" pattern="^[a-fA-F0-9]+$" minLength=6 maxLength=6 required />
+				<input type="text" class="color" name="color" value="${data.color}" placeholder="FFFFFF" pattern="^[a-fA-F0-9]+$" minLength=6 maxLength=6 required title="Select Color" />
 				<span class="hash">#</span>
 				<span class="color-preview" title="Color Preview"><input type="color" value="${data.color}"></span>
-				<button type="button" class="random-color"><i class="fas fa-random"></i></button>
+				<button type="button" class="random-color" title="Random Color"><i class="fas fa-random"></i></button>
 			</div>
 		</label>
 	`;
