@@ -1,27 +1,29 @@
 @mixin reactTableColorsMixin
 {
+	$color: #fafafa;
+
 	.react-table
 	{
 		.rt-table
 		{
 			.rt-thead > .rt-tr > .rt-th
 			{
-				background: darken(#f6f6f6, 10%);
+				background: darken($color, 11%);
 			}
 
 			.rt-tr-group:nth-child(even) > .rt-tr > .rt-td
 			{
-				background: darken(#f6f6f6, 5%);		
+				background: darken($color, 7%);
 			}
 
 			.rt-tr-group:nth-child(odd) > .rt-tr > .rt-td
 			{
-				background: #f6f6f6;		
+				background: darken($color, 3%);
 			}
 
 			.rt-tr-group:hover > .rt-tr > .rt-td
 			{
-				background: #dfdfdf;
+				background: darken($color, 11%);
 			}
 
 			.rt-td:focus,
@@ -36,17 +38,12 @@
 		{
 			.rt-tr-group:nth-child(even) > .rt-tr > .rt-td
 			{
-				background: #f6f6f6;		
+				background: darken($color, 3%);
 			}
 
 			.rt-tr-group:nth-child(odd) > .rt-tr > .rt-td
 			{
-				background: darken(#f6f6f6, 5%);		
-			}
-
-			.rt-tr-group:hover > .rt-tr > .rt-td
-			{
-				background: #dfdfdf;
+				background: darken($color, 7%);		
 			}
 		}
 	}

@@ -1,25 +1,27 @@
 @mixin tableColorsMixin
 {
+	$color: #fafafa;
+
 	table
 	{
 		tr > th
 		{
-			background: darken(#f6f6f6, 10%);
+			background: darken($color, 11%);
 		}
 
 		tr:nth-child(even) > td
 		{
-			background: darken(#f6f6f6, 5%);		
+			background: darken($color, 7%);
 		}
 
 		tr:nth-child(odd) > td
 		{
-			background: #f6f6f6;		
+			background: darken($color, 3%);
 		}
 
 		tr:hover > td
 		{
-			background: #dfdfdf;
+			background: darken($color, 11%);
 		}
 	}
 
@@ -27,17 +29,12 @@
 	{
 		tr:nth-child(even) > td
 		{
-			background: #f6f6f6;		
+			background: darken($color, 3%);
 		}
 
 		tr:nth-child(odd) > td
 		{
-			background: darken(#f6f6f6, 5%);		
-		}
-
-		tr:hover > td
-		{
-			background: #dfdfdf;
+			background: darken($color, 7%);
 		}
 	}
 }
