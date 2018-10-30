@@ -24,7 +24,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.fileHash = React.createRef();
 		this.textForm = React.createRef();
 		this.textArea = React.createRef();
-		this.timestampForm = React.createRef();
 		this.counter = React.createRef();
 	}
 
@@ -236,23 +235,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.updateSelectedTextTags(data);
 	};
 
-	handleTimestampSubmitButtonClick = (e) =>
-	{
-		if(e)
-			e.preventDefault();
-
-		api.postUrl("/api/timestamp", null, false)
-		.then(function(data)
-		{
-			iziToast.success({title: "Success", message: "Timestamp has been created."});
-		})
-		.catch(function(error)
-		{
-			log.error(error);
-			iziToast.error({title: "Error", message: error});
-		});
-	};
-
 	isDataReady = () =>
 	{
 		return (this.data.hasOwnProperty("tags"));
@@ -373,32 +355,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return htmlHelpers.renderContainer("text-container", "Text Message", html);
 	};
 
-	renderTimestamp = () =>
-	{
-		if(!this.isDataReady())
-			return htmlHelpers.renderLoading();
-
-		const html =
-		(
-			<div>
-				<div className="description">
-					Create a manual timestamp entry in the blockchain.
-				</div>
-				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
-					<div className="button-container">
-						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
-					</div>
-				</form>
-			</div>
-		);
-		return htmlHelpers.renderContainer("timestamp-container", "Timestamp", html);
-	};
-
 	render()
 	{
 		const file = this.renderFile();
 		const text = this.renderText();
-		const timestamp = this.renderTimestamp();
 
 		const html =
 		(
@@ -415,7 +375,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</h1>
 					{file}
 					{text}
-					{timestamp}
 				</div>
 
 				<Footer />

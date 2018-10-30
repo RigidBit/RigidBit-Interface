@@ -3,12 +3,14 @@ section.settings
 	@include contentMixin;
 
 	.cache-container,
-	.tags-container
+	.tags-container,
+	.timestamp-container
 	{
 		@include sectionContainerDefaultMixin;
 	}
 
-	.cache-container
+	.cache-container,
+	.timestamp-container
 	{
 		div.button-container
 		{

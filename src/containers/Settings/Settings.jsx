@@ -18,6 +18,8 @@ import Table from "../../components/Table/Table.jsx";
 	constructor(props)
 	{
 		super(props);
+
+		this.timestampForm = React.createRef();
 	}
 
 	componentDidMount()
@@ -103,6 +105,23 @@ import Table from "../../components/Table/Table.jsx";
 		{
 			_this.refreshDataFailure(error);
 			_this.refreshData();
+		});
+	};
+
+	handleTimestampSubmitButtonClick = (e) =>
+	{
+		if(e)
+			e.preventDefault();
+
+		api.postUrl("/api/timestamp", null, false)
+		.then(function(data)
+		{
+			iziToast.success({title: "Success", message: "Timestamp has been created."});
+		})
+		.catch(function(error)
+		{
+			log.error(error);
+			iziToast.error({title: "Error", message: error});
 		});
 	};
 
@@ -263,9 +282,31 @@ import Table from "../../components/Table/Table.jsx";
 		return html;
 	};
 
+	renderTimestamp = () =>
+	{
+		if(!this.isDataReady())
+			return htmlHelpers.renderLoading();
+
+		const html =
+		(
+			<div>
+				<div className="description">
+					Create a manual timestamp entry in the blockchain.
+				</div>
+				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+					<div className="button-container">
+						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick}><i className="far fa-save icon"></i>Save</button>
+					</div>
+				</form>
+			</div>
+		);
+		return htmlHelpers.renderContainer("timestamp-container", "Timestamp", html);
+	};
+
 	render()
 	{
 		const tags = this.renderTags();
+		const timestamp = this.renderTimestamp();
 		const cache = this.renderCache();
 
 		const html =
@@ -282,6 +323,7 @@ import Table from "../../components/Table/Table.jsx";
 						</div>
 					</h1>
 					{tags}
+					{timestamp}
 					{cache}
 				</div>
 

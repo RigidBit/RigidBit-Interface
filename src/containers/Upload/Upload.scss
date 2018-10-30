@@ -3,8 +3,7 @@ section.upload
 	@include contentMixin;
 
 	.file-container,
-	.text-container,
-	.timestamp-container
+	.text-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -151,7 +150,7 @@ section.upload
 			textarea
 			{
 				margin-bottom: $margin-default;
-				min-height: 100px;
+				min-height: 150px;
 				width: 100%;
 			}
 
