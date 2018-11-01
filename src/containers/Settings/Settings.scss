@@ -28,8 +28,12 @@ section.settings
 
 		.react-table
 		{
+			overflow: auto;
+
 			.rt-table
 			{
+				min-width: 500px;
+
 				.rt-thead > .rt-tr > .rt-th.uses > div,
 				.rt-tbody > .rt-tr-group > .rt-tr > .rt-td.uses
 				{

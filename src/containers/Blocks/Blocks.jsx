@@ -222,19 +222,21 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html =
 		(
-			<table>
-				<thead>
-					<tr>
-						<th className="id">ID</th>
-						<th className="hash">Block Hash</th>
-						<th className="block_type">Block Type</th>
-						<th className="timestamp">Timestamp</th>
-					</tr>
-				</thead>
-				<tbody>
-					{tableRows}
-				</tbody>
-			</table>
+			<div className="blocks-table-container">
+				<table>
+					<thead>
+						<tr>
+							<th className="id">ID</th>
+							<th className="hash">Block Hash</th>
+							<th className="block_type">Block Type</th>
+							<th className="timestamp">Timestamp</th>
+						</tr>
+					</thead>
+					<tbody>
+						{tableRows}
+					</tbody>
+				</table>
+			</div>
 		);
 		return htmlHelpers.renderContainer("blocks-container", "Recent Blocks", html, this.renderControls());
 	};
