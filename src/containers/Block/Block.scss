@@ -73,14 +73,37 @@ section.block
 
 	.block-meta-container
 	{
-		table td.metric
+		overflow: visible;
+
+		table
 		{
-			text-transform: capitalize;
+			overflow: visible;
+
+			td.metric
+			{
+				text-transform: capitalize;
+			}
 		}
 
 		.tags-container
 		{
 			margin-bottom: -1 * $margin-button;
+
+			.edit-button,
+			.edit-save-button-container
+			{
+				float: right;
+			}
+
+			.edit-save-button-container
+			{
+				width: 120px;
+
+				@include media("<tablet")
+				{
+					width: 70px;
+				}
+			}
 
 			.tag
 			{
@@ -97,6 +120,21 @@ section.block
 				{
 					margin-right: 0;
 				}
+			}
+
+			.react-select
+			{
+				min-width: 200px;
+				max-width: calc(100% - 130px); // Leave room for .edit-save-button-container.
+				width: 100%;
+
+				@include media("<tablet")
+				{
+					margin-bottom: $margin-default;
+					max-width: calc(100% - 80px); // Leave room for .edit-save-button-container.
+				}
+
+				@include reactSelectMixin;
 			}
 		}
 	}

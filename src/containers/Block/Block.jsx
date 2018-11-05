@@ -1,9 +1,11 @@
 import filesize from "filesize";
 import iziToast from "izitoast";
+import Select from "react-select";
 
 import * as api from "../../common/js/api.js";
 import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
+import * as reactSelect from "../../common/js/react-select.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -13,6 +15,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 {
 	@observable data = {};
 	@observable expandDataPreviewImage = false;
+	@observable selectedTags = [];
+	@observable tagsEditModeEnabled = false;
 	autorun = null;
 	dataPreviewImageExtensions = ["png", "jpg", "jpeg", "gif", "svg"];
 	dataPreviewMovieExtensions = ["mov", "mp4", "m4v", "webm", "mkv", "flv", "ogv", "ogg", "avi", "wmv", "qt", "mpg", "mpeg"];
@@ -64,6 +68,24 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return extension;
 	}
 
+	generateTagSelectOptions = (data) =>
+	{
+		if(!data)
+			return [];
+
+		const selectOptions = data.map(function(item, i)
+		{
+			const option =
+			{
+				color: item.color,
+				label: item.name,
+				value: item.id,
+			};
+			return option;
+		});
+		return _.sortBy(selectOptions, "label");
+	};
+
 	handleBlockDataPreviewImageClick = (e) =>
 	{
 		e.preventDefault();
@@ -72,6 +94,55 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			this.expandDataPreviewImage = !this.expandDataPreviewImage;
 		})();
+	};
+
+	handleEditTagsClick = (e) =>
+	{
+		e.preventDefault();
+
+		this.updateSelectedTags(this.generateTagSelectOptions(this.data.tags));
+
+		action(()=>
+		{
+			this.tagsEditModeEnabled = true;
+		})();
+	}
+
+	handleEditTagsCancel = (e) =>
+	{
+		action(()=>
+		{
+			this.tagsEditModeEnabled = false;
+		})();
+	};
+
+	handleEditTagsSave = (e) =>
+	{
+		const _this = this;
+
+		let data = this.selectedTags.map(function(tag)
+		{
+			return tag.value;
+		});
+		data = {tags: data.join(",")};
+
+		api.putUrl(`/api/tags-for-block/${store.routeParams.id}`, data)
+		.then(function(data)
+		{
+			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
+			_this.updateData(newData);
+
+			action(()=>
+			{
+				_this.tagsEditModeEnabled = false;
+			})();
+
+			api.removeCache(`/api/block-complete/${store.routeParams.id}`, "GET");
+		})
+		.catch(function(error)
+		{
+			_this.refreshDataFailure(error);
+		});
 	};
 
 	handleNextPrevButtonClick = (e) =>
@@ -168,10 +239,18 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	updateData = action((data) =>
 	{
 		this.data = data;
+		this.updateSelectedTags(this.generateTagSelectOptions(this.data.tags));
+
 		log.debug("UPDATE DATA:", this.data);
 
-		// Set the default expand to false every time data is changed.
+		// Set the defaults every time data is changed.
 		this.expandDataPreviewImage = false;
+		this.tagsEditModeEnabled = false;
+	});
+
+	updateSelectedTags = action((data) =>
+	{
+		this.selectedTags = data;
 	});
 
 	refreshClicked = (e) =>
@@ -511,23 +590,44 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isBlockTagsAvailable())
 			return null;
 
-		const data = _.sortBy(this.data.tags, "name");
-
-		const tags = [];
-		data.forEach(function(tag, t)
+		let tags;
+		if(!this.tagsEditModeEnabled)
 		{
-			const html =
-			(
-				<span key={t} className="tag" style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}}>
-					{tag.name}
-				</span>
-			);
-			tags.push(html);
-		});
+			tags = [];
+
+			const data = _.sortBy(this.data.tags, "name");
+			data.forEach(function(tag, t)
+			{
+				const html =
+				(
+					<span key={t} className="tag" style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}}>
+						{tag.name}
+					</span>
+				);
+				tags.push(html);
+			});
+		}
+		else
+		{
+			const selectStyles = reactSelect.generateSelectStyles();
+			const selectOptions = this.generateTagSelectOptions(this.data.tags);
+			tags = <Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedTags)} onChange={this.updateSelectedTags} isMulti placeholder="Select Tags..." />;
+		}
+
+		const editButton = (!this.tagsEditModeEnabled) ? <button type="button" className="edit-button flat" onClick={this.handleEditTagsClick}>Edit</button> : null;
+		const saveCancelButtons = (!this.tagsEditModeEnabled) ? null :
+		(
+			<div className="edit-save-button-container">
+				<button type="button" className="cancel-button flat" onClick={this.handleEditTagsCancel}>Cancel</button>
+				<button type="button" className="save-button flat" onClick={this.handleEditTagsSave}>Save</button>
+			</div>
+		);
 
 		const html =
 		(
 			<div className="tags-container">
+				{editButton}
+				{saveCancelButtons}
 				{tags}
 			</div>
 		);
