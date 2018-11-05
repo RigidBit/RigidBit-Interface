@@ -80,12 +80,15 @@ section.block
 
 		.tags-container
 		{
+			margin-bottom: -1 * $margin-button;
+
 			.tag
 			{
 				border-radius: $border-radius-input;
 				display: inline-block;
 				font-family: $font-family-default;
 				font-size: 10px;
+				margin-bottom: $margin-button;
 				margin-right: $margin-button;
 				padding: $padding-thin/4 $padding-thin $padding-thin/4 $padding-thin;
 				white-space: nowrap;
