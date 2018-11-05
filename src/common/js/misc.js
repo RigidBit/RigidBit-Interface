@@ -218,8 +218,8 @@ export function calculateLuminance(hexColor)
  */
 export function calculateContrastColor(hexColor)
 {
-	if(calculateLuminance(hexColor) > 0.149)
-		return "555555";
+	if(calculateLuminance(hexColor) > 0.379)
+		return "333333";
 	else
 		return "ffffff";
 }
