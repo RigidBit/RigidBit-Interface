@@ -210,6 +210,11 @@ export function patchUrl(url, data, useCache=false)
 	return fetchUrl(url, "PATCH", data, useCache);
 }
 
+export function putUrl(url, data, useCache=false)
+{
+	return fetchUrl(url, "PUT", data, useCache);
+}
+
 export function deleteUrl(url, useCache=false)
 {
 	return fetchUrl(url, "DELETE", null, useCache);
