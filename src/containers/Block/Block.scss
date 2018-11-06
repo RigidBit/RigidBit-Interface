@@ -21,6 +21,7 @@ section.block
 	.block-container,
 	.block-data-container,
 	.block-meta-container,
+	.block-tags-container,
 	.block-preview-container
 	{
 		@include sectionContainerDefaultMixin;
@@ -73,22 +74,21 @@ section.block
 
 	.block-meta-container
 	{
-		overflow: visible;
-
 		table
 		{
-			overflow: visible;
-
 			td.metric
 			{
 				text-transform: capitalize;
 			}
 		}
+	}
+
+	.block-tags-container
+	{
+		overflow: visible;
 
 		.tags-container
 		{
-			margin-bottom: -1 * $margin-button;
-
 			.edit-button,
 			.edit-save-button-container
 			{
@@ -97,6 +97,7 @@ section.block
 
 			.edit-save-button-container
 			{
+				text-align: right;
 				width: 120px;
 
 				@include media("<tablet")
@@ -110,7 +111,7 @@ section.block
 				border-radius: $border-radius-input;
 				display: inline-block;
 				font-family: $font-family-default;
-				font-size: 10px;
+				font-size: 12px;
 				margin-bottom: $margin-button;
 				margin-right: $margin-button;
 				padding: $padding-thin/4 $padding-thin $padding-thin/4 $padding-thin;
@@ -130,13 +131,12 @@ section.block
 
 				@include media("<tablet")
 				{
-					margin-bottom: $margin-default;
 					max-width: calc(100% - 80px); // Leave room for .edit-save-button-container.
 				}
 
 				@include reactSelectMixin;
 			}
-		}
+		}		
 	}
 
 	.block-preview-container

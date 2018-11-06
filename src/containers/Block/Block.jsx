@@ -190,7 +190,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isBlockTagsAvailable = () =>
 	{
-		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("tags") && _.isArray(mobx.toJS(this.data.tags)) && this.data.tags.length > 0)
+		const validBlockTypes = ["file", "filehash", "text"];
+
+		if(this.isDataReady() && this.isDataValid() && _.has(this.data, "tagsAvailable") && _.includes(validBlockTypes, this.data.block.block_type.toLowerCase()))
 			return true;
 
 		return false;
@@ -473,7 +475,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataValid())
 			return null;
 
-		if(!this.isBlockMetaAvailable() && !this.isBlockTagsAvailable())
+		if(!this.isBlockMetaAvailable())
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
@@ -501,33 +503,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		});
 
-		// Add tags if available.
-		if(_this.isBlockTagsAvailable())
-		{
-			const html =
-			(
-				<tr key="tags">
-					<td className="metric">Tags:</td>
-					<td className="value">{this.renderBlockTags()}</td>
-					<td className="empty" />
-				</tr>
-			);
-			tableRows.push(html);
-		}
-
 		// Add a single timestamp to the end. Use the first meta data entry for this.
-		if(_this.isBlockMetaAvailable())
-		{
-			const html =
-			(
-				<tr key="timestamp">
-					<td className="metric">Timestamp:</td>
-					<td className="value">{misc.timestampToDate(data.meta[0]["timestamp"])}</td>
-					<td className="empty" />
-				</tr>
-			);
-			tableRows.push(html);
-		} 
+		const html =
+		(
+			<tr key="timestamp">
+				<td className="metric">Timestamp:</td>
+				<td className="value">{misc.timestampToDate(data.meta[0]["timestamp"])}</td>
+				<td className="empty" />
+			</tr>
+		);
+		tableRows.push(html);
 
 		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
@@ -602,11 +587,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderBlockTags = () =>
 	{
+		const containerClassName = "block-tags-container";
+		const containerTitle = "Block Tags";
+
 		if(!this.isBlockTagsAvailable())
 			return null;
 
 		let tags;
-		if(!this.tagsEditModeEnabled)
+		if(!this.tagsEditModeEnabled && this.data.tags.length > 0)
 		{
 			tags = [];
 
@@ -621,6 +609,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				);
 				tags.push(html);
 			});
+		}
+		else if(!this.tagsEditModeEnabled)
+		{
+			tags = <i>No tags have been added to this block.</i>;
 		}
 		else
 		{
@@ -644,9 +636,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				{editButton}
 				{saveCancelButtons}
 				{tags}
+				{htmlHelpers.clear()}
 			</div>
 		);
-		return html;
+		return htmlHelpers.renderContainer(containerClassName, containerTitle, html);
 	};
 
 	renderBlockVerify = () =>
@@ -729,6 +722,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const block = this.renderBlock();
 		const blockData = this.renderBlockData();
 		const blockMeta = this.renderBlockMeta();
+		const blockTags = this.renderBlockTags();
 		const blockPreview = this.renderBlockDataPreview();
 		const controls = this.renderControls();
 
@@ -745,6 +739,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					{block}
 					{blockData}
 					{blockMeta}
+					{blockTags}
 					{blockPreview}
 				</div>
 
