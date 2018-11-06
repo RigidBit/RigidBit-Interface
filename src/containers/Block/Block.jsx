@@ -68,10 +68,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return extension;
 	}
 
-	generateTagSelectOptions = (data) =>
+	generateTagSelectOptions = (data, showHidden=true) =>
 	{
 		if(!data)
 			return [];
+
+		if(!showHidden)
+			data = data.filter((item)=>!item.hidden);
 
 		const selectOptions = data.map(function(item, i)
 		{
@@ -83,6 +86,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			};
 			return option;
 		});
+
 		return _.sortBy(selectOptions, "label");
 	};
 
@@ -286,6 +290,17 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null}, data);
+			_this.updateData(newData);
+		})
+		.catch(function(error)
+		{
+			_this.refreshDataFailure(error);
+		});
+
+		api.getUrl(`/api/tags`, false)
+		.then(function(data)
+		{
+			const newData = _.merge(mobx.toJS(_this.data), {tagsAvailable: null}, {tagsAvailable: data});
 			_this.updateData(newData);
 		})
 		.catch(function(error)
@@ -610,7 +625,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		else
 		{
 			const selectStyles = reactSelect.generateSelectStyles();
-			const selectOptions = this.generateTagSelectOptions(this.data.tags);
+			const selectOptions = this.generateTagSelectOptions(this.data.tagsAvailable, false);
 			tags = <Select className="react-select" classNamePrefix="react-select" options={selectOptions} styles={selectStyles} value={mobx.toJS(this.selectedTags)} onChange={this.updateSelectedTags} isMulti placeholder="Select Tags..." />;
 		}
 
