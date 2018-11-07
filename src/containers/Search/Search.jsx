@@ -32,12 +32,16 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 			action(()=> { this.searchPhrase = store.routeParams.q; })();
 
 		this.search.current.focus();
+
+	    this.search.current.addEventListener("keydown", this.handleSearchKeyPress, false);
 	}
 
 	componentWillUnmount()
 	{
 		if(this.autorun)
 			this.autorun();
+
+	    this.search.current.removeEventListener("keydown", this.handleSearchKeyPress, false);
 	}
 
 	_handleSearchChange = _.debounce((phrase) =>
@@ -52,6 +56,13 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 	handleSearchChange = (e) =>
 	{
 		this._handleSearchChange(this.search.current.value);
+	};
+	handleSearchKeyPress = (e) =>
+	{
+		if(this.search.current && this.search.current === e.currentTarget && e.keyCode === 27)
+		{
+			this.search.current.value = "";
+		}
 	};
 
 	refreshClicked = (e) =>
