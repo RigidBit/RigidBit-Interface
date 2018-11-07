@@ -1,0 +1,48 @@
+section.search
+{
+	.search-container
+	{
+		.search-results
+		{
+			.search-result
+			{
+				border-radius: $border-radius-default;
+				margin: $margin-default 0 0 0;
+
+				td
+				{
+					text-align: left;
+
+					&:first-child
+					{
+						white-space: nowrap;
+						width: 120px; 
+					}
+				}
+
+				.tag
+				{
+					border-radius: $border-radius-input;
+					display: inline-block;
+					font-family: $font-family-default;
+					font-size: 12px;
+					margin-bottom: $margin-button;
+					margin-right: $margin-button;
+					padding: $padding-thin/4 $padding-thin $padding-thin/4 $padding-thin;
+					white-space: nowrap;
+
+					&:last-child
+					{
+						margin-right: 0;
+					}
+				}
+
+				.highlight
+				{
+					color: $color-red;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}

@@ -4,7 +4,7 @@ class Component extends React.Component
 	{
 		e.preventDefault();
 
-		const route = e.target.href.split("#")[1];
+		const route = e.currentTarget.href.split("#")[1];
 
 		const params = (route === "blocks") ? config.navigationDefaultBlocksParams : null;
 
@@ -22,6 +22,7 @@ class Component extends React.Component
 			[["#blocks", "#block"], "Blocks"],
 			["#upload", "Upload"],
 			["#settings", "Settings"],
+			["#search", <i className="fas fa-search"></i>],
 		];
 
 		const links = [];

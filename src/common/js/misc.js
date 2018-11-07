@@ -132,7 +132,6 @@ export function ucwords(str)
 		});
 }
 
-
 /**
  * The splice() method changes the content of a string by removing a range of
  * characters and/or adding new characters.

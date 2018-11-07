@@ -1,0 +1,37 @@
+section.search
+{
+	@include contentMixin;
+
+	.search-container
+	{
+		@include sectionContainerDefaultMixin;
+
+		h2
+		{
+			display: none;
+		}
+
+		input[name="search"]
+		{
+			font-size: 1.4em;
+			line-height: 1.4em;
+		}
+
+		.search-results
+		{
+			.count
+			{
+				font-size: 0.8em;
+				margin: $margin-default 0 $margin-default 0;
+				text-align: center;
+			}
+
+			.no-results
+			{
+				font-style: italic;
+				margin: $margin-default 0 0 0;
+				text-align: center;
+			}
+		}
+	}
+}

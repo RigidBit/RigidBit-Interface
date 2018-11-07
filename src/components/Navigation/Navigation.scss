@@ -37,6 +37,11 @@ nav.main
 				padding: 0 $padding-default/2 0 $padding-default/2;
 				text-decoration: none;
 				width: 100%;
+
+				&[href="#search"]
+				{
+					color: rgba($font-color-default, 0.7);
+				}
 			}
 		}
 	}

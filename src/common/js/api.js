@@ -43,11 +43,12 @@ function cacheKeyGenerate(url, method, data=null)
  * @param  {string}		method 		The HTTP method type of the request.
  * @param  {object}		data   		An JSON compatible object with all request data. 
  * @param  {Boolean}	useCache	If true, a cached response will be returned if available.
+ * @param  {Boolean}	background	If true, will execute fetch in background mode without loading indicators.
  * @param  {onSuccessCallback} onSuccess A function called on successful execution. 
  * @param  {onFailureCallback} onError	 A function called on a failed execution.
  * @return {Promise} The resulting promise of the request.
  */
-export function fetchUrl(url, method="GET", data=null, useCache=false)
+export function fetchUrl(url, method="GET", data=null, useCache=false, background=false)
 {
 	const cacheKey = cacheKeyGenerate(url, method, data);
 	const apiUrl = apiUrlFromRelativePath(url);
@@ -56,7 +57,8 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 	log.debug("FETCH DATA:", data);
 	log.debug("USE CACHE:", useCache);
 
-	loading.show();
+	if(!background)
+		loading.show();
 
 	// Check for cached response.
 	if(useCache)
@@ -68,7 +70,8 @@ export function fetchUrl(url, method="GET", data=null, useCache=false)
 
 			log.debug("Cached JSON:", json);
 
-			loading.hide();
+			if(!background)
+				loading.hide();
 
 			return Promise.resolve(json);
 		}
@@ -195,27 +198,27 @@ export function apiUrlFromRelativePath(relativeUrl)
 	return url;
 }
 
-export function getUrl(url, useCache=false)
+export function getUrl(url, useCache=false, background=false)
 {
-	return fetchUrl(url, "GET", null, useCache);
+	return fetchUrl(url, "GET", null, useCache, background);
 }
 
-export function postUrl(url, data, useCache=false)
+export function postUrl(url, data, useCache=false, background=false)
 {
-	return fetchUrl(url, "POST", data, useCache);
+	return fetchUrl(url, "POST", data, useCache, background);
 }
 
-export function patchUrl(url, data, useCache=false)
+export function patchUrl(url, data, useCache=false, background=false)
 {
-	return fetchUrl(url, "PATCH", data, useCache);
+	return fetchUrl(url, "PATCH", data, useCache, background);
 }
 
-export function putUrl(url, data, useCache=false)
+export function putUrl(url, data, useCache=false, background=false)
 {
-	return fetchUrl(url, "PUT", data, useCache);
+	return fetchUrl(url, "PUT", data, useCache, background);
 }
 
-export function deleteUrl(url, useCache=false)
+export function deleteUrl(url, useCache=false, background=false)
 {
-	return fetchUrl(url, "DELETE", null, useCache);
+	return fetchUrl(url, "DELETE", null, useCache, background);
 }

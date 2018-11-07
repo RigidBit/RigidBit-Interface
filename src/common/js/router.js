@@ -10,6 +10,7 @@ export const routes =
 	{ name: "dashboard", path: "/dashboard" },
     { name: "settings", path: "/settings" },
 	{ name: "upload", path: "/upload" },
+    { name: "search", path: "/search?:q" },
 ];
 
 const storeUpdatePlugin = function(router, dependencies)

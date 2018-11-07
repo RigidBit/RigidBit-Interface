@@ -2,6 +2,7 @@ import Block from "../Block/Block.jsx";
 import Blocks from "../Blocks/Blocks.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
 import Login from "../Login/Login.jsx";
+import Search from "../Search/Search.jsx";
 import Settings from "../Settings/Settings.jsx";
 import Upload from "../Upload/Upload.jsx";
 
@@ -29,6 +30,9 @@ import Upload from "../Upload/Upload.jsx";
 				break;
 			case "upload":
 				html = <Upload />;
+				break;
+			case "search":
+				html = <Search />;
 				break;
 			default:
 				html = "Invalid route";
