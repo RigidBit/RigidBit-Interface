@@ -80,7 +80,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		if(this.searchPhrase == "")
 			return;
 
-		api.getUrl(`/api/search/${this.searchPhrase}?mode=or`, false, true)
+		api.getUrl(`/api/search/${this.searchPhrase}`, false, true)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {searchResults: null}, {searchResults: data});
