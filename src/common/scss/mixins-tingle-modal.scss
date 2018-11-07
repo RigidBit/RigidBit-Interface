@@ -2,6 +2,11 @@
 {
 	background: rgba(0, 0, 0, 0.3);
 
+	// These styles override the Tingle defaults to blur the background on some browsers.
+    -webkit-backdrop-filter: none;
+    -webkit-filter: none;
+    filter: none;
+
 	&.tingle-modal--hiding
 	{
 		transition: opacity 0.3s;
