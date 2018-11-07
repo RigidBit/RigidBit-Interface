@@ -169,6 +169,12 @@ function initAddTagForm()
 		updateAddTagState();
 	});
 
+	$name.on("keypress", function(e)
+	{
+		if(e.keyCode === 32)
+			return false;
+	});
+
 	$button.click();
 }
 
@@ -200,6 +206,12 @@ function initEditTagForm()
 	$name.on("change keyup", function(e)
 	{
 		updateEditTagState();
+	});
+
+	$name.on("keypress", function(e)
+	{
+		if(e.keyCode === 32)
+			return false;
 	});
 
 	updateEditTagState();
@@ -321,8 +333,6 @@ function updateEditTagState()
 	const colorValid = $color.is(":valid");
 	const nameValid = $name.is(":valid");
 	const hiddenValid = $hidden.val().length > 0;
-
-console.log($confirm, colorValid, nameValid, hiddenValid);
 
 	if(colorValid)
 	{
