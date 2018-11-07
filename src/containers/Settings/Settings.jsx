@@ -108,6 +108,14 @@ import Table from "../../components/Table/Table.jsx";
 		});
 	};
 
+	handleTagNameClick = (e) =>
+	{
+		e.preventDefault();
+
+		const q = "tag:" + e.currentTarget.dataset.name;
+		router.navigate("search", {q})
+	};
+
 	handleTimestampSubmitButtonClick = (e) =>
 	{
 		if(e)
@@ -207,7 +215,8 @@ import Table from "../../components/Table/Table.jsx";
 			},
 			{
 				Header: "Name",
-				accessor: "name",
+				id: "name",
+				accessor: (d)=>this.renderTagsName(d.name),
 				className: "name",
 				headerClassName: "name",
 			},
@@ -266,6 +275,15 @@ import Table from "../../components/Table/Table.jsx";
 				<span className="color-preview" style={{"background": color}} />
 				{color}
 			</div>
+		);
+		return html;
+	};
+
+	renderTagsName = (name) =>
+	{
+		const html =
+		(
+			<a href={"/#/search?q=tag%3A"+name} data-name={name} onClick={this.handleTagNameClick}>{name}</a>
 		);
 		return html;
 	};
