@@ -54,6 +54,11 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		this._handleSearchChange(this.search.current.value);
 	};
 
+	refreshClicked = (e) =>
+	{
+		this.refreshData(false);
+	};
+
 	_refreshData = (useCache=false) =>
 	{
 		const _this = this;
@@ -155,11 +160,9 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 				<div className="content">
 					<h1>
 						Search Blocks
-						{
-							// <div className="controls">
-							// 	<button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>
-							// </div>
-						}
+						<div className="controls">
+							<button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>
+						</div>
 					</h1>
 					{search}
 				</div>

@@ -261,9 +261,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	refreshClicked = (e) =>
 	{
-		if(e)
-			e.preventDefault();
-
 		this.refreshData(false);
 	};
 
