@@ -189,7 +189,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.fileHashCheckboxChanged();
 
 			const noun = (url === "/api/file") ? "File" : "Filehash";
-			iziToast.success({title: "Success", message: `${noun} has been saved.`});
+			const linkUrl = "/#/block/"+data.id;
+			iziToast.success({title: "Success", message: `${noun} has been saved.&nbsp; <a href="${linkUrl}">View</a>`});
 		})
 		.catch(function(error)
 		{
@@ -221,7 +222,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.updateSelectedTextTags([]);
 			_this.handleTextAreaChange();
 
-			iziToast.success({title: "Success", message: "Text has been saved."});
+			const linkUrl = "/#/block/"+data.id;
+			iziToast.success({title: "Success", message: `Text has been saved.&nbsp; <a href="${linkUrl}">View</a>`});
 		})
 		.catch(function(error)
 		{
