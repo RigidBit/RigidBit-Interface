@@ -609,7 +609,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		}
 		else if(!this.tagsEditModeEnabled)
 		{
-			tags = <i>No tags have been added to this block.</i>;
+			tags = "No tags have been added to this block.";
 		}
 		else
 		{
