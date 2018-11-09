@@ -1,3 +1,5 @@
+import iziToast from "izitoast";
+
 import * as htmlHelpers from "../../common/js/html.jsx";
 
 import Footer from "../../components/Footer/Footer.jsx";
