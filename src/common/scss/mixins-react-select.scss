@@ -11,6 +11,11 @@
 		}
 	}
 
+	.react-select__multi-value
+	{
+		border-radius: $border-radius-input;
+	}
+
 	.react-select__multi-value__label
 	{
 		border-radius: $border-radius-input 0 0 $border-radius-input;
