@@ -25,10 +25,10 @@ section.search
 					border-radius: $border-radius-input;
 					display: inline-block;
 					font-family: $font-family-default;
-					font-size: 12px;
+					font-size: 0.75em;
 					margin-bottom: $margin-button;
 					margin-right: $margin-button;
-					padding: $padding-thin/4 $padding-thin $padding-thin/4 $padding-thin;
+					padding: 0.15em 0.4em 0.15em 0.4em;
 					white-space: nowrap;
 
 					&:last-child
