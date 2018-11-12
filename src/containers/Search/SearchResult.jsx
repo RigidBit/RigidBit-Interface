@@ -194,7 +194,7 @@ class Component extends React.PureComponent
 					let location = _this.indexOfFirstTerm(text, search) - Math.round(config.maximumSearchDataLength / 4);
 					if(location < 0) location = 0;
 					const highlightedText = _this.highlightSearches(misc.uintToString(value.data).substr(location, config.maximumSearchDataLength), search);
-					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value text"><div>{highlightedText}{location}</div></td><td className="empty"></td></tr>;
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value text"><div>{highlightedText}</div></td><td className="empty"></td></tr>;
 				}
 			}
 
