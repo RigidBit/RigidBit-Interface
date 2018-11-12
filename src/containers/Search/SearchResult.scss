@@ -18,6 +18,12 @@ section.search
 						white-space: nowrap;
 						width: 120px; 
 					}
+
+					&.value.text > div
+					{
+						max-height: 16px;
+						overflow: hidden;
+					}
 				}
 
 				.tag
@@ -34,6 +40,17 @@ section.search
 					&:last-child
 					{
 						margin-right: 0;
+					}
+
+					&.active
+					{
+					}
+
+					&.inactive:not(:hover)
+					{
+						background: rgba(#000000, 0.1) !important;
+						color: #000000 !important;
+						opacity: 0.2;
 					}
 				}
 

@@ -8,6 +8,7 @@ const config =
 	debouceDelayShort: 100,
 	footerResizeTimerInterval: 500,
 	minimumSearchPhraseLength: 3,
+	maximumSearchDataLength: 140,
 	navigationDefaultBlocksParams: {count: 10, offset: 0, type: "user"},
 };
 

@@ -18,7 +18,7 @@ class Component extends React.PureComponent
 		const needles = needle.split(/\s+/);
 		for(let n = 0; n < needles.length; ++n)
 		{
-			const needle = needles[n].replace(/^(?:filename\:|tag\:)/gi, "");
+			const needle = needles[n].replace(/^(?:data\:|filename\:|hash\:|tag\:)/gi, "");
 
 			if(needle.length < config.minimumSearchPhraseLength)
 				continue;
@@ -43,17 +43,72 @@ class Component extends React.PureComponent
 		return <span>{slices}</span>;
 	}
 
-	renderFilenameRow = (m, key, label, value, search) =>
+	/**
+	 * Determins if the specified input string (haystack) contains any needles (search terms).
+	 */
+	areTermsPresent(haystack, needle)
 	{
-		if(_.isArray(value))
+		const needles = needle.split(/\s+/);
+		for(let n = 0; n < needles.length; ++n)
 		{
-			for(let i = 0; i < value.length; ++i)
+			const needle = needles[n].replace(/^(?:filename\:|hash\:|tag\:)/gi, "");
+
+			if(needle.length < config.minimumSearchPhraseLength)
+				continue;
+
+			const re = new RegExp(`(${needle})`, "gi");
+			const result = re.test(String(haystack));
+
+			if(result)
+				return true;
+		}
+
+		return false;
+	}
+
+	findItemContainingKey = (items, key, value) =>
+	{
+		if(_.isArray(items))
+		{
+			for(let i = 0; i < items.length; ++i)
 			{
-				if(value[i].name === key)
+				if(_.isObject(items[i]) && _.has(items[i], key) && items[i][key] === value)
 				{
-					return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{this.highlightSearches(value[i].value, search)}</td><td className="empty"></td></tr>;
+					return items[i];
 				}
 			}
+		}
+
+		return null;
+	};
+
+	indexOfFirstTerm = (haystack, needles) =>
+	{
+		haystack = haystack.toLowerCase();
+		needles = needles.split(/\s+/);
+
+		for(let n = 0; n < needles.length; ++n)
+		{
+			const needle = needles[n].replace(/^(?:data\:|filename\:|hash\:|tag\:)/gi, "");
+
+			if(needle.length < config.minimumSearchPhraseLength)
+				continue;
+
+			const index = haystack.indexOf(needle);
+
+			if(index !== -1)
+				return index;
+		}
+
+		return -1;
+	}
+
+	renderFilenameRow = (m, key, label, value, search) =>
+	{
+		const item = this.findItemContainingKey(value, "name", "filename");
+		if(item)
+		{
+			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{this.highlightSearches(item.value, search)}</td><td className="empty"></td></tr>;
 		}
 
 		return null;
@@ -70,9 +125,11 @@ class Component extends React.PureComponent
 				const tags = [];
 				value.forEach(function(tag, t)
 				{
+					const className = (_this.areTermsPresent(tag.name, search)) ? "tag active" : "tag inactive";
+
 					const html =
 					(
-						<span key={t} className="tag" style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}}>
+						<span key={t} className={className} style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}}>
 							{_this.highlightSearches(tag.name, search)}
 						</span>
 					);
@@ -94,6 +151,7 @@ class Component extends React.PureComponent
 			["id", "Block ID/Type", data.block],
 			["hash", "Block Hash", data.block.hash],
 			["filename", "Filename", data.meta],
+			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
 		];
@@ -114,10 +172,39 @@ class Component extends React.PureComponent
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{value}</td><td className="empty"></td></tr>;
 
 			else if(key === "filename")
-				row = _this.renderFilenameRow(m, key, label, value, search);
+			{
+				const item = _this.findItemContainingKey(value, "name", key);
+				if(item && (data.block.block_type.toLowerCase() === "file" || _this.areTermsPresent(item.value, search)))
+				{
+					row = _this.renderFilenameRow(m, key, label, value, search);
+				}
+			}
+
+			else if(key === "hash")
+			{
+				if(_this.areTermsPresent(value, search))
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
+			}
+
+			else if(key === "text")
+			{
+				if(_.has(value, "data") && data.block.block_type.toLowerCase() === "text")
+				{
+					const text = misc.uintToString(value.data);
+					let location = _this.indexOfFirstTerm(text, search) - Math.round(config.maximumSearchDataLength / 4);
+					if(location < 0) location = 0;
+					const highlightedText = _this.highlightSearches(misc.uintToString(value.data).substr(location, config.maximumSearchDataLength), search);
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value text"><div>{highlightedText}{location}</div></td><td className="empty"></td></tr>;
+				}
+			}
 
 			else if(key === "tags")
-				row = _this.renderTagRow(m, key, label, value, search);
+			{
+				if(_this.areTermsPresent(value.map((o)=>o.name).join(" "), search))
+				{
+					row = _this.renderTagRow(m, key, label, value, search);
+				}
+			}
 
 			else
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
