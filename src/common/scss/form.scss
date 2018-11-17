@@ -171,6 +171,7 @@ select
 textarea
 {
 	padding: $padding-input;
+	-webkit-appearance: none; // Remove the top shadow on iOS.
 }
 
 label
