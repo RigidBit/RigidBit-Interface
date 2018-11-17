@@ -60,8 +60,8 @@ export function fetchUrl(url, method="GET", data=null, useCache=false, backgroun
 	if(!background)
 		loading.show();
 
-	// Check for cached response.
-	if(useCache)
+	// Check for cached response. Never cache when FormData is submitted since that is not considered in the cache key.
+	if(useCache && !(data instanceof FormData))
 	{
 		const cachedResponse = lscache.get(cacheKey);
 		if(cachedResponse !== null)
