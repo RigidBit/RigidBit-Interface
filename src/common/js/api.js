@@ -77,6 +77,10 @@ export function fetchUrl(url, method="GET", data=null, useCache=false, backgroun
 		}
 	}
 
+	// Invalidate cache when a new request will occur.
+	removeCache(url, method, data);
+
+	// Always convert data into a FormData object.
 	let formData = null;
 	if(data)
 	{
