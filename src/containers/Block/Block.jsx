@@ -30,12 +30,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			this.refreshData();
 		});
+
+		this.registerKeypressHandler(true);
 	}
 
 	componentWillUnmount()
 	{
 		if(this.autorun)
 			this.autorun();
+
+		this.registerKeypressHandler(false);
 	}
 
 	dataArrayToFormattedText = (data) =>
@@ -110,7 +114,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			this.tagsEditModeEnabled = true;
 		})();
-	}
+	};
 
 	handleEditTagsCancel = (e) =>
 	{
@@ -240,6 +244,44 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return false;
 
 		return true;
+	};
+
+	registerKeypressHandler = (addHandler) =>
+	{
+		const _this = this;
+
+		if(addHandler)
+		{
+			$(document).on("keydown", function(e)
+			{
+				let modifier;
+
+				if(e.key === "ArrowLeft")
+				{
+					e.preventDefault();
+					modifier = -1;
+				}
+				else if(e.key === "ArrowRight")
+				{
+					e.preventDefault();
+					modifier = 1;
+				}
+
+				if(e.key === "ArrowLeft" || e.key === "ArrowRight")
+				{
+					let id = parseInt(_this.data.block.id) + modifier;
+
+					if(id < 1) id = 1;
+					if(id > _this.data.block_count) id = _this.data.block_count;
+
+					router.navigate("block", {id: id});
+				}
+			});
+		}
+		else
+		{
+			$(document).off("keydown");
+		}
 	};
 
 	updateData = action((data) =>
