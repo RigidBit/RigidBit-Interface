@@ -316,7 +316,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!("id" in store.routeParams))
 			return _this.refreshDataFailure("ID not found in route parameters.");
 
-		api.getUrl(`/api/count`, false)
+		api.getUrl(`/api/count`, false) // We do not use cache here because this allow the next/prev buttons to always be accurate.
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {block_count: null}, data);
@@ -338,7 +338,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.refreshDataFailure(error);
 		});
 
-		api.getUrl(`/api/tags`, false)
+		api.getUrl(`/api/tags`, useCache)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {tagsAvailable: null}, {tagsAvailable: data});

@@ -46,6 +46,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.postUrl("/api/tags", data, false)
 		.then(function(data)
 		{
+			_this.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
 			_this.refreshData();
 		})
 		.catch(function(error)
