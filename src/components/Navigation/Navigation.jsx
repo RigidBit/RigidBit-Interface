@@ -6,7 +6,9 @@ class Component extends React.Component
 
 		const route = e.currentTarget.href.split("#")[1];
 
-		const params = (route === "blocks") ? config.navigationDefaultBlocksParams : null;
+		let params = null;
+		if (route === "blocks") params = config.navigationDefaultBlocksParams;
+		else if (route === "monitor") params = config.navigationDefaultMonitorParams;
 
 		router.navigate(route, params);
 	}
@@ -20,6 +22,7 @@ class Component extends React.Component
 		[
 			["#dashboard", "Dashboard"],
 			[["#blocks", "#block"], "Blocks"],
+			["#monitor", "Monitor"],
 			["#upload", "Upload"],
 			["#settings", "Settings"],
 			["#search", <i className="fas fa-search"></i>],
