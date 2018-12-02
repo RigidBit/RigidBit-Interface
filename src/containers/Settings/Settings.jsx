@@ -313,7 +313,7 @@ import Table from "../../components/Table/Table.jsx";
 				</div>
 				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
 					<div className="button-container">
-						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Save Timestamp"><i className="far fa-save icon"></i>Save</button>
+						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Create Timestamp"><i className="far fa-save icon"></i>Create Timestamp</button>
 					</div>
 				</form>
 			</div>
