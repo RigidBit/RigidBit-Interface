@@ -50,6 +50,7 @@ function cacheKeyGenerate(url, method, data=null)
  */
 export function fetchUrl(url, method="GET", data=null, useCache=false, background=false)
 {
+	method = method.toUpperCase();
 	const cacheKey = cacheKeyGenerate(url, method, data);
 	const apiUrl = apiUrlFromRelativePath(url);
 
@@ -167,8 +168,9 @@ export function reformatError(errorObj)
  * @param  {object} data   An JSON compatible object with all request data. 
  * @return {void}
  */
-export function removeCache(url, method, data=null)
+export function removeCache(url, method="GET", data=null)
 {
+	method = method.toUpperCase();
 	const cacheKey = cacheKeyGenerate(url, method, data);
 	lscache.remove(cacheKey);
 }
