@@ -26,14 +26,6 @@ section.monitor
 					&.file_size
 					{
 						white-space: nowrap;
-
-						.bytes
-						{
-							@include media("<desktop")
-							{
-								display: none;
-							}
-						}
 					}
 
 					&.last_modified
