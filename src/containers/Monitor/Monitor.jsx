@@ -162,7 +162,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				const html =
 				(
 					<tr key={r}>
-						<td className="id item">{row.id}</td>
+						<td className="filename item">{misc.filenameFromPath(row.file_path)}</td>
 						<td className="file_path item">{row.file_path}</td>
 						<td className="file_size item">{filesize(row.file_size)} <span className="bytes">{`(${parseInt(row.file_size).toLocaleString()} bytes)`}</span></td>
 						<td className="last_modified item">{misc.timestampToDate(row.last_modified)}</td>
@@ -178,7 +178,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<table>
 					<thead>
 						<tr>
-							<th className="id">ID</th>
+							<th className="filename">Filename</th>
 							<th className="file_path">File Path</th>
 							<th className="file_size">Filesize</th>
 							<th className="last_modified">Last Modified</th>

@@ -97,6 +97,19 @@ export function timestampToDate(timestamp)
 }
 
 /**
+ * Find the filename component of a file path.
+ *
+ * Source: https://stackoverflow.com/a/423385/9979
+ * 
+ * @param  {String} filePath A filename with full path.
+ * @return {String}          The filename.
+ */
+export function filenameFromPath(filePath)
+{
+	return filePath.replace(/^.*[\\\/]/, '');
+}
+
+/**
  * Find the extension of a filename.
  * 
  * Source: https://stackoverflow.com/a/680982/9979

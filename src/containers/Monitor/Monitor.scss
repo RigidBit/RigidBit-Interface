@@ -18,9 +18,9 @@ section.monitor
 				td,
 				th
 				{
-					&.id
+					&.filename
 					{
-						display: none;
+						white-space: nowrap;
 					}
 
 					&.file_size
@@ -38,12 +38,8 @@ section.monitor
 
 					&.last_modified
 					{
+						display: none;
 						min-width: 180px;
-
-						@include media("<desktop")
-						{
-							display: none;
-						}
 					}
 
 					&.timestamp
