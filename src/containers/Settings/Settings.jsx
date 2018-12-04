@@ -46,7 +46,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.postUrl("/api/tags", data, false)
 		.then(function(data)
 		{
-			_this.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
+			api.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
 			_this.refreshData();
 		})
 		.catch(function(error)
@@ -74,6 +74,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.deleteUrl("/api/tags/"+id, false)
 		.then(function(data)
 		{
+			api.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
 			_this.refreshData();
 		})
 		.catch(function(error)
@@ -100,6 +101,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.patchUrl("/api/tags/"+data.id, data, false)
 		.then(function(data)
 		{
+			api.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
 			_this.refreshData();
 		})
 		.catch(function(error)
