@@ -267,7 +267,11 @@ import Table from "../../components/Table/Table.jsx";
 				</div>
 			</div>
 		);
-		return htmlHelpers.renderContainer("tags-container", title, <Table data={data} columns={columns} />);
+
+		if(data.length === 0)
+			return htmlHelpers.renderContainer("tags-container", title, <div className="empty">No tags have been created.</div>);
+		else
+			return htmlHelpers.renderContainer("tags-container", title, <Table data={data} columns={columns} />);
 	};
 
 	renderTagsColorPreview = (color) =>

@@ -26,6 +26,11 @@ section.settings
 			@include controlsMixin;
 		}
 
+		.empty
+		{
+			text-align: center;			
+		}
+
 		.react-table
 		{
 			overflow: auto;
