@@ -195,6 +195,20 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("block", {id: $(e.currentTarget).text()});
 	};
 
+	handleViewBlockTypeClick = (e) =>
+	{
+		e.preventDefault();
+
+		const params =
+		{
+			count: 10,
+			offset: 0,
+			type: $(e.currentTarget).text().toLowerCase(),
+		};
+
+		router.navigate("blocks", params);
+	};
+
 	isBlockDataAvailable = () =>
 	{
 		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("data") && this.data.data !== null)
@@ -410,8 +424,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const label = metric[1];
 			let value = data[metric[0]];
 
-			if(key === "prev_hash")
+			if(key === "id" || key === "hash" || key === "prev_hash")
 				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClick}>{value}</a>
+
+			else if(key === "block_type")
+				value = <a href={"#/blocks/10/0?type=" + value} onClick={_this.handleViewBlockTypeClick}>{value}</a>
 
 			else if(key === "timestamp")
 				value = misc.timestampToDate(value);
