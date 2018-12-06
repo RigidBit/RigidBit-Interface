@@ -121,7 +121,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const chartDataFiltered = _.cloneDeep(charts.dataBaseSet1);
 		this.data.block_type_count.forEach(function(item)
 		{
-			if(item.block_type !== "Genesis" && item.block_type !== "Timestamp")
+			if(item.block_type === "File" || item.block_type === "FileHash" || item.block_type === "Text")
 			{
 				chartDataFiltered.labels.push(item.block_type);
 				chartDataFiltered.datasets[0].data.push(item.block_count);
@@ -161,7 +161,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const types = ["file", "filehash", "text", "timestamp"];
+		const types = ["file", "filehash", "text", "timestamp", "sync"];
 		const dates = Object.keys(this.data.block_type_usage_daily).sort();
 		const block_type_usage_daily = _.mapValues(mobx.toJS(this.data.block_type_usage_daily), function(date)
 		{
@@ -212,7 +212,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const types = ["file", "filehash", "text", "timestamp"];
+		const types = ["file", "filehash", "text", "timestamp", "sync"];
 		const dates = Object.keys(this.data.block_type_usage_hourly).sort();
 		const block_type_usage_hourly = _.mapValues(mobx.toJS(this.data.block_type_usage_hourly), function(date)
 		{
