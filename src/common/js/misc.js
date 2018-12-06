@@ -123,7 +123,7 @@ export function filenameExtension(filename)
 	const result = re.exec(filename)[1];
 
 	if(typeof result === "undefined")
-		return null;
+		return "";
 
 	return result;
 }
