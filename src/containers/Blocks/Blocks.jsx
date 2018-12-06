@@ -269,6 +269,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 							<option value="file">File ({valueOrZero(block_type_count, "file")})</option>
 							<option value="filehash">Filehash ({valueOrZero(block_type_count, "filehash")})</option>
 							<option value="genesis">Genesis ({valueOrZero(block_type_count, "genesis")})</option>
+							<option value="sync">Sync ({valueOrZero(block_type_count, "sync")})</option>
 							<option value="text">Text ({valueOrZero(block_type_count, "text")})</option>
 							<option value="timestamp">Timestamp ({valueOrZero(block_type_count, "timestamp")})</option>
 						</select>
