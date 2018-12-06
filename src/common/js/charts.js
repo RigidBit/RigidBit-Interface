@@ -9,7 +9,7 @@ export const dataBaseSet1 =
 			data: [],
 			backgroundColor: colorsDefault,
 		}
-	]
+	],
 };
 
 export const dataBaseSet2 =
@@ -17,10 +17,10 @@ export const dataBaseSet2 =
 	labels: [],
 	datasets:
 	[
-	]
+	],
 };
 
-export const optionsBase =
+export const optionsBase1 =
 {
 	animation: false,
 	maintainAspectRatio: false,
@@ -35,5 +35,27 @@ export const optionsBase =
 		{
 			boxWidth: 12,
 		}
-	}
+	},
+};
+
+export const optionsBase2 =
+{
+	animation: false,
+	maintainAspectRatio: false,
+	title:
+	{
+		display: true,
+	},
+	legend:
+	{
+		position: "bottom",
+		labels:
+		{
+			boxWidth: 12,
+		}
+	},
+	tooltips: {
+		mode: 'index',
+		intersect: false,
+	},
 };

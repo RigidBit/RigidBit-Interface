@@ -135,10 +135,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			chartData.datasets[0].data.push(item.block_count);
 		});
 
-		const chartOptions = _.cloneDeep(charts.optionsBase);
+		const chartOptions = _.cloneDeep(charts.optionsBase1);
 		chartOptions.title.text = "All Blocks";
 
-		const chartOptionsFiltered = _.cloneDeep(charts.optionsBase);
+		const chartOptionsFiltered = _.cloneDeep(charts.optionsBase1);
 		chartOptionsFiltered.title.text = "User Blocks";
 
 		const html1 =
@@ -195,7 +195,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			});
 		});
 
-		const chartOptions = _.cloneDeep(charts.optionsBase);
+		const chartOptions = _.cloneDeep(charts.optionsBase2);
 		chartOptions.title.display = false;
 
 		const html =
@@ -246,7 +246,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			});
 		});
 
-		const chartOptions = _.cloneDeep(charts.optionsBase);
+		const chartOptions = _.cloneDeep(charts.optionsBase2);
 		chartOptions.title.display = false;
 
 		const html =
