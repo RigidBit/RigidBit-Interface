@@ -398,7 +398,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			["data_hash", "Data Hash"],
 			["prev_hash", "Previous Hash"],
 			["block_type", "Block Type"],
-			["timestamp", "Block Time"],
+			["timestamp", "Timestamp"],
 			// ["version", "Block Version"],
 			["verified", "Verify"],
 		];
@@ -461,7 +461,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			// ["external", "External"],
 			["data", "Data"],
 			["data_hash", "Data Hash"],
-			["timestamp", "Timestamp"],
+			// ["timestamp", "Timestamp"],
 		];
 
 		const tableRows = [];
@@ -566,15 +566,15 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		});
 
 		// Add a single timestamp to the end. Use the first meta data entry for this.
-		const html =
-		(
-			<tr key="timestamp">
-				<td className="metric">Timestamp:</td>
-				<td className="value">{misc.timestampToDate(data.meta[0]["timestamp"])}</td>
-				<td className="empty" />
-			</tr>
-		);
-		tableRows.push(html);
+		// const html =
+		// (
+		// 	<tr key="timestamp">
+		// 		<td className="metric">Timestamp:</td>
+		// 		<td className="value">{misc.timestampToDate(data.meta[0]["timestamp"])}</td>
+		// 		<td className="empty" />
+		// 	</tr>
+		// );
+		// tableRows.push(html);
 
 		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);
 	};
