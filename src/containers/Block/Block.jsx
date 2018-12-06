@@ -42,9 +42,28 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.registerKeypressHandler(false);
 	}
 
+	dataArrayToString = (data) =>
+	{
+		return misc.uintToString(data);
+	};
+
+	dataArrayToFormattedJson = (data) =>
+	{
+		let json = this.dataArrayToString(data);
+		json = JSON.stringify(JSON.parse(json), null, 4);
+		json = json.replace(/[ ]{4}/g, "    ");
+
+		return this.dataStringToFormattedText(json);
+	};
+
 	dataArrayToFormattedText = (data) =>
 	{
-		const value = misc.uintToString(data).replace(/\r/g, "").split("\n").map((item, key) =>
+		return this.dataStringToFormattedText(this.dataArrayToString(data));
+	};
+
+	dataStringToFormattedText = (data) =>
+	{
+		const value = data.replace(/\r/g, "").split("\n").map((item, key) =>
 		{
 			const html =
 			(
@@ -457,7 +476,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 			if(key === "data" && value !== null)
 			{
-				if(value.length > _this.textBlockInlineViewThreshold)
+				if(_this.data.block.block_type.toLowerCase() === "sync")
+				{
+					value = _this.dataArrayToFormattedJson(value);
+				}
+				else if(value.length > _this.textBlockInlineViewThreshold)
 					value = <i>see block data preview</i>;
 				else
 					value = _this.dataArrayToFormattedText(value);
