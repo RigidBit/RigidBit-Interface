@@ -65,7 +65,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			if(metaData[i].hasOwnProperty("name") && metaData[i].name === "filename")
 			{
-				extension = misc.filenameExtension(metaData[i].value).toLowerCase();
+				extension = misc.filenameExtension(metaData[i].value);
+				if(extension)
+					extension.toLowerCase();
+
 				break;
 			}
 		}
