@@ -453,6 +453,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!_this.isBlockDataAvailable())
 			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
+		const block_type = this.data.block.block_type.toLowerCase();
+		const syncBlockAndValidJson = block_type === "sync" && misc.isJson(this.dataArrayToString(data.data));
+
 		const metrics =
 		[
 			// ["id", "ID"],
@@ -469,17 +472,15 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			const key = metric[0];
 			const label = metric[1];
-			let value = data[metric[0]];
+			let value = mobx.toJS(data[metric[0]]);
 
 			if(key === "archive" || key === "external")
 				value = (value) ? "true" : "false";
 
 			if(key === "data" && value !== null)
 			{
-				if(_this.data.block.block_type.toLowerCase() === "sync")
-				{
+				if(syncBlockAndValidJson)
 					value = _this.dataArrayToFormattedJson(value);
-				}
 				else if(value.length > _this.textBlockInlineViewThreshold)
 					value = <i>see block data preview</i>;
 				else
@@ -505,7 +506,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		});
 
-		if(data.archive === true || this.data.block.block_type.toLowerCase() === "text")
+		if(data.archive === true || block_type === "text")
 		{
 			const html =
 			(
@@ -518,6 +519,25 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				</tr>
 			);
 			tableRows.push(html);
+		}
+
+		if(syncBlockAndValidJson)
+		{
+			const json = JSON.parse(this.dataArrayToString(data.data));
+			if(json.tx_hash)
+			{
+				const html =
+				(
+					<tr key="view">
+						<td className={"view metric"}>View:</td>
+						<td className={"view value"}>
+							<a href={`https://etherscan.io/tx/0x${json.tx_hash}`} target="_blank">View on Etherscan</a>
+						</td>
+						<td className="empty" />
+					</tr>
+				);
+				tableRows.push(html);
+			}
 		}
 
 		return htmlHelpers.renderContainerWithTable(containerClassName, containerTitle, tableRows);

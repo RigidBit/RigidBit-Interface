@@ -235,3 +235,24 @@ export function calculateContrastColor(hexColor)
 	else
 		return "ffffff";
 }
+
+/**
+ * Checks if string is valid JSON.
+ *
+ * Source: https://stackoverflow.com/a/3710226/9979
+ * 
+ * @param  {String}  string The string to check.
+ * @return {Boolean}        True if string is valid JSON, otherwise false.
+ */
+export function isJson(string)
+{
+    try
+    {
+        JSON.parse(string);
+    }
+    catch(e)
+    {
+        return false;
+    }
+    return true;
+}
