@@ -155,6 +155,7 @@ class Component extends React.PureComponent
 			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
 			["image-preview", "Preview", data],
+			["view-on-etherscan", "View", data]
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
 		];
 
@@ -218,6 +219,16 @@ class Component extends React.PureComponent
 				if(_this.areTermsPresent(value.map((o)=>o.name).join(" "), search))
 				{
 					row = _this.renderTagRow(m, key, label, value, search);
+				}
+			}
+
+			else if(key === "view-on-etherscan")
+			{
+				if(block_type === "sync" && misc.isJson(misc.uintToString(value.data.data)))
+				{
+					const json = JSON.parse(misc.uintToString(value.data.data));
+					const link = <a href={`https://etherscan.io/tx/0x${json.tx_hash}`} target="_blank">View on Etherscan</a>;
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{link}</td><td className="empty"></td></tr>;
 				}
 			}
 
