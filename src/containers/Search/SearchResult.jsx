@@ -145,14 +145,16 @@ class Component extends React.PureComponent
 	renderTableRows = (data, search) =>
 	{
 		const _this = this;
+		const block_type = data.block.block_type.toLowerCase();
 
 		const metrics =
 		[
-			["id", "Block ID/Type", data.block],
+			["id", "ID/Type/Timestamp", data.block],
 			["hash", "Block Hash", data.block.hash],
 			["filename", "Filename", data.meta],
 			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
+			["image-preview", "Preview", data],
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
 		];
 
@@ -166,7 +168,7 @@ class Component extends React.PureComponent
 			let row = null;
 
 			if(key === "id")
-				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value"><a href={"/#/block/"+value.id}>{value.id}</a> ({value.block_type})</td><td className="empty"></td></tr>;
+				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value"><a href={"/#/block/"+value.id}>{value.id}</a> ({value.block_type}) <div className="timestamp">{misc.timestampToDate(value.timestamp)}</div></td><td className="empty"></td></tr>;
 
 			else if(key === "block_type" || key === "block_time")
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{value}</td><td className="empty"></td></tr>;
@@ -174,7 +176,7 @@ class Component extends React.PureComponent
 			else if(key === "filename")
 			{
 				const item = _this.findItemContainingKey(value, "name", key);
-				if(item && (data.block.block_type.toLowerCase() === "file" || _this.areTermsPresent(item.value, search)))
+				if(item && (block_type === "file" || _this.areTermsPresent(item.value, search)))
 				{
 					row = _this.renderFilenameRow(m, key, label, value, search);
 				}
@@ -186,9 +188,18 @@ class Component extends React.PureComponent
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
 			}
 
+			else if(key === "image-preview" && block_type === "file")
+			{
+				const item = _this.findItemContainingKey(value.meta, "name", "filename");
+				if(item && _.includes(config.dataPreviewImageExtensions, misc.filenameExtension(item.value).toLowerCase()))
+				{
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value"><img className="preview-image" src={api.apiUrlFromRelativePath(`/api/file-inline/${value.block.id}`)} alt="Image Preview"/></td><td className="empty"></td></tr>;
+				}
+			}
+
 			else if(key === "text")
 			{
-				if(_.has(value, "data") && data.block.block_type.toLowerCase() === "text")
+				if(_.has(value, "data") && block_type === "text")
 				{
 					const text = misc.uintToString(value.data);
 					let location = _this.indexOfFirstTerm(text, search) - Math.round(config.maximumSearchDataLength / 4);

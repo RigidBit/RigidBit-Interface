@@ -24,6 +24,22 @@ section.search
 						max-height: 16px;
 						overflow: hidden;
 					}
+
+					.preview-image
+					{
+						max-width: 100%;
+						max-height: 100px;
+					}
+
+					.timestamp
+					{
+						float: right;
+
+						@include media("<500px")
+						{
+							display: none;
+						}
+					}
 				}
 
 				.tag
