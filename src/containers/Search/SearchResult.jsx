@@ -188,12 +188,16 @@ class Component extends React.PureComponent
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
 			}
 
-			else if(key === "image-preview" && block_type === "file")
+			else if(key === "image-preview")
 			{
-				const item = _this.findItemContainingKey(value.meta, "name", "filename");
-				if(item && _.includes(config.dataPreviewImageExtensions, misc.filenameExtension(item.value).toLowerCase()))
+				if(block_type === "file")
 				{
-					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value"><img className="preview-image" src={api.apiUrlFromRelativePath(`/api/file-inline/${value.block.id}`)} alt="Image Preview"/></td><td className="empty"></td></tr>;
+					const item = _this.findItemContainingKey(value.meta, "name", "filename");
+					if(item && _.includes(config.dataPreviewImageExtensions, misc.filenameExtension(item.value).toLowerCase()))
+					{
+						const image = <img className="preview-image" src={api.apiUrlFromRelativePath(`/api/file-inline/${value.block.id}`)} alt="Image Preview"/>;
+						row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{image}</td><td className="empty"></td></tr>;
+					}					
 				}
 			}
 
