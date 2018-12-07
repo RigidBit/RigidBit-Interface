@@ -176,7 +176,7 @@ class Component extends React.PureComponent
 			else if(key === "filename")
 			{
 				const item = _this.findItemContainingKey(value, "name", key);
-				if(item && (block_type === "file" || _this.areTermsPresent(item.value, search)))
+				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search)))
 				{
 					row = _this.renderFilenameRow(m, key, label, value, search);
 				}
