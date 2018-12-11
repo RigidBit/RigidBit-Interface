@@ -48,7 +48,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.startTimer();
 	});
 
-	handleViewBlockClickedClick = (e) =>
+	handleViewBlockClicked = (e) =>
 	{
 		e.preventDefault();
 
