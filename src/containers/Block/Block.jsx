@@ -289,25 +289,28 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			{
 				let modifier;
 
-				if(e.key === "ArrowLeft")
+				if(!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey)
 				{
-					e.preventDefault();
-					modifier = -1;
-				}
-				else if(e.key === "ArrowRight")
-				{
-					e.preventDefault();
-					modifier = 1;
-				}
+					if(e.key === "ArrowLeft")
+					{
+						e.preventDefault();
+						modifier = -1;
+					}
+					else if(e.key === "ArrowRight")
+					{
+						e.preventDefault();
+						modifier = 1;
+					}
 
-				if(e.key === "ArrowLeft" || e.key === "ArrowRight")
-				{
-					let id = parseInt(_this.data.block.id) + modifier;
+					if(e.key === "ArrowLeft" || e.key === "ArrowRight")
+					{
+						let id = parseInt(_this.data.block.id) + modifier;
 
-					if(id < 1) id = 1;
-					if(id > _this.data.block_count) id = _this.data.block_count;
+						if(id < 1) id = 1;
+						if(id > _this.data.block_count) id = _this.data.block_count;
 
-					router.navigate("block", {id: id});
+						router.navigate("block", {id: id});
+					}
 				}
 			});
 		}
