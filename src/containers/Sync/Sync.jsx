@@ -76,13 +76,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			offset: parseInt(store.routeParams.offset),
 		};
 
-		const chain_sync_records_count = this.data.chain_sync_records_count;
+		const sync_records_count = this.data.sync_records_count;
 
 		params.offset += modifier;
 
 		// This could result in an offset below zero. It must come before the "< 0" check. 
-		if(params.offset >= chain_sync_records_count)
-			params.offset = ((Math.ceil(chain_sync_records_count / params.count) - 1) * params.count);
+		if(params.offset >= sync_records_count)
+			params.offset = ((Math.ceil(sync_records_count / params.count) - 1) * params.count);
 
 		if(params.offset < 0)
 			params.offset = 0;
@@ -92,7 +92,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isDataReady = () =>
 	{
-		if(this.data.hasOwnProperty("chain_sync_records") && this.data.hasOwnProperty("chain_sync_records_count"))
+		if(this.data.hasOwnProperty("sync_records") && this.data.hasOwnProperty("sync_records_count"))
 			return true;
 
 		return false;
@@ -100,7 +100,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isDataValid = () =>
 	{
-		return this.isDataReady() && _.isObject(this.data.chain_sync_records);
+		return this.isDataReady() && _.isObject(this.data.sync_records);
 	};
 
 	startRefreshTimer = () =>
@@ -135,7 +135,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		api.getUrl(`/api/sync/${store.routeParams.count}/${store.routeParams.offset}/1`, false)
 		.then(function(data)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {chain_sync_records: null, chain_sync_records_count: null}, data);
+			const newData = _.merge(mobx.toJS(_this.data), {sync_records: null, sync_records_count: null}, data);
 			_this.updateData(newData);
 		})
 		.catch(function(error)
@@ -146,13 +146,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	refreshDataFailure = (error) =>
 	{
-		this.updateData({chain_sync_records: null, chain_sync_records_count: null});
+		this.updateData({sync_records: null, sync_records_count: null});
 
 		log.error(error);
 		iziToast.error({title: "Error", message: error});
 	};
 
-	renderChainSyncRecords = () =>
+	renderSyncRecords = () =>
 	{
 		const _this = this;
 
@@ -161,11 +161,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const tableRows = [];
 
-		if(this.data.chain_sync_records.length === 0)
+		if(this.data.sync_records.length === 0)
 			tableRows.push(<tr key={0}><td className="empty-table" colSpan={5}>No data available to display.</td></tr>);
 		else
 		{
-			this.data.chain_sync_records.forEach(function(row, r)
+			this.data.sync_records.forEach(function(row, r)
 			{
 				const block_id_link = <a href={"#/block/" + row.block_id} data-block-id={row.block_id} onClick={_this.handleViewBlockClicked}>{row.block_id}</a>;
 				const tx_hash_link = <a href={`https://etherscan.io/tx/0x${row.tx_hash}`} target="_blank"><span className="full">{row.tx_hash}</span><span className="short">View</span></a>;
@@ -173,9 +173,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				const html =
 				(
 					<tr key={r}>
+						<td className="block_id item">{block_id_link}</td>
 						<td className="operation item">{row.operation}</td>
 						<td className="chain item">{row.chain}</td>
-						<td className="block_id item">{block_id_link}</td>
 						<td className="success item">{(row.success)?"true":"false"}</td>
 						<td className="tx_hash item">{tx_hash_link}</td>
 						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>
@@ -191,9 +191,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<table>
 					<thead>
 						<tr>
-							<th className="operation">Operation</th>
-							<th className="chain">Chain</th>
 							<th className="block_id">Block ID</th>
+							<th className="operation">OP</th>
+							<th className="chain">Chain</th>
 							<th className="success">Success</th>
 							<th className="tx_hash">TX Hash</th>
 							<th className="timestamp">Timestamp</th>
@@ -210,18 +210,18 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderControls = () =>
 	{
-		const chain_sync_records_count = this.data.chain_sync_records_count;
+		const sync_records_count = this.data.sync_records_count;
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
-		const pages = Math.ceil(chain_sync_records_count / count);
-		const page = (chain_sync_records_count > 0) ? Math.ceil(offset / count) + 1 : 0;
+		const pages = Math.ceil(sync_records_count / count);
+		const page = (sync_records_count > 0) ? Math.ceil(offset / count) + 1 : 0;
 
 		const disablePrevPageFast = (page <= 1);
 		const disablePrevPage = (page <= 1);
 		const disableNextPage = (page >= pages);
 		const disableNextPageFast = (page >= pages);
-		const disableCount = (chain_sync_records_count === 0);
+		const disableCount = (sync_records_count === 0);
 
 		const html =
 		(
@@ -254,7 +254,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	render()
 	{
 		const controls = this.renderControls();
-		const syncRecords = this.renderChainSyncRecords();
+		const syncRecords = this.renderSyncRecords();
 
 		const html =
 		(

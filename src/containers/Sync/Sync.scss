@@ -21,7 +21,8 @@ section.sync
 					&.operation,
 					&.chain,
 					&.block_id,
-					&.success
+					&.success,
+					&.timestamp
 					{
 						white-space: nowrap;
 					}
@@ -45,11 +46,6 @@ section.sync
 								display: inline;
 							}
 						}
-					}
-
-					&.timestamp
-					{
-						min-width: 180px;
 					}
 				}
 
