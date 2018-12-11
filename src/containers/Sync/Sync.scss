@@ -27,6 +27,11 @@ section.sync
 						white-space: nowrap;
 					}
 
+					&.chain
+					{
+						display: none;
+					}
+
 					&.tx_hash
 					{
 						.short
