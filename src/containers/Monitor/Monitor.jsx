@@ -159,10 +159,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		else
 			this.data.monitor_records.forEach(function(row, r)
 			{
+				const filename = misc.filenameFromPath(row.file_path);
+				const filename_link = <a href={"#"+router.buildPath("search", {q: filename})}>{filename}</a>;
+
 				const html =
 				(
 					<tr key={r}>
-						<td className="filename item">{misc.filenameFromPath(row.file_path)}</td>
+						<td className="filename item">{filename_link}</td>
 						<td className="file_path item">{row.file_path}</td>
 						<td className="file_size item">{filesize(row.file_size)}</td>
 						<td className="last_modified item">{misc.timestampToDate(row.last_modified)}</td>
