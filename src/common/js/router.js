@@ -9,9 +9,10 @@ export const routes =
     { name: "blocks", path: "/blocks/:count/:offset?:type" },
     { name: "dashboard", path: "/dashboard" },
 	{ name: "monitor", path: "/monitor/:count/:offset" },
-    { name: "settings", path: "/settings" },
-	{ name: "upload", path: "/upload" },
     { name: "search", path: "/search?:q" },
+    { name: "settings", path: "/settings" },
+    { name: "sync", path: "/sync/:count/:offset" },
+	{ name: "upload", path: "/upload" },
 ];
 
 const storeUpdatePlugin = function(router, dependencies)

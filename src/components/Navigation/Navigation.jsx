@@ -9,6 +9,7 @@ class Component extends React.Component
 		let params = null;
 		if (route === "blocks") params = config.navigationDefaultBlocksParams;
 		else if (route === "monitor") params = config.navigationDefaultMonitorParams;
+		else if (route === "sync") params = config.navigationDefaultSyncParams;
 
 		router.navigate(route, params);
 	}
@@ -23,6 +24,7 @@ class Component extends React.Component
 			["#dashboard", "Dashboard"],
 			[["#blocks", "#block"], "Blocks"],
 			["#monitor", "Monitor"],
+			["#sync", "Sync"],
 			["#upload", "Upload"],
 			["#settings", "Settings"],
 			["#search", <i className="fas fa-search"></i>],

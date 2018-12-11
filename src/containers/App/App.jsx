@@ -5,6 +5,7 @@ import Login from "../Login/Login.jsx";
 import Monitor from "../Monitor/Monitor.jsx";
 import Search from "../Search/Search.jsx";
 import Settings from "../Settings/Settings.jsx";
+import Sync from "../Sync/Sync.jsx";
 import Upload from "../Upload/Upload.jsx";
 
 @observer class App extends React.Component
@@ -31,6 +32,9 @@ import Upload from "../Upload/Upload.jsx";
 				break;
 			case "settings":
 				html = <Settings />;
+				break;
+			case "sync":
+				html = <Sync />;
 				break;
 			case "upload":
 				html = <Upload />;

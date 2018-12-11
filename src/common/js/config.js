@@ -14,6 +14,8 @@ const config =
 	monitorRefreshInterval: 5 * 60 * 1000,
 	navigationDefaultBlocksParams: {count: 10, offset: 0, type: "user"},
 	navigationDefaultMonitorParams: {count: 10, offset: 0},
+	navigationDefaultSyncParams: {count: 10, offset: 0},
+	syncRefreshInterval: 5 * 60 * 1000,
 };
 
 export default config;
