@@ -118,21 +118,27 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const chartDataFiltered = _.cloneDeep(charts.dataBaseSet1);
-		this.data.block_type_count.forEach(function(item)
-		{
-			if(item.block_type === "File" || item.block_type === "FileHash" || item.block_type === "Text")
-			{
-				chartDataFiltered.labels.push(item.block_type);
-				chartDataFiltered.datasets[0].data.push(item.block_count);
-			}
-		});
+		const blockTypes = ["file", "filehash", "text"];
+		const blockTypesFiltered = ["file", "filehash", "text", "sync", "timestamp"];
 
 		const chartData = _.cloneDeep(charts.dataBaseSet1);
 		this.data.block_type_count.forEach(function(item)
 		{
-			chartData.labels.push(item.block_type);
-			chartData.datasets[0].data.push(item.block_count);
+			if(_.includes(blockTypesFiltered, item.block_type.toLowerCase()))
+			{
+				chartData.labels.push(item.block_type);
+				chartData.datasets[0].data.push(item.block_count);
+			}
+		});
+
+		const chartDataFiltered = _.cloneDeep(charts.dataBaseSet1);
+		this.data.block_type_count.forEach(function(item)
+		{
+			if(_.includes(blockTypes, item.block_type.toLowerCase()))
+			{
+				chartDataFiltered.labels.push(item.block_type);
+				chartDataFiltered.datasets[0].data.push(item.block_count);
+			}
 		});
 
 		const chartOptions = _.cloneDeep(charts.optionsBase1);
