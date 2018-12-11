@@ -168,7 +168,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.data.sync_records.forEach(function(row, r)
 			{
 				const block_id_link = <a href={"#/block/" + row.block_id} data-block-id={row.block_id} onClick={_this.handleViewBlockClicked}>{row.block_id}</a>;
-				const tx_hash_link = <a href={`https://etherscan.io/tx/0x${row.tx_hash}`} target="_blank"><span className="full">{row.tx_hash}</span><span className="short">View</span></a>;
+				const tx_hash_link = <a href={`https://etherscan.io/tx/0x${row.tx_hash}`} target="_blank"><span className="full">{row.tx_hash}</span><span className="short">{row.tx_hash.substr(0,16)+"…"}</span></a>;
 
 				const html =
 				(
