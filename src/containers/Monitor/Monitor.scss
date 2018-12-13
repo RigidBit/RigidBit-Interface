@@ -18,6 +18,11 @@ section.monitor
 				td,
 				th
 				{
+					&.block_id
+					{
+						white-space: nowrap;
+					}
+
 					&.filename
 					{
 					}

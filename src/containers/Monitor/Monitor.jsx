@@ -83,6 +83,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("monitor", params);
 	};
 
+	handleViewBlockClicked = (e) =>
+	{
+		e.preventDefault();
+
+		router.navigate("block", {id: $(e.target).data("block-id")});
+	};
+
 	isDataReady = () =>
 	{
 		if(this.data.hasOwnProperty("monitor_records") && this.data.hasOwnProperty("monitor_records_count"))
@@ -159,12 +166,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		else
 			this.data.monitor_records.forEach(function(row, r)
 			{
+				const block_id_link = <a href={"#/block/" + row.block_id} data-block-id={row.block_id} onClick={_this.handleViewBlockClicked}>{row.block_id}</a>;
 				const filename = misc.filenameFromPath(row.file_path);
 				const filename_link = <a href={"#"+router.buildPath("search", {q: filename})}>{filename}</a>;
 
 				const html =
 				(
 					<tr key={r}>
+						<td className="block_id item">{block_id_link}</td>
 						<td className="filename item">{filename_link}</td>
 						<td className="file_path item">{row.file_path}</td>
 						<td className="file_size item">{filesize(row.file_size)}</td>
@@ -181,6 +190,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<table>
 					<thead>
 						<tr>
+							<th className="block_id">ID</th>
 							<th className="filename">Filename</th>
 							<th className="file_path">File Path</th>
 							<th className="file_size">Filesize</th>
