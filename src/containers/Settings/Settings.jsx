@@ -164,6 +164,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.getUrl("/api/tags-with-usage", false)
 		.then(function(data)
 		{
+			data = _.sortBy(data, (o)=>o.name);
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
 			_this.updateData(newData);
 		})
