@@ -127,7 +127,8 @@ import Table from "../../components/Table/Table.jsx";
 		api.postUrl("/api/timestamp", null, false)
 		.then(function(data)
 		{
-			iziToast.success({title: "Success", message: "Timestamp has been created."});
+			const linkUrl = "/#/block/"+data.id;
+			iziToast.success({title: "Success", message: `Timestamp has been created.&nbsp; <a href="${linkUrl}">View</a>`});
 		})
 		.catch(function(error)
 		{
