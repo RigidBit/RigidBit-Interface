@@ -650,12 +650,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		if(_.includes(imageExtensions, extension))
 		{
+			// Image has a key because it doesn't always seem to refresh properly.
 			const src = api.apiUrlFromRelativePath("/api/file-inline/"+data.block.id);
 			const expanded = (this.expandDataPreviewImage) ? " expanded" : "";
 			html =
 			(
 				<div className={"image-container" + expanded}>
-					<img src={src} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand/Collapse" />
+					<img key={data.block.id} src={src} alt="Image Preview" onClick={this.handleBlockDataPreviewImageClick} title="Click to Expand/Collapse" />
 				</div>
 			);
 		}
