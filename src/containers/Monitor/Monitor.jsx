@@ -161,7 +161,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			{
 				const block_id_link = <a href={"#" + router.buildPath("block", {id: row.block_id})}>{row.block_id}</a>;
 				const filename = misc.filenameFromPath(row.file_path);
-				const filename_link = <a href={"#" + router.buildPath("search", {q: "filename:"+filename})}>{filename}</a>;
+				const filename_link = <a href={"#" + router.buildPath("search", {q: "\"filename:"+filename+"\""})}>{filename}</a>;
 
 				const html =
 				(
