@@ -83,13 +83,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("monitor", params);
 	};
 
-	handleViewBlockClicked = (e) =>
-	{
-		e.preventDefault();
-
-		router.navigate("block", {id: $(e.target).data("block-id")});
-	};
-
 	isDataReady = () =>
 	{
 		if(this.data.hasOwnProperty("monitor_records") && this.data.hasOwnProperty("monitor_records_count"))
@@ -166,9 +159,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		else
 			this.data.monitor_records.forEach(function(row, r)
 			{
-				const block_id_link = <a href={"#/block/" + row.block_id} data-block-id={row.block_id} onClick={_this.handleViewBlockClicked}>{row.block_id}</a>;
+				const block_id_link = <a href={"#" + router.buildPath("block", {id: row.block_id})}>{row.block_id}</a>;
 				const filename = misc.filenameFromPath(row.file_path);
-				const filename_link = <a href={"#"+router.buildPath("search", {q: filename})}>{filename}</a>;
+				const filename_link = <a href={"#" + router.buildPath("search", {q: "filename:"+filename})}>{filename}</a>;
 
 				const html =
 				(
