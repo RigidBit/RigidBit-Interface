@@ -3,22 +3,27 @@ import PropTypes from "prop-types";
 import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
 
+const REGEX_ESCAPE = /[-[\]{}()*+?.,\\^$|#\s]/g;
+const REGEX_PREFIXES = /^(?:data\:|filename\:|file_path\:|hash\:|tag\:)/gi;
+const REGEX_TERMS = /('.*?'|".*?"|\S+)/g;
+const REGEX_TRIM = /^['"]+|['"]+$/g;
+
 class Component extends React.PureComponent
 {
 	/**
 	 * Returns React elements for the specified input string (haystack), highlighting the needles (search terms).
 	 *
-	 * Since a search phrase may constitute multiple terms, it splits them by \s+ and processes them in sequence.
+	 * Since a search phrase may constitute multiple terms, it splits them and processes them in sequence.
 	 * Once a match is found, it stops processing further terms. 
 	 */
 	highlightSearches(haystack, needle)
 	{
 		let slices = haystack;
 
-		const needles = needle.split(/\s+/);
+		const needles = this.phraseToTerms(needle);
 		for(let n = 0; n < needles.length; ++n)
 		{
-			const needle = needles[n].replace(/^(?:data\:|filename\:|hash\:|tag\:)/gi, "");
+			const needle = this.processNeedle(needles[n]);
 
 			if(needle.length < config.minimumSearchPhraseLength)
 				continue;
@@ -48,10 +53,10 @@ class Component extends React.PureComponent
 	 */
 	areTermsPresent(haystack, needle)
 	{
-		const needles = needle.split(/\s+/);
+		const needles = this.phraseToTerms(needle);
 		for(let n = 0; n < needles.length; ++n)
 		{
-			const needle = needles[n].replace(/^(?:filename\:|hash\:|tag\:)/gi, "");
+			const needle = this.processNeedle(needles[n]);
 
 			if(needle.length < config.minimumSearchPhraseLength)
 				continue;
@@ -85,11 +90,11 @@ class Component extends React.PureComponent
 	indexOfFirstTerm = (haystack, needles) =>
 	{
 		haystack = haystack.toLowerCase();
-		needles = needles.split(/\s+/);
+		needles = this.phraseToTerms(needles);
 
 		for(let n = 0; n < needles.length; ++n)
 		{
-			const needle = needles[n].replace(/^(?:data\:|filename\:|hash\:|tag\:)/gi, "");
+			const needle = this.processNeedle(needles[n]);
 
 			if(needle.length < config.minimumSearchPhraseLength)
 				continue;
@@ -103,9 +108,37 @@ class Component extends React.PureComponent
 		return -1;
 	}
 
+	phraseToTerms(phrase)
+	{
+		let terms;
+		terms = phrase.match(REGEX_TERMS);
+		terms = terms.map(function(term)
+		{
+			return term.replace(REGEX_TRIM, "");
+		});
+
+		return terms;
+	}
+
+	processNeedle(needle)
+	{
+		return needle.replace(REGEX_PREFIXES, "").replace(REGEX_ESCAPE, '\\$&');
+	}
+
 	renderFilenameRow = (m, key, label, value, search) =>
 	{
 		const item = this.findItemContainingKey(value, "name", "filename");
+		if(item)
+		{
+			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{this.highlightSearches(item.value, search)}</td><td className="empty"></td></tr>;
+		}
+
+		return null;
+	};
+
+	renderFilePathRow = (m, key, label, value, search) =>
+	{
+		const item = this.findItemContainingKey(value, "name", "file_path");
 		if(item)
 		{
 			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{this.highlightSearches(item.value, search)}</td><td className="empty"></td></tr>;
@@ -152,6 +185,7 @@ class Component extends React.PureComponent
 			["id", "ID/Type/Timestamp", data.block],
 			["hash", "Block Hash", data.block.hash],
 			["filename", "Filename", data.meta],
+			["file_path", "File Path", data.meta],
 			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
 			["image-preview", "Preview", data],
@@ -180,6 +214,15 @@ class Component extends React.PureComponent
 				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search)))
 				{
 					row = _this.renderFilenameRow(m, key, label, value, search);
+				}
+			}
+
+			else if(key === "file_path")
+			{
+				const item = _this.findItemContainingKey(value, "name", key);
+				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search)))
+				{
+					row = _this.renderFilePathRow(m, key, label, value, search);
 				}
 			}
 
