@@ -127,13 +127,15 @@ export function fetchUrl(url, method="GET", data=null, useCache=false, backgroun
 
 		lscache.set(cacheKey, JSON.stringify(json), CACHE_EXPIRATION);
 
-		loading.hide();
+		if(!background)
+			loading.hide();
 
 		return json;
 	})
 	.catch(function(error)
 	{
-		loading.hide();
+		if(!background)
+			loading.hide();
 
 		throw reformatError(error);
 	})
