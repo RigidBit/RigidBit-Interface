@@ -471,7 +471,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return null;
 
 		if(!_this.isBlockDataAvailable())
-			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
+			return null;
+			// return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
 		const block_type = this.data.block.block_type.toLowerCase();
 		const syncBlockAndValidJson = block_type === "sync" && misc.isJson(this.dataArrayToString(data.data));
@@ -578,7 +579,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return null;
 
 		if(!this.isBlockMetaAvailable())
-			return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
+			return null;
+			// return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const tableRows = [];
 		data.meta.forEach(function(meta, m)
