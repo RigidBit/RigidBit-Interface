@@ -8,8 +8,18 @@ const REGEX_PREFIXES = /^(?:data\:|filename\:|file_path\:|hash\:|tag\:)/gi;
 const REGEX_TERMS = /('.*?'|".*?"|\S+)/g;
 const REGEX_TRIM = /^['"]+|['"]+$/g;
 
-class Component extends React.PureComponent
+@observer class Component extends React.Component
 {
+	@observable expandPreviewImage = false;
+
+	handleImageClick = action((e) =>
+	{
+		if(e && e.preventDefault)
+			e.preventDefault();
+
+		this.expandPreviewImage = !this.expandPreviewImage;
+	})
+
 	/**
 	 * Returns React elements for the specified input string (haystack), highlighting the needles (search terms).
 	 *
@@ -239,9 +249,10 @@ class Component extends React.PureComponent
 					const item = _this.findItemContainingKey(value.meta, "name", "filename");
 					if(item && _.includes(config.dataPreviewImageExtensions, misc.filenameExtension(item.value).toLowerCase()))
 					{
-						const image = <img key={value.block.id} className="preview-image" src={api.apiUrlFromRelativePath(`/api/file-inline/${value.block.id}`)} alt="Image Preview"/>;
+						const className = (_this.expandPreviewImage) ? "preview-image expanded" : "preview-image";
+						const image = <img key={value.block.id} className={className} src={api.apiUrlFromRelativePath(`/api/file-inline/${value.block.id}`)} alt="Image Preview" title="Click to expand/collapse." onClick={_this.handleImageClick} />;
 						row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{image}</td><td className="empty"></td></tr>;
-					}					
+					}
 				}
 			}
 
