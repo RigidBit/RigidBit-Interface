@@ -214,7 +214,12 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			let row = null;
 
 			if(key === "id")
-				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value"><a href={"/#/block/"+value.id}>{value.id}</a> ({value.block_type}) <div className="timestamp">{misc.timestampToDate(value.timestamp)}</div></td><td className="empty"></td></tr>;
+			{
+				const id_link = <a href={"/#/block/"+value.id}>{value.id}</a>;
+				const type_link = <a href={"#" + router.buildPath("search", {q: `"type:${value.block_type}"`})}>{value.block_type}</a>;
+				const timestamp = misc.timestampToDate(value.timestamp);
+				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{id_link} ({type_link}) <div className="timestamp">{timestamp}</div></td><td className="empty"></td></tr>;
+			}
 
 			else if(key === "block_type" || key === "block_time")
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{value}</td><td className="empty"></td></tr>;
