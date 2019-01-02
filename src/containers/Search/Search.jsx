@@ -11,7 +11,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 {
 	@observable data = {};
 	@observable searchPhrase = "";
-	autorun = null;
+	autorun = [];
 
 	constructor(props)
 	{
@@ -22,29 +22,46 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 
 	componentDidMount()
 	{
-		this.autorun = mobx.reaction(()=>this.searchPhrase, ()=>
+		const reaction1 = mobx.reaction(()=>this.searchPhrase, ()=>
 		{
 			if(this.searchPhrase.length >= config.minimumSearchPhraseLength)
 				this.refreshData();
 			else
 				this.data = {};
 		});
+		this.autorun.push(reaction1);
 
-		if("q" in store.routeParams && store.routeParams.q.length > 0)
-			action(()=> { this.searchPhrase = store.routeParams.q; })();
+		const reaction2 = mobx.reaction(()=>store.routeParams, ()=>
+		{
+			this.handleRouteParamChange();
+		});
+		this.autorun.push(reaction2);
+
+		this.handleRouteParamChange();
 
 		this.search.current.focus();
-
 	    this.search.current.addEventListener("keydown", this.handleSearchKeyPress, false);
 	}
 
 	componentWillUnmount()
 	{
-		if(this.autorun)
-			this.autorun();
+		this.autorun.forEach(function(autorun)
+		{
+			autorun();
+		});
 
 	    this.search.current.removeEventListener("keydown", this.handleSearchKeyPress, false);
 	}
+
+	handleRouteParamChange = action(() =>
+	{
+		if("q" in store.routeParams && store.routeParams.q.length > 0)
+		{
+			const query = store.routeParams.q;
+			this.searchPhrase = query;
+			this.search.current.value = query;
+		}
+	});
 
 	_handleSearchChange = _.debounce((phrase) =>
 	{
@@ -112,7 +129,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		(
 			<div>
 				<div className="search">
-					<input ref={this.search} type="text" name="search" defaultValue={this.searchPhrase} placeholder="Begin typing to search..." onChange={this.handleSearchChange} />
+					<input ref={this.search} type="text" name="search" placeholder="Begin typing to search..." onChange={this.handleSearchChange} />
 				</div>
 				{this.renderSearchResults()}
 			</div>

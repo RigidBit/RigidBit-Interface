@@ -140,7 +140,8 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 		const item = this.findItemContainingKey(value, "name", "filename");
 		if(item)
 		{
-			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{this.highlightSearches(item.value, search)}</td><td className="empty"></td></tr>;
+			const link = <a href={"#" + router.buildPath("search", {q: `"filename:${item.value}"`})}>{this.highlightSearches(item.value, search)}</a>;
+			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{link}</td><td className="empty"></td></tr>;
 		}
 
 		return null;
