@@ -183,12 +183,13 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 				value.forEach(function(tag, t)
 				{
 					const className = (_this.areTermsPresent(tag.name, search)) ? "tag active" : "tag inactive";
+					const linkHref = "#" + router.buildPath("search", {q: `"tag:${tag.name}"`});
 
 					const html =
 					(
-						<span key={t} className={className} style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}}>
+						<a key={t} className={className} style={{background: "#"+tag.color, color: "#"+misc.calculateContrastColor(tag.color)}} href={linkHref}>
 							{_this.highlightSearches(tag.name, search)}
-						</span>
+						</a>
 					);
 					tags.push(html);
 				});
