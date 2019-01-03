@@ -48,6 +48,23 @@ section.search
 					}
 				}
 
+				.filename,
+				.file_path
+				{
+					.value a
+					{
+						text-decoration: none;
+					}
+
+					&:hover
+					{
+						.value a
+						{
+							text-decoration: underline;
+						}
+					}
+				}
+
 				.tag
 				{
 					border-radius: $border-radius-input;

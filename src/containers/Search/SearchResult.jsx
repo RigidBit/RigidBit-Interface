@@ -149,10 +149,23 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 	renderFilePathRow = (m, key, label, value, search) =>
 	{
+		const _this = this;
+
 		const item = this.findItemContainingKey(value, "name", "file_path");
 		if(item)
 		{
-			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{this.highlightSearches(item.value, search)}</td><td className="empty"></td></tr>;
+			let paths = item.value.split("/").map(function(path, p)
+			{
+				if(path.length > 0)
+				{
+					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{_this.highlightSearches(path, search)}</a>;
+					return <span key={p}>/{link}</span>;
+				}
+
+				return path;
+			});
+
+			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{paths}</td><td className="empty"></td></tr>;
 		}
 
 		return null;
