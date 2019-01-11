@@ -12,7 +12,8 @@
 
 		// Add the resize listener to the window.
 		$(window).on("resize", null, this.handleResize);
-		setTimeout(() => { this.handleResizeReal(); }, 500);
+		for(let i = 0; i < 3; ++i)
+			setTimeout(() => { this.handleResizeReal(); }, i*200);
 
 		// Start the check timer.
 		this.checkTimer = setInterval(() =>
