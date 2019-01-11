@@ -1,6 +1,65 @@
 section.login
 {
-	border: 1px solid red;
-	font-size: 3em;
-	text-align: left;
+	@include sectionContainerDefaultMixin;
+
+	// Eliminate hover effect.
+	background: $background-color-box-light;
+	border: 1px solid $border-color-light;
+
+	left: 50%;
+	opacity: 0;
+	padding: $padding-default;
+	position: absolute;
+	top: 200px;
+   	text-align: center;
+	transform: translateX(-50%);
+	transition: opacity 1s;
+	width: 300px;
+
+	&.show
+	{
+		opacity: 1;
+	}
+
+	div.logo
+	{
+    	margin: 1em 0 2em 0;
+
+		img
+		{
+			width: 50%;
+		}
+	}
+
+	div.input-container
+	{
+		margin: 0 auto 1em auto;
+		position: relative;
+		width: 80%;
+
+		i.fas
+		{
+			left: $padding-default;
+			opacity: 0.7;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%); 
+		}
+	}
+
+	input[name="username"]
+	{
+		padding-left: 30px;			
+	}
+
+	input[name="password"]
+	{
+		padding-left: 30px;			
+	}
+
+	input[type="submit"]
+	{
+		display: block;
+		margin: 2em auto 0 auto;
+	}
 }

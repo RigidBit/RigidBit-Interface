@@ -1,0 +1,36 @@
+section.logout
+{
+	@include sectionContainerDefaultMixin;
+
+	// Eliminate hover effect.
+	background: $background-color-box-light;
+	border: 1px solid $border-color-light;
+
+	left: 50%;
+	padding: $padding-default;
+	position: absolute;
+	top: 200px;
+	text-align: center;
+	transform: translateX(-50%);
+	width: 300px;
+
+	div.logo
+	{
+		margin: 1em 0 2em 0;
+
+		img
+		{
+			width: 50%;
+		}
+	}
+
+	div.message
+	{
+		margin-bottom: 2em;
+	}
+
+	div.link
+	{
+		margin-bottom: 1em;
+	}
+}

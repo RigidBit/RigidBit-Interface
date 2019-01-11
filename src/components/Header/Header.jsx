@@ -4,6 +4,8 @@ class Component extends React.Component
 {
 	render()
 	{
+		const logoutLink = <a href={"#" + router.buildPath("logout")}>Logout</a>;
+
 		const html =
 		(
 			<header className="main">
@@ -13,7 +15,7 @@ class Component extends React.Component
 					</a>
 				</div>
 				<div className="top-menu">
-					John Doe
+					{logoutLink}
 				</div>
 			</header>
 		);
