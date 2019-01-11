@@ -53,7 +53,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.file.current.addEventListener("change", this.handleFileChange);
 	};
 
-	formDataSppendFiles = (formData, fileSelect) =>
+	formDataAppendFiles = (formData, fileSelect) =>
 	{
 	    let files = fileSelect.files;
 	    for (let i = 0; i < files.length; i++)
@@ -178,7 +178,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const url = (!this.fileHash.current.checked) ? "/api/file" : "/api/filehash";
 
 		formData.append("tags", _.map(_this.selectedFileTags, "value").join(","));
-		_this.formDataSppendFiles(formData, _this.file.current);
+		_this.formDataAppendFiles(formData, _this.file.current);
 
 		api.postUrl(url, formData, false)
 		.then(function(data)
