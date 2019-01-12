@@ -18,6 +18,7 @@ class Component extends React.Component
 	{
 		const _this = this;
 		const activeLink = "#" + store.route;
+		const isAdmin = (store && store.user && store.user.is_admin) ? true : false;
 
 		const linkData =
 		[
@@ -38,9 +39,11 @@ class Component extends React.Component
 			links.push(html);
 		});
 
+		const navClassName = (isAdmin) ? "main admin" : "main";
+
 		const html =
 		(
-			<nav className="main">
+			<nav className={navClassName}>
 				<ul>
 					{links}
 				</ul>
