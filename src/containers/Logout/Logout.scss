@@ -14,6 +14,11 @@ section.logout
 	transform: translateX(-50%);
 	width: 300px;
 
+	@include media("<tablet")
+	{
+		top: 75px;
+	}
+
 	div.logo
 	{
 		margin: 1em 0 2em 0;

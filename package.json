@@ -35,6 +35,7 @@
     "node-sass": "^4.9.2",
     "node-sass-glob-importer": "^5.2.0",
     "parseboolean": "^1.0.0",
+    "particles.js": "^2.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-chartjs-2": "^2.7.4",
@@ -48,7 +49,7 @@
     "web-webpack-plugin": "^4.0.1",
     "webpack": "^4.16.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5"
+    "webpack-dev-server": "^3.1.14"
   },
   "devDependencies": {
     "esdoc": "^1.1.0",
