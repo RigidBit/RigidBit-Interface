@@ -6,7 +6,6 @@ import * as misc from "../../common/js/misc.js";
 @observer class Login extends React.Component
 {
 	@observable formDisabled = false;
-	@observable loginVisible = false;
 	handleResize = null; // A debouced handler for resizing.
 
 	constructor(props)
@@ -26,7 +25,9 @@ import * as misc from "../../common/js/misc.js";
 		this.handleResizeReal();
 
 		this.initResizeHandler(true);
-		this.checkLogin();
+
+		if(this.username.current)
+			this.username.current.focus();
 	}
 
 	componentWillUnmount()
@@ -34,24 +35,6 @@ import * as misc from "../../common/js/misc.js";
 		this.initResizeHandler(false);
 		this.stopParticlesJs();
 	}
-
-	checkLogin = () =>
-	{
-		const _this = this;
-
-		api.getUrl("/api/login-check", false)
-		.then(function(data)
-		{
-			action(() => { store.user = data; })();
-			router.navigate("dashboard");
-		})
-		.catch(function(error)
-		{
-			_this.disableForm(false);
-			_this.showLogin(true);
-			_this.username.current.focus();
-		});
-	};
 
 	disableForm = (disable) =>
 	{
@@ -89,7 +72,6 @@ import * as misc from "../../common/js/misc.js";
 
 	handleResizeReal = () =>
 	{
-		console.log("WTFFFFF RESIZE");
 		this.stopParticlesJs();
 
 		const $window = $(window);
@@ -121,14 +103,6 @@ import * as misc from "../../common/js/misc.js";
 		}
 	};
 
-	showLogin = (show) =>
-	{
-		action(()=>
-		{
-			this.loginVisible = show;
-		})();
-	};
-
 	stopParticlesJs = () =>
 	{
 		pJSDom.forEach(function(item)
@@ -143,13 +117,12 @@ import * as misc from "../../common/js/misc.js";
 	render()
 	{
 		const formDisabled = this.formDisabled;
-		const loginBoxClassName = (this.loginVisible) ? "loginBox show" : "loginBox";
 
 		const html =
 		(
 			<section className="login">
 				<div id="particles-js"></div>
-				<div className={loginBoxClassName}>
+				<div className="loginBox show">
 					<div className="logo">
 						<img src={misc.rigidBitLogo()} alt="RigidBit Logo" />
 					</div>
