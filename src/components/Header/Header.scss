@@ -9,14 +9,14 @@ header.main
 	{
 		height: $height;
 		left: $padding-default;
-		line-height: $height;
 		position: absolute;
 		top: $padding-default;
 
 		img
 		{
-			height: $height * 0.8;
-			vertical-align: middle;
+			height: $height;
+			position: relative;
+			top: 5px;
 		}
 	}
 
