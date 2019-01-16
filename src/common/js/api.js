@@ -178,6 +178,15 @@ export function removeCache(url, method="GET", data=null)
 }
 
 /**
+ * Removes all cache entries.
+ * @return {void}
+ */
+export function purgeCache()
+{
+	lscache.flush();
+}
+
+/**
  * Updates the cache entrying matching the specified parameters
  * @param  {string} url    The URL of the request.
  * @param  {string} method The HTTP method type of the request.
