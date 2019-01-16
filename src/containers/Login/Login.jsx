@@ -60,7 +60,17 @@ import * as misc from "../../common/js/misc.js";
 		.then(function(data)
 		{
 			action(() => { store.user = data; })();
-			router.navigate("dashboard");
+
+			const redirect = mobx.toJS(store.routeParams).redirect;
+			if(redirect && redirect.length > 0 && misc.isJson(redirect))
+			{
+				const data = JSON.parse(redirect);
+				router.navigate(data.route, data.routeParams)
+			}
+			else
+			{
+				router.navigate("dashboard");
+			}
 		})
 		.catch(function(error)
 		{

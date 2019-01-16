@@ -8,7 +8,7 @@ export const routes =
 	{ name: "block", path: "/block/:id" },
     { name: "blocks", path: "/blocks/:count/:offset?:type" },
     { name: "dashboard", path: "/dashboard" },
-    { name: "login", path: "/login" },
+    { name: "login", path: "/login?:redirect" },
     { name: "logout", path: "/logout" },
 	{ name: "monitor", path: "/monitor/:count/:offset" },
     { name: "search", path: "/search?:q" },
@@ -70,7 +70,7 @@ const loggerPlugin = function()
 };
 loggerPlugin.pluginName = "LOGGER_PLUGIN";
 
-export const router = createRouter(routes, {defaultRoute: "login"});
+export const router = createRouter(routes, {defaultRoute: "dashboard"});
 
 router.usePlugin(storeUpdatePlugin);
 router.usePlugin(browserPlugin({useHash: true}));

@@ -33,9 +33,22 @@ import Upload from "../Upload/Upload.jsx";
 		})
 		.catch(function(error)
 		{
-			router.navigate("login");
+			router.navigate("login", _this.determineRedirect());
 			action(() => { _this.isReady = true; })(); // Must occur after router.navigate().
 		});
+	};
+
+	determineRedirect = () =>
+	{
+		const data = mobx.toJS(store);
+
+		if(data.route != "login")
+		{
+			const redirect = JSON.stringify({route:data.route, routeParams:data.routeParams});
+			return {redirect};
+		}
+		else
+			return {};
 	};
 
 	render()
