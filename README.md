@@ -1,6 +1,6 @@
 # RigidBit Interface
 
-This is the primary web based interface for the RigidBit app.
+This is the primary web based interface that is built into the [RigidBit](https://github.com/RigidBit/RigidBit) application. 
 
 ## Prerequisites
 
@@ -20,12 +20,12 @@ You should also have working experience with the following frameworks and librar
 * Router5 (https://router5.js.org/)
 * Lodash (https://lodash.com/)
 
-You must have the following installed in your development environment:
+You must have the following installed in your development environment to properly build:
 
 * Node.js (Via NVM is recommended: https://github.com/creationix/nvm#install-script)
 * Npm (Automatically installed by nvm.)
 
-## Setup
+## Development Setup
 
 Enter the root directory and execute the following command to install all project depedencies and dev dependencies.
 
@@ -33,15 +33,15 @@ Enter the root directory and execute the following command to install all projec
 npm i
 ```
 
-## Development
+## Developing
 
-Use the following command to start the Webpack dev server.
+Use the following command to start the Webpack dev server. The viewing URL will be displayed, which can be opened in any supported web browser.
 
 ```
 npm start
 ```
 
-If the RigidBit server is not on localhost, it can be specified manually. Load the RigidBit Interface in a web browser, then open the development console. Set the "baseUrl" cookie using the command below, replacing the IP address to your RigidBit server IP. Be sure to change the IP and port accordingly.
+The dev server will present the interface, but it still requires a RigidBit server to function. The URL to a RigidBit server must be specified manually. Load the RigidBit Interface in a web browser, then open the development console. Set the "baseUrl" cookie using the command below, replacing the IP address to your RigidBit server IP. Be sure to change the IP and port or this will not work.
 
 ```
 Cookies.set("baseUrl", "http://192.168.0.123:8000", { expires: 365 });
@@ -55,7 +55,7 @@ Cookies.remove("baseUrl");
 
 ## Building
 
-Use the following command to build the production HTML, JS, and CSS files without launching the server. This only needs to be done as a final step, and does not need to be done during development. The final files will be emitted to the `dist` directory. The contents of the dist directory can then be copied to the remote webserver.
+Use the following command to build the production files without launching the server. This only needs to be done as a final step, and does not need to be done during development. The final files will be emitted to the `dist` directory. The contents of the dist directory can then be copied into the main [RigidBit](https://github.com/RigidBit/RigidBit) application's `src/http/resources` directory so it can be built directly into the application when compiled.
 
 ```
 npm run build
