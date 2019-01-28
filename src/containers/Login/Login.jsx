@@ -1,3 +1,4 @@
+import hash from "hash.js";
 import "particles.js";
 
 import * as alert from "../../components/Alert/alert.js";
@@ -55,6 +56,9 @@ import * as misc from "../../common/js/misc.js";
 		this.disableForm(true);
 
 		const data = $(this.loginForm.current).serializeObject();
+
+		// Hash password before transmitting.
+		data.password = hash.sha256().update(config.loginPasswordSalt).update(data.password).digest("hex");
 
 		api.postUrl("/api/login", data, false)
 		.then(function(data)

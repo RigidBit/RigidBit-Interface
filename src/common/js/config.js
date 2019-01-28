@@ -9,6 +9,7 @@ const config =
 	debouceDelayLong: 400,
 	debouceDelayShort: 100,
 	footerResizeTimerInterval: 500,
+	loginPasswordSalt: "jUtbdMW7wtrYBYQtL8fUtRsD",
 	maximumSearchDataLength: 140,
 	minimumSearchPhraseLength: 3,
 	monitorRefreshInterval: 5 * 60 * 1000,
