@@ -19,6 +19,7 @@ import Table from "../../components/Table/Table.jsx";
 	{
 		super(props);
 
+		this.syncForm = React.createRef();
 		this.timestampForm = React.createRef();
 	}
 
@@ -111,6 +112,24 @@ import Table from "../../components/Table/Table.jsx";
 		});
 	};
 
+	handleSyncSubmitButtonClick = (e) =>
+	{
+		if(e)
+			e.preventDefault();
+
+		api.postUrl("/api/sync", null, false)
+		.then(function(data)
+		{
+			const linkUrl = "/#/block/"+data.id;
+			iziToast.success({title: "Success", message: `Sync block has been created.&nbsp; <a href="${linkUrl}">View</a>`});
+		})
+		.catch(function(error)
+		{
+			log.error(error);
+			iziToast.error({title: "Error", message: error});
+		});
+	};
+
 	handleTagNameClick = (e) =>
 	{
 		e.preventDefault();
@@ -200,6 +219,27 @@ import Table from "../../components/Table/Table.jsx";
 			</div>
 		);
 		return htmlHelpers.renderContainer("cache-container", "Clear Cache", html);
+	};
+
+	renderSync = () =>
+	{
+		if(!this.isDataReady())
+			return htmlHelpers.renderLoading();
+
+		const html =
+		(
+			<div>
+				<div className="description">
+					Manually start a sync operation to peg with external blockchains.
+				</div>
+				<form ref={this.syncForm} action="/api/sync" method="post" encType="multipart/form-data">
+					<div className="button-container">
+						<button type="button" className="submit" onClick={this.handleSyncSubmitButtonClick} title="Start Sync"><i className="far fa-save icon"></i>Start Sync</button>
+					</div>
+				</form>
+			</div>
+		);
+		return htmlHelpers.renderContainer("sync-container", "Sync", html);
 	};
 
 	renderTags = () =>
@@ -320,7 +360,7 @@ import Table from "../../components/Table/Table.jsx";
 				<div className="description">
 					Create a manual timestamp entry in the blockchain.
 				</div>
-				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data">
 					<div className="button-container">
 						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Create Timestamp"><i className="far fa-save icon"></i>Create Timestamp</button>
 					</div>
@@ -333,6 +373,7 @@ import Table from "../../components/Table/Table.jsx";
 	render()
 	{
 		const tags = this.renderTags();
+		const sync = this.renderSync();
 		const timestamp = this.renderTimestamp();
 		const cache = this.renderCache();
 
@@ -350,6 +391,7 @@ import Table from "../../components/Table/Table.jsx";
 						</div>
 					</h1>
 					{tags}
+					{sync}
 					{timestamp}
 					{cache}
 				</div>

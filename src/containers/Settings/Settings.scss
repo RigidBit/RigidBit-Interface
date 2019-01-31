@@ -4,12 +4,14 @@ section.settings
 
 	.cache-container,
 	.tags-container,
+	.sync-container,
 	.timestamp-container
 	{
 		@include sectionContainerDefaultMixin;
 	}
 
 	.cache-container,
+	.sync-container,
 	.timestamp-container
 	{
 		div.button-container
