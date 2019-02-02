@@ -68,7 +68,7 @@ import * as misc from "../../common/js/misc.js";
 					<label className="username">{user.username}</label><i className="fas fa-caret-down"></i>
 					<ul className={menuClassName}>
 						<li><a href="#clearcache" onClick={this.handleClearCacheClicked}><i className="far fa-trash-alt"></i><label>Clear Cache</label></a></li>
-						<li><a href={router.buildUrl("logout")} onClick={this.handleLogoutClicked}><i className="fas fa-sign-out-alt"></i><label>Log Out</label></a></li>
+						<li className="logout"><a href={router.buildUrl("logout")} onClick={this.handleLogoutClicked}><i className="fas fa-sign-out-alt"></i><label>Log Out</label></a></li>
 					</ul>
 				</nav>
 

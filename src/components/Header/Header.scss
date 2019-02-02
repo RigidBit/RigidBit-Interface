@@ -48,7 +48,8 @@ header.main
 		{
 			width: $width-small;
 
-			label.username
+			label.username,
+			li.logout
 			{
 				display: none;
 			}
