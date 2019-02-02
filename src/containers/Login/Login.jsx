@@ -69,7 +69,7 @@ import * as misc from "../../common/js/misc.js";
 			if(redirect && redirect.length > 0 && misc.isJson(redirect))
 			{
 				const data = JSON.parse(redirect);
-				router.navigate(data.route, data.routeParams)
+				router.navigate(data.route, data.routeParams);
 			}
 			else
 			{
