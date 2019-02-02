@@ -3,7 +3,8 @@ section.upload
 	@include contentMixin;
 
 	.file-container,
-	.text-container
+	.text-container,
+	.verify-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -34,7 +35,8 @@ section.upload
 		}
 	}
 
-	.file-container
+	.file-container,
+	.verify-container
 	{
 		.filehash-warning
 		{
