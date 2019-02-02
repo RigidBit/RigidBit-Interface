@@ -294,7 +294,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			loading.hide();
 
-			const q = "\"data_hash:" + hash + "\"";
+			const q = "data_hash:" + hash;
 			router.navigate("search", {q});
 		})
 		.catch(function(error)
