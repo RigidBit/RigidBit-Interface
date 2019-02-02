@@ -50,7 +50,7 @@ import * as misc from "../../common/js/misc.js";
 		const menuClassName = (this.menuExpanded) ? "menu expanded" : "menu";
 
 		let topNavigationClassName = ["top-navigation"];
-		if(!isSingleUserMode) topNavigationClassName.push("show");
+		if(isSingleUserMode) topNavigationClassName.push("single-user-mode");
 		if(this.menuExpanded) topNavigationClassName.push("expanded");
 		topNavigationClassName = topNavigationClassName.join(" ");
 

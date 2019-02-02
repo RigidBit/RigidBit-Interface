@@ -27,13 +27,15 @@ header.main
 		$color: #7a8a90;
 		$height: 30px;
 		$width: 150px;
+		$width-small: 31px;
 
 		background: transparent;
 		border: 1px solid transparent;
 		border-radius: $border-radius-default;
 		cursor: pointer;
-		display: none;
+		display: block;
 		height: $height;
+		overflow: visible;
 		padding: 0;
 		position: absolute;
 		right: $padding-default;
@@ -42,9 +44,14 @@ header.main
 		width: $width;
 		z-index: $z-index-top-navigation;
 
-		&.show
+		&.single-user-mode
 		{
-			display: block;
+			width: $width-small;
+
+			label.username
+			{
+				display: none;
+			}
 		}
 
 		&:hover,
@@ -84,9 +91,11 @@ header.main
 			border-radius: $border-radius-default;
 			box-shadow: $box-shadow;
 			display: none;
+			min-width: $width;
 			overflow: hidden;
 			padding: 0;
 			position: absolute;
+			right: 0;
 			top: $height - 10px;
 			width: 100%;
 
