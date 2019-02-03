@@ -188,27 +188,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("block", {id: id});
 	};
 
-	handleViewBlockClick = (e) =>
-	{
-		e.preventDefault();
-
-		router.navigate("block", {id: $(e.currentTarget).text()});
-	};
-
-	handleViewBlockTypeClick = (e) =>
-	{
-		e.preventDefault();
-
-		const params =
-		{
-			count: 10,
-			offset: 0,
-			type: $(e.currentTarget).text().toLowerCase(),
-		};
-
-		router.navigate("blocks", params);
-	};
-
 	isBlockDataAvailable = () =>
 	{
 		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("data") && this.data.data !== null)
@@ -428,10 +407,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			let value = data[metric[0]];
 
 			if(key === "id" || key === "hash" || key === "prev_hash")
-				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClick}>{value}</a>
+				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>
+
+			if(key === "data_hash")
+				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>
 
 			else if(key === "block_type")
-				value = <a href={"#/blocks/10/0?type=" + value} onClick={_this.handleViewBlockTypeClick}>{value}</a>
+				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>
 
 			else if(key === "timestamp")
 				value = misc.timestampToDate(value);
@@ -509,6 +491,12 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 				value = <div className="data-container">{value}</div>;
 			}
+
+			if(key === "data" && value === null)
+				return;
+
+			if(key === "data_hash")
+				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>
 
 			if(key === "timestamp")
 				value = misc.timestampToDate(value);
@@ -588,9 +576,26 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const label = meta["name"].replace("_", " ");
 			let value = meta["value"];
 
-			if("name" in meta && meta["name"] === "filesize")
-			{
+			if(_.has(meta, "name") && meta["name"] === "filename")
+				value = <a href={router.buildUrl("search", {q: `"filename:${value}"`})}>{value}</a>;
+
+			if(_.has(meta, "name") && meta["name"] === "filesize")
 				value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
+
+			if(_.has(meta, "name") && meta["name"] === "file_path")
+			{
+				let paths = value.split("/").map(function(path, p)
+				{
+					if(path.length > 0)
+					{
+						const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
+						return <span key={p}>/{link}</span>;
+					}
+
+					return path;
+				});
+
+				value = paths;
 			}
 
 			if(value === null)
