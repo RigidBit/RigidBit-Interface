@@ -42,6 +42,32 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.registerKeypressHandler(false);
 	}
 
+	createSearchPath = (fullpath) =>
+	{
+		const isWindowsPath = misc.isWindowsPath(fullpath);
+		const divider = (isWindowsPath) ? "\\" : "/";
+
+		let paths = fullpath.split(divider).map(function(path, p)
+		{
+			if(path.length > 0)
+			{
+				const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
+
+				if(path.length >= config.minimumSearchPhraseLength)
+				{
+					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
+					return <span key={p}>{leadSlash}{link}</span>;
+				}
+				else
+					return <span key={p}>{leadSlash}{path}</span>;
+			}
+
+			return path;
+		});
+
+		return paths;
+	}
+
 	dataArrayToString = (data) =>
 	{
 		return misc.uintToString(data);
@@ -584,18 +610,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 			if(_.has(meta, "name") && meta["name"] === "file_path")
 			{
-				let paths = value.split("/").map(function(path, p)
-				{
-					if(path.length > 0)
-					{
-						const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
-						return <span key={p}>/{link}</span>;
-					}
-
-					return path;
-				});
-
-				value = paths;
+				value = _this.createSearchPath(value);
 			}
 
 			if(value === null)

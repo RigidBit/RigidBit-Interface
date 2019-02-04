@@ -50,6 +50,32 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		}
 	};
 
+	createSearchPath = (fullpath) =>
+	{
+		const isWindowsPath = misc.isWindowsPath(fullpath);
+		const divider = (isWindowsPath) ? "\\" : "/";
+
+		let paths = fullpath.split(divider).map(function(path, p)
+		{
+			if(path.length > 0)
+			{
+				const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
+
+				if(path.length >= config.minimumSearchPhraseLength)
+				{
+					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
+					return <span key={p}>{leadSlash}{link}</span>;
+				}
+				else
+					return <span key={p}>{leadSlash}{path}</span>;
+			}
+
+			return path;
+		});
+
+		return paths;
+	}
+
 	handleControlChange = (e) =>
 	{
 		const params =
@@ -168,7 +194,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<tr key={r}>
 						<td className="block_id item">{block_id_link}</td>
 						<td className="filename item">{filename_link}</td>
-						<td className="file_path item">{row.file_path}</td>
+						<td className="file_path item">{_this.createSearchPath(row.file_path)}</td>
 						<td className="file_size item">{filesize(row.file_size)}</td>
 						<td className="last_modified item">{misc.timestampToDate(row.last_modified)}</td>
 						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>

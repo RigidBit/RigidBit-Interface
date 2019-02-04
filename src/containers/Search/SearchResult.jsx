@@ -12,6 +12,33 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 {
 	@observable expandPreviewImage = false;
 
+	createSearchPath = (fullpath, search) =>
+	{
+		const _this = this;
+		const isWindowsPath = misc.isWindowsPath(fullpath);
+		const divider = (isWindowsPath) ? "\\" : "/";
+
+		let paths = fullpath.split(divider).map(function(path, p)
+		{
+			if(path.length > 0)
+			{
+				const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
+
+				if(path.length >= config.minimumSearchPhraseLength)
+				{
+					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{_this.highlightSearches(path, search)}</a>;
+					return <span key={p}>{leadSlash}{link}</span>;
+				}
+				else
+					return <span key={p}>{leadSlash}{_this.highlightSearches(path, search)}</span>;
+			}
+
+			return path;
+		});
+
+		return paths;
+	}
+
 	handleImageClick = action((e) =>
 	{
 		if(e && e.preventDefault)
@@ -154,17 +181,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 		const item = this.findItemContainingKey(value, "name", "file_path");
 		if(item)
 		{
-			let paths = item.value.split("/").map(function(path, p)
-			{
-				if(path.length > 0)
-				{
-					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{_this.highlightSearches(path, search)}</a>;
-					return <span key={p}>/{link}</span>;
-				}
-
-				return path;
-			});
-
+			let paths = _this.createSearchPath(item.value, search);
 			return <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{paths}</td><td className="empty"></td></tr>;
 		}
 

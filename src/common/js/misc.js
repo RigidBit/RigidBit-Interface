@@ -326,3 +326,16 @@ export function hashFile(file)
 
 	return promise;
 }
+
+/**
+ * Determines if the specified path is a Windows path.
+ * 
+ * @param  {String}  path The path to be tested.
+ * @return {Boolean}      True if the path is a Windows path, otherwise false.
+ */
+export function isWindowsPath(path)
+{
+	const regex = /^[a-z]\:\\.*/gi;
+
+	return regex.test(path);
+}
