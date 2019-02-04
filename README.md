@@ -53,6 +53,8 @@ To restore default functionality, remove the baseUrl cookie using your browser's
 Cookies.remove("baseUrl");
 ```
 
+Note: Due to issues with CORS, using two different machines can cause problems with cookies. If you login successfully then get authentication errors, this is probably a cookie problem. The easiest work around is to enable single user mode on the server. The second work around is to setup subdomains for each host, such as `desktop.rigidbit.local` and `server.rigidbit.local`. Because they share `rigidbit.local` there shouldn't be a cookie issue. Setting up temporary subdomains can be done easily by [editing your hosts file](https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/).
+
 ## Building
 
 Use the following command to build the production files without launching the server. This only needs to be done as a final step, and does not need to be done during development. The final files will be emitted to the `dist` directory. The contents of the dist directory can then be copied into the main [RigidBit](https://github.com/RigidBit/RigidBit) application's `src/http/resources` directory so it can be built directly into the application when compiled.
