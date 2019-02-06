@@ -146,7 +146,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	refreshDataFailure = (error) =>
 	{
-		this.updateData({sync_records: null, sync_records_count: null});
+		this.updateData({});
 
 		log.error(error);
 		iziToast.error({title: "Error", message: error});
