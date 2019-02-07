@@ -335,7 +335,8 @@ export function hashFile(file)
  */
 export function isWindowsPath(path)
 {
-	const regex = /^[a-z]\:\\.*/gi;
+	const regex1 = /^[a-z]:\\.*/gi;
+	const regex2 = /^\\\\.*/gi;
 
-	return regex.test(path);
+	return regex1.test(path) || regex2.test(path);
 }

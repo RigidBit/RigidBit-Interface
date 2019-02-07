@@ -57,18 +57,15 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		let paths = fullpath.split(divider).map(function(path, p)
 		{
-			if(path.length > 0)
-			{
-				const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
+			const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
 
-				if(path.length >= config.minimumSearchPhraseLength)
-				{
-					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
-					return <span key={p}>{leadSlash}{link}</span>;
-				}
-				else
-					return <span key={p}>{leadSlash}{path}</span>;
+			if(path.length >= config.minimumSearchPhraseLength)
+			{
+				const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
+				return <span key={p}>{leadSlash}{link}</span>;
 			}
+			else
+				return <span key={p}>{leadSlash}{path}</span>;
 
 			return path;
 		});

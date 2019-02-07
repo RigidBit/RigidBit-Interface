@@ -20,18 +20,15 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 		let paths = fullpath.split(divider).map(function(path, p)
 		{
-			if(path.length > 0)
-			{
-				const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
+			const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
 
-				if(path.length >= config.minimumSearchPhraseLength)
-				{
-					const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{_this.highlightSearches(path, search)}</a>;
-					return <span key={p}>{leadSlash}{link}</span>;
-				}
-				else
-					return <span key={p}>{leadSlash}{_this.highlightSearches(path, search)}</span>;
+			if(path.length >= config.minimumSearchPhraseLength)
+			{
+				const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{_this.highlightSearches(path, search)}</a>;
+				return <span key={p}>{leadSlash}{link}</span>;
 			}
+			else
+				return <span key={p}>{leadSlash}{_this.highlightSearches(path, search)}</span>;
 
 			return path;
 		});
