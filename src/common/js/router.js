@@ -12,7 +12,8 @@ export const routes =
     { name: "logout", path: "/logout" },
 	{ name: "monitor", path: "/monitor/:count/:offset" },
     { name: "search", path: "/search?:q" },
-    { name: "settings", path: "/settings" },
+    { name: "settings", path: "/settings", forwardTo: "settings.subsection" },
+    { name: "settings.subsection", path: "/:subsection", defaultParams: {subsection: "users"} },
     { name: "sync", path: "/sync/:count/:offset" },
 	{ name: "upload", path: "/upload" },
 ];

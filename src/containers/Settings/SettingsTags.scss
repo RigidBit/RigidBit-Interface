@@ -1,0 +1,54 @@
+section.settings
+{
+	.tags-container,
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
+	.tags-container
+	{
+		.controls
+		{
+			@include controlsMixin;
+		}
+
+		.empty
+		{
+			text-align: center;			
+		}
+
+		.react-table
+		{
+			overflow: auto;
+
+			.rt-table
+			{
+				min-width: 500px;
+
+				.rt-thead > .rt-tr > .rt-th.uses > div,
+				.rt-tbody > .rt-tr-group > .rt-tr > .rt-td.uses
+				{
+					text-align: right;
+				}
+			}
+			.uses
+			{
+			}
+		}
+
+		.color-preview
+		{
+			text-transform: uppercase;
+
+			.color-preview
+			{
+				border: $border-default;
+				display: inline-block;
+				height: 1em;
+				margin-right: $margin-button;
+				width: 1em;
+				vertical-align: bottom;
+			}
+		}
+	}
+}

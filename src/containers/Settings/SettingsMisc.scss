@@ -1,0 +1,20 @@
+section.settings
+{
+	.cache-container,
+	.sync-container,
+	.timestamp-container
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
+	.cache-container,
+	.sync-container,
+	.timestamp-container
+	{
+		div.button-container
+		{
+			position: relative;
+			text-align: center;
+		}
+	}
+}

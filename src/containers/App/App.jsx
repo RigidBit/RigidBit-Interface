@@ -79,6 +79,7 @@ import Upload from "../Upload/Upload.jsx";
 				html = <Monitor />;
 				break;
 			case "settings":
+			case "settings.subsection":
 				html = <Settings />;
 				break;
 			case "sync":
@@ -91,7 +92,7 @@ import Upload from "../Upload/Upload.jsx";
 				html = <Search />;
 				break;
 			default:
-				html = "Invalid route";
+				html = `Invalid route: "${store.route}"`;
 		}
 
 		return html;
