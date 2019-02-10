@@ -168,7 +168,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.data.sync_records.forEach(function(row, r)
 			{
 				const block_id_link = (!_.isNull(row.sync_block_id)) ? <a href={"#/block/" + row.sync_block_id} data-block-id={row.sync_block_id} onClick={_this.handleViewBlockClicked}>{row.sync_block_id}</a> : null;
-				const tx_hash_link = (!_.isNull(row.tx_hash)) ? <a href={`https://etherscan.io/tx/0x${row.tx_hash}`} target="_blank"><span className="full">{row.tx_hash}</span><span className="short">{row.tx_hash.substr(0,16)+"…"}</span></a> : null;
+				const tx_hash_link = (!_.isNull(row.chain) && !_.isNull(row.tx_hash)) ? htmlHelpers.renderTransactionViewLink(row.chain, row.tx_hash, <React.Fragment><span className="full">{row.tx_hash}</span><span className="short">{row.tx_hash.substr(0,16)+"…"}</span></React.Fragment>) : null;
 
 				const html =
 				(

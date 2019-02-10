@@ -46,6 +46,28 @@ export function renderLoading()
 	return <div className="loading-text">Loading...</div>;
 }
 
+export function renderTransactionViewLink(chain, tx_hash, linkHtml=null)
+{
+	let link;
+	if(chain === "ethereum")
+	{
+		const label = (linkHtml) ? linkHtml : "View on Etherscan";
+		link = <a href={`https://etherscan.io/tx/0x${tx_hash}`} target="_blank">{label}</a>
+	}
+	else if(chain === "horizen")
+	{
+		const label = (linkHtml) ? linkHtml : "View on Horizen Explorer";
+		link = <a href={`https://explorer.zensystem.io/tx/${tx_hash}`} target="_blank">{label}</a>
+	}
+	else
+	{
+		log.error(`Invalid chain specified: ${chain}`);
+		link = null;
+	}
+
+	return link;
+};
+
 export function clear()
 {
 	return <div style={{clear: "both", lineHeight: 0, height: 0}}>&nbsp;</div>;

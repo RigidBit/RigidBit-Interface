@@ -556,14 +556,15 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(syncBlockAndValidJson)
 		{
 			const json = JSON.parse(this.dataArrayToString(data.data));
-			if(json.tx_hash)
+			if(json.chain && json.tx_hash)
 			{
+				const link = htmlHelpers.renderTransactionViewLink(json.chain, json.tx_hash);
 				const html =
 				(
 					<tr key="view">
 						<td className={"view metric"}>View:</td>
 						<td className={"view value"}>
-							<a href={`https://etherscan.io/tx/0x${json.tx_hash}`} target="_blank">View on Etherscan</a>
+							{link}
 						</td>
 						<td className="empty" />
 					</tr>
