@@ -4,7 +4,7 @@ class Component extends React.Component
 	{
 		e.preventDefault();
 
-		const route = e.currentTarget.href.split("#")[1];
+		const route = e.currentTarget.href.split("/#/")[1];
 
 		let params = null;
 		if (route === "blocks") params = config.navigationDefaultBlocksParams;
@@ -17,18 +17,18 @@ class Component extends React.Component
 	render()
 	{
 		const _this = this;
-		const activeLink = "#" + store.route;
+		const activeLink = "/#/" + store.route;
 		const isAdmin = (store && store.user && store.user.is_admin) ? true : false;
 
 		const linkData =
 		[
-			["#dashboard", "Dashboard"],
-			[["#blocks", "#block"], "Blocks"],
-			["#monitor", "Monitor"],
-			["#sync", "Sync"],
-			["#upload", "Upload"],
-			["#settings", "Settings"],
-			["#search", <i className="fas fa-search"></i>],
+			["/#/dashboard", "Dashboard"],
+			[["/#/blocks", "/#/block"], "Blocks"],
+			["/#/monitor", "Monitor"],
+			["/#/sync", "Sync"],
+			["/#/upload", "Upload"],
+			[["/#/settings", "/#/settings.subsection"], "Settings"],
+			["/#/search", <i className="fas fa-search"></i>],
 		];
 
 		const links = [];
