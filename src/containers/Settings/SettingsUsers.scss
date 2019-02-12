@@ -1,0 +1,15 @@
+section.settings
+{
+	.users-container
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
+	.users-container
+	{
+		.controls
+		{
+			@include controlsMixin;
+		}
+	}
+}

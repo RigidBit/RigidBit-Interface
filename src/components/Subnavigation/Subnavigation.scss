@@ -1,10 +1,13 @@
 div.subnavigation
 {
+	display: inline-block;
+	font-weight: normal;
 	// margin-bottom: $margin-default;
 
 	.fas
 	{
 		font-size: $font-size-navigation;
+		margin-left: $margin-default;
 		margin-right: $margin-default;
 		opacity: 0.3;
 	}

@@ -340,3 +340,14 @@ export function isWindowsPath(path)
 
 	return regex1.test(path) || regex2.test(path);
 }
+
+/**
+ * Hashes the specified password with the default salt.
+ * 
+ * @param  {String} password A string of the password to hash.
+ * @return {String}          A string of the hashed password.
+ */
+export function hashPassword(password)
+{
+	return hash.sha256().update(config.loginPasswordSalt).update(password).digest("hex");
+}

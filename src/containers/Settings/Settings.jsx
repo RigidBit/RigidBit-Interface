@@ -76,11 +76,11 @@ import Users from "./SettingsUsers.jsx";
 				<div className="content">
 					<h1>
 						Settings
+						<Subnavigation items={subnavigationItems} selectedName={selectedName} />
 						<div className={"controls "+showControls}>
 							<button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>
 						</div>
 					</h1>
-					<Subnavigation items={subnavigationItems} selectedName={selectedName} />
 					{subsection}
 				</div>
 

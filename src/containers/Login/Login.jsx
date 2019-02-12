@@ -58,7 +58,7 @@ import * as misc from "../../common/js/misc.js";
 		const data = $(this.loginForm.current).serializeObject();
 
 		// Hash password before transmitting.
-		data.password = hash.sha256().update(config.loginPasswordSalt).update(data.password).digest("hex");
+		data.password = misc.hashPassword(data.password);
 
 		api.postUrl("/api/login", data, false)
 		.then(function(data)
