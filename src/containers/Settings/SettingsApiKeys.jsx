@@ -158,13 +158,17 @@ import Table from "../../components/Table/Table.jsx";
 		if(!this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		const data_users = _.keyBy(mobx.toJS(this.data.users), "id");
 		let data_api_keys = mobx.toJS(this.data.apiKeys);
+		let data_users = _.keyBy(mobx.toJS(this.data.users), "id");
+
+		// Add the matching username to data_api_keys from data_users where the user_id matches.
 		data_api_keys = data_api_keys.map((o)=>
 		{
-			// Add the matching username to data_api_keys from data_users where the user_id matches.
 			return {...o, username: data_users[o.user_id].username};
 		});
+
+		// Sort by username then API key.
+		data_api_keys = _.orderBy(data_api_keys, ["username", "api_key"]);
 
 		const columns =
 		[
