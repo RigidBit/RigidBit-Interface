@@ -13,7 +13,7 @@ export const routes =
 	{ name: "monitor", path: "/monitor/:count/:offset" },
     { name: "search", path: "/search?:q" },
     { name: "settings", path: "/settings", forwardTo: "settings.subsection" },
-    { name: "settings.subsection", path: "/:subsection", defaultParams: {subsection: "users"} },
+    { name: "settings.subsection", path: "/:subsection", defaultParams: config.subnavigationDefaultParamsSettings },
     { name: "sync", path: "/sync/:count/:offset" },
 	{ name: "upload", path: "/upload" },
 ];
