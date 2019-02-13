@@ -45,9 +45,10 @@ import ReactModal from 'react-modal';
 
 	renderUserSelect = () =>
 	{
-		const options = [];
+		const data = _.sortBy(this.props.data, (o)=>o.username);
 
-		this.props.data.forEach(function(user, u)
+		const options = [];
+		data.forEach(function(user, u)
 		{
 			const html = <option key={u} value={user.id}>{user.username}</option>;
 			options.push(html);
