@@ -43,6 +43,10 @@ import Table from "../../components/Table/Table.jsx";
 	{
 		const _this = this;
 
+		// Hash password before transmitting, but only if it was provided.
+		if(data.password.length > 0)
+			data.password = misc.hashPassword(data.password);
+
 		action(()=>{this.addEditUserModalOpen = false;})();
 
 		api.postUrl("/api/users", data, false)
