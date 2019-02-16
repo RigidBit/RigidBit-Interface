@@ -181,7 +181,7 @@ import Table from "../../components/Table/Table.jsx";
 			{
 				Header: "Hidden",
 				id: "hidden",
-				accessor: (d)=>d.hidden.toString(),
+				accessor: (d)=>d.is_hidden.toString(),
 				className: "hidden",
 				headerClassName: "hidden",
 				maxWidth: 80,

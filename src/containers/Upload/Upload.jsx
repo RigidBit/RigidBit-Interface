@@ -75,7 +75,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	generateTagSelectOptions = () =>
 	{
-		const selectOptions = this.data.tags.filter((item)=>!item.hidden).map(function(item, i)
+		const selectOptions = this.data.tags.filter((item)=>!item.is_hidden).map(function(item, i)
 		{
 			const option =
 			{

@@ -276,7 +276,7 @@ function renderEditTagForm(data)
 		</label>
 	`;
 	const $color = $(color);
-	const hiddenValue = String(Number(data.hidden));
+	const hiddenValue = String(Number(data.is_hidden));
 	const hidden =
 	`
 		<label class="hidden">

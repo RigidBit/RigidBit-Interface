@@ -120,7 +120,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return [];
 
 		if(!showHidden)
-			data = data.filter((item)=>!item.hidden);
+			data = data.filter((item)=>!item.is_hidden);
 
 		const selectOptions = data.map(function(item, i)
 		{
