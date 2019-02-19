@@ -176,7 +176,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		});
 		data = {tags: data.join(",")};
 
-		api.putUrl(`/api/tags-for-block/${store.routeParams.id}`, data)
+		api.putUrl(`/api/tags-for-block/${_this.data.block.id}`, data)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
@@ -187,7 +187,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				_this.tagsEditModeEnabled = false;
 			})();
 
-			api.removeCache(`/api/block-complete/${store.routeParams.id}`, "GET");
+			api.removeCache(`/api/block-complete/${_this.data.block.id}`, "GET");
 		})
 		.catch(function(error)
 		{
@@ -229,7 +229,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isBlockTagsAvailable = () =>
 	{
-		const validBlockTypes = ["file", "filehash", "text"];
+		const validBlockTypes = ["data", "file", "filehash", "text"];
 
 		if(this.isDataReady() && this.isDataValid() && _.has(this.data, "tagsAvailable") && _.includes(validBlockTypes, this.data.block.block_type.toLowerCase()))
 			return true;
@@ -605,7 +605,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(_.has(meta, "name") && meta["name"] === "filename")
 				value = <a href={router.buildUrl("search", {q: `"filename:${value}"`})}>{value}</a>;
 
-			if(_.has(meta, "name") && meta["name"] === "filesize")
+			if(_.has(meta, "name") && (meta["name"] === "filesize" || meta["name"] === "data_size"))
 				value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
 
 			if(_.has(meta, "name") && meta["name"] === "file_path")
