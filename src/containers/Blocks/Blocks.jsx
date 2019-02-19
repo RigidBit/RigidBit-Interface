@@ -266,6 +266,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange} title="Filter by Block Type">
 							<option value="all">All ({valueOrZero(block_type_count, "all")})</option>
 							<option value="user">All User ({valueOrZero(block_type_count, "user")})</option>
+							<option value="data">Data ({valueOrZero(block_type_count, "data")})</option>
 							<option value="file">File ({valueOrZero(block_type_count, "file")})</option>
 							<option value="filehash">Filehash ({valueOrZero(block_type_count, "filehash")})</option>
 							<option value="genesis">Genesis ({valueOrZero(block_type_count, "genesis")})</option>

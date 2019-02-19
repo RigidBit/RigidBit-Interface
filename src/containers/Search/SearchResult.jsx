@@ -4,7 +4,7 @@ import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
 
 const REGEX_ESCAPE = /[-[\]{}()*+?.,\\^$|#\s]/g;
-const REGEX_PREFIXES = /^(?:data\:|filename\:|file_path\:|hash\:|tag\:)/gi;
+const REGEX_PREFIXES = /^(?:data\:|data_hash\:|filename\:|file_path\:|hash\:|tag\:)/gi;
 const REGEX_TERMS = /('.*?'|".*?"|\S+)/g;
 const REGEX_TRIM = /^['"]+|['"]+$/g;
 
@@ -223,12 +223,14 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 		[
 			["id", "ID/Type/Timestamp", data.block],
 			["hash", "Block Hash", data.block.hash],
+			["data_hash", "Data Hash", data.block.data_hash],
 			["filename", "Filename", data.meta],
 			["file_path", "File Path", data.meta],
 			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
 			["image-preview", "Preview", data],
-			["view-on-etherscan", "View", data]
+			["view-on-etherscan", "View", data],
+			["download", "Download", data.block.id],
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
 		];
 
@@ -251,6 +253,12 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "block_type" || key === "block_time")
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{value}</td><td className="empty"></td></tr>;
+
+			else if(key === "data_hash")
+			{
+				if(block_type === "data")
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
+			}
 
 			else if(key === "filename")
 			{
@@ -317,6 +325,25 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 					const json = JSON.parse(misc.uintToString(value.data.data));
 					const link = <a href={`https://etherscan.io/tx/0x${json.tx_hash}`} target="_blank">View on Etherscan</a>;
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{link}</td><td className="empty"></td></tr>;
+				}
+			}
+
+			else if(key === "download")
+			{
+				if(block_type === "data" || block_type === "file" || block_type === "text")
+				{
+					row =
+					(
+						<tr key={m} className={key}>
+							<td className="name">{label}:</td>
+							<td className="value">
+								<a href={api.apiUrlFromRelativePath("/api/file-download/"+value)}>Download</a>
+								{" "}
+								{(block_type !== "data") && <a href={api.apiUrlFromRelativePath("/api/file-inline/"+value)} target="_blank">Open in New Window</a>}
+							</td>
+							<td className="empty"></td>
+						</tr>
+					);
 				}
 			}
 
