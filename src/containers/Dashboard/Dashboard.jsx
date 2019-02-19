@@ -118,11 +118,19 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
+		// Sort data by configured ordering.
+		const dashboardBlockTypesDisplayOrder = ["data", "file", "filehash", "text", "timestamp", "sync"];
+		let data = mobx.toJS(this.data.block_type_count);
+		data = _.sortBy(data, function(item)
+		{
+			return _.indexOf(dashboardBlockTypesDisplayOrder, item.block_type.toLowerCase());
+		});
+
 		const blockTypes = ["data", "file", "filehash", "text"];
 		const blockTypesFiltered = ["data", "file", "filehash", "text", "sync", "timestamp"];
 
 		const chartData = _.cloneDeep(charts.dataBaseSet1);
-		this.data.block_type_count.forEach(function(item)
+		data.forEach(function(item)
 		{
 			if(_.includes(blockTypesFiltered, item.block_type.toLowerCase()))
 			{
@@ -132,7 +140,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		});
 
 		const chartDataFiltered = _.cloneDeep(charts.dataBaseSet1);
-		this.data.block_type_count.forEach(function(item)
+		data.forEach(function(item)
 		{
 			if(_.includes(blockTypes, item.block_type.toLowerCase()))
 			{
