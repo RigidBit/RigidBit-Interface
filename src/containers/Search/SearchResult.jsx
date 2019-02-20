@@ -256,14 +256,14 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "data_hash")
 			{
-				if(block_type === "data")
+				if(block_type === "data" || search.startsWith("data_hash:"))
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
 			}
 
 			else if(key === "filename")
 			{
 				const item = _this.findItemContainingKey(value, "name", key);
-				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search)))
+				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search) || search.startsWith("filename:")))
 				{
 					row = _this.renderFilenameRow(m, key, label, value, search);
 				}
@@ -272,7 +272,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			else if(key === "file_path")
 			{
 				const item = _this.findItemContainingKey(value, "name", key);
-				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search)))
+				if(item && (block_type === "file" || block_type === "filehash" || _this.areTermsPresent(item.value, search) || search.startsWith("file_path:")))
 				{
 					row = _this.renderFilePathRow(m, key, label, value, search);
 				}
@@ -280,7 +280,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "hash")
 			{
-				if(_this.areTermsPresent(value, search))
+				if(_this.areTermsPresent(value, search) || search.startsWith("hash:"))
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
 			}
 
@@ -312,7 +312,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "tags")
 			{
-				if(_this.areTermsPresent(value.map((o)=>o.name).join(" "), search))
+				if(_this.areTermsPresent(value.map((o)=>o.name).join(" "), search) || search.startsWith("tag:"))
 				{
 					row = _this.renderTagRow(m, key, label, value, search);
 				}
