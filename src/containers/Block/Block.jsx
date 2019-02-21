@@ -229,9 +229,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isBlockTagsAvailable = () =>
 	{
-		const validBlockTypes = ["data", "file", "filehash", "text"];
-
-		if(this.isDataReady() && this.isDataValid() && _.has(this.data, "tagsAvailable") && _.includes(validBlockTypes, this.data.block.block_type.toLowerCase()))
+		if(this.isDataReady() && this.isDataValid() && _.has(this.data, "tagsAvailable"))
 			return true;
 
 		return false;
