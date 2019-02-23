@@ -14,7 +14,7 @@ class Component extends React.Component
 
 	handleClearCacheButtonClick = (e) =>
 	{
-		localStorage.clear();
+		api.purgeCache();
 		iziToast.success({title: "Success", message: "Cache has been cleared."});
 	};
 
