@@ -22,7 +22,7 @@ class Component extends React.Component
 	{
 		if(e) e.preventDefault();
 
-		api.postUrl("/api/sync", null, false)
+		api.postUrl("/api/sync", null)
 		.then(function(data)
 		{
 			const linkUrl = "/#/block/"+data.id;
@@ -39,7 +39,7 @@ class Component extends React.Component
 	{
 		if(e) e.preventDefault();
 
-		api.postUrl("/api/timestamp", null, false)
+		api.postUrl("/api/timestamp", null)
 		.then(function(data)
 		{
 			const linkUrl = "/#/block/"+data.id;

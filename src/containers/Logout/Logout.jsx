@@ -12,7 +12,7 @@ class Login extends React.Component
 	{
 		const _this = this;
 
-		api.getUrl("/api/logout", false)
+		api.getUrl("/api/logout")
 		.catch(function(error)
 		{
 			log.error(error);

@@ -1,4 +1,5 @@
 import ApiKeys from "./SettingsApiKeys.jsx";
+import Events from "./SettingsEvents.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Misc from "./SettingsMisc.jsx";
@@ -46,6 +47,9 @@ import Users from "./SettingsUsers.jsx";
 			case "tags":
 				html = <Tags refreshSubscribe={this.refreshSubscribe} />;
 				break;
+			case "events":
+				html = <Events refreshSubscribe={this.refreshSubscribe} />;
+				break;
 			case "misc":
 				html = <Misc />;
 				break;
@@ -64,13 +68,14 @@ import Users from "./SettingsUsers.jsx";
 			{ name: "users", label: "Users", route: "settings.subsection", routeParams:{subsection: "users"} },
 			{ name: "api-keys", label: "API Keys", route: "settings.subsection", routeParams:{subsection: "api-keys"} },
 			{ name: "tags", label: "Tags", route: "settings.subsection", routeParams:{subsection: "tags"} },
+			{ name: "events", label: "Events", route: "settings.subsection", routeParams:{subsection: "events"} },
 			{ name: "misc", label: "Misc.", route: "settings.subsection", routeParams:{subsection: "misc"} },
 		];
 		const subsection = this.renderSubsection(selectedName);
 
 		// The control hiding is hard coded as a quick workaround.
 		// Checking this.refreshHandlers isn't possible since subscription occurs after rendering.
-		const showControls = (_.includes(["tags", "users", "api-keys"], selectedName)) ? "show" : "";
+		const showControls = (_.includes(["tags", "users", "api-keys", "events"], selectedName)) ? "show" : "";
 
 		const html =
 		(

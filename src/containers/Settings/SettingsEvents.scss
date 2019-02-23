@@ -1,0 +1,24 @@
+section.settings
+{
+	.events-container
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
+	.events-container
+	{
+		.react-table
+		{
+			.rt-th.c_a > div,
+			.rt-td.c_a
+			{
+				text-align: center;
+			}
+		}
+
+		.controls
+		{
+			@include controlsMixin;
+		}
+	}
+}

@@ -148,7 +148,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(store.route !== "monitor")
 			return false;
 
-		api.getUrl(`/api/monitor/${store.routeParams.count}/${store.routeParams.offset}/1`, false)
+		api.getUrl(`/api/monitor/${store.routeParams.count}/${store.routeParams.offset}/1`)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {monitor_records: null, monitor_records_count: null}, data);

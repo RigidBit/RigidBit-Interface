@@ -43,7 +43,7 @@ import Table from "../../components/Table/Table.jsx";
 
 		action(()=>{this.addApiKeyModalOpen = false;})();
 
-		api.postUrl("/api/api-keys", data, false)
+		api.postUrl("/api/api-keys", data)
 		.then(function(data)
 		{
 			api.removeCache("/api/api-keys"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -73,7 +73,7 @@ import Table from "../../components/Table/Table.jsx";
 		const _this = this;
 		const id = data.id;
 
-		api.deleteUrl("/api/api-keys/"+id, false)
+		api.deleteUrl("/api/api-keys/"+id)
 		.then(function(data)
 		{
 			api.removeCache("/api/api-keys"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -98,14 +98,14 @@ import Table from "../../components/Table/Table.jsx";
 		if(!store.route.startsWith("settings"))
 			return false;
 
-		api.getUrl("/api/users", false)
+		api.getUrl("/api/users")
 		.then(function(data)
 		{
 			// data = _.sortBy(data, (o)=>o.username);
 			const newData = _.merge(mobx.toJS(_this.data), {users: null}, {users: data});
 			_this.updateData(newData);
 		})
-		.then(()=>api.getUrl("/api/api-keys", false))
+		.then(()=>api.getUrl("/api/api-keys"))
 		.then(function(data)
 		{
 			// data = _.sortBy(data, (o)=>o.username);

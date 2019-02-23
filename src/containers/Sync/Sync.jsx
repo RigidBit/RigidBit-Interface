@@ -132,7 +132,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(store.route !== "sync")
 			return false;
 
-		api.getUrl(`/api/sync/${store.routeParams.count}/${store.routeParams.offset}/1`, false)
+		api.getUrl(`/api/sync/${store.routeParams.count}/${store.routeParams.offset}/1`)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {sync_records: null, sync_records_count: null}, data);

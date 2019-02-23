@@ -16,6 +16,10 @@ const config =
 	navigationDefaultBlocksParams: {count: 10, offset: 0, type: "user"},
 	navigationDefaultMonitorParams: {count: 10, offset: 0},
 	navigationDefaultSyncParams: {count: 10, offset: 0},
+	settingsEventsEventRuleActionActions: ["AddTag"],
+	settingsEventsEventRuleConditionObjects: ["Filename", "FilePath"],
+	settingsEventsEventRuleConditionOperators: ["Equals", "BeginsWith", "EndsWith", "Contains", "RegEx", "NotEqual", "NotBeginsWith", "NotEndsWith", "NotContains", "NotRegex"],
+	settingsEventsEventRuleRuleTypes: ["NewBlock", "NewDataBlock", "NewFileBlock", "NewFileHashBlock", "NewTextBlock", "NewTimestampBlock", "NewSyncBlock"],
 	subnavigationDefaultParamsSettings: {subsection: "users"},
 	syncRefreshInterval: 5 * 60 * 1000,
 };

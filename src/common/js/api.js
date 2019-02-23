@@ -43,12 +43,13 @@ function cacheKeyGenerate(url, method, data=null)
  * @param  {string}		method 		The HTTP method type of the request.
  * @param  {object}		data   		An JSON compatible object with all request data. 
  * @param  {Boolean}	useCache	If true, a cached response will be returned if available.
+ * @param  {Boolean}	useJson		If true, the request data will be sent as application/json.
  * @param  {Boolean}	background	If true, will execute fetch in background mode without loading indicators.
  * @param  {onSuccessCallback} onSuccess A function called on successful execution. 
  * @param  {onFailureCallback} onError	 A function called on a failed execution.
  * @return {Promise} The resulting promise of the request.
  */
-export function fetchUrl(url, method="GET", data=null, useCache=false, background=false)
+export function fetchUrl(url, method="GET", data=null, useCache=false, useJson=false, background=false)
 {
 	method = method.toUpperCase();
 	const cacheKey = cacheKeyGenerate(url, method, data);
@@ -81,13 +82,19 @@ export function fetchUrl(url, method="GET", data=null, useCache=false, backgroun
 	// Invalidate cache when a new request will occur.
 	removeCache(url, method, data);
 
-	// Always convert data into a FormData object.
 	let formData = null;
 	if(data)
 	{
+		if(useJson)
+		{
+			formData = JSON.stringify(data);
+		}
 		// If formData is not a FormData instance, assume it is a JSON compatible object.
-		if(data instanceof FormData)
+		else if(data instanceof FormData)
+		{
 			formData = data;
+		}
+		// Convert to FormData.
 		else
 		{
 			formData = new FormData();
@@ -107,6 +114,15 @@ export function fetchUrl(url, method="GET", data=null, useCache=false, backgroun
 		referrer: "no-referrer",
 		body: formData,
 	};
+
+	if(useJson)
+	{
+		config.headers =
+		{
+			"Accept": "application/json",
+			"Content-Type": "application/json",
+		};
+	}
 
 	const promise = fetch(apiUrl, config)
 	.then(async function(response)
@@ -217,25 +233,40 @@ export function apiUrlFromRelativePath(relativeUrl)
 
 export function getUrl(url, useCache=false, background=false)
 {
-	return fetchUrl(url, "GET", null, useCache, background);
+	return fetchUrl(url, "GET", null, useCache, false, background);
 }
 
 export function postUrl(url, data, useCache=false, background=false)
 {
-	return fetchUrl(url, "POST", data, useCache, background);
+	return fetchUrl(url, "POST", data, useCache, false, background);
+}
+
+export function postUrlJson(url, data, useCache=false, background=false)
+{
+	return fetchUrl(url, "POST", data, useCache, true, background);
 }
 
 export function patchUrl(url, data, useCache=false, background=false)
 {
-	return fetchUrl(url, "PATCH", data, useCache, background);
+	return fetchUrl(url, "PATCH", data, useCache, false, background);
+}
+
+export function patchUrlJson(url, data, useCache=false, background=false)
+{
+	return fetchUrl(url, "PATCH", data, useCache, true, background);
 }
 
 export function putUrl(url, data, useCache=false, background=false)
 {
-	return fetchUrl(url, "PUT", data, useCache, background);
+	return fetchUrl(url, "PUT", data, useCache, false, background);
+}
+
+export function putUrlJson(url, data, useCache=false, background=false)
+{
+	return fetchUrl(url, "PUT", data, useCache, true, background);
 }
 
 export function deleteUrl(url, useCache=false, background=false)
 {
-	return fetchUrl(url, "DELETE", null, useCache, background);
+	return fetchUrl(url, "DELETE", null, useCache, false, background);
 }

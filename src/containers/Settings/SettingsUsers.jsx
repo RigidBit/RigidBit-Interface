@@ -49,7 +49,7 @@ import Table from "../../components/Table/Table.jsx";
 
 		action(()=>{this.addEditUserModalOpen = false;})();
 
-		api.postUrl("/api/users", data, false)
+		api.postUrl("/api/users", data)
 		.then(function(data)
 		{
 			api.removeCache("/api/users"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -78,7 +78,7 @@ import Table from "../../components/Table/Table.jsx";
 		const _this = this;
 		const id = data.id;
 
-		api.deleteUrl("/api/users/"+id, false)
+		api.deleteUrl("/api/users/"+id)
 		.then(function(data)
 		{
 			api.removeCache("/api/users"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -120,7 +120,7 @@ import Table from "../../components/Table/Table.jsx";
 			this.addEditUserModalEditData = null;
 		})();
 
-		api.patchUrl("/api/users/"+data.id, data, false)
+		api.patchUrl("/api/users/"+data.id, data)
 		.then(function(data)
 		{
 			api.removeCache("/api/users"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -145,7 +145,7 @@ import Table from "../../components/Table/Table.jsx";
 		if(!store.route.startsWith("settings"))
 			return false;
 
-		api.getUrl("/api/users", false)
+		api.getUrl("/api/users")
 		.then(function(data)
 		{
 			data = _.sortBy(data, (o)=>o.username);
@@ -183,14 +183,15 @@ import Table from "../../components/Table/Table.jsx";
 		if(!this.addEditUserModalOpen)
 			return null;
 
-		const isEditMode = _.isObject(mobx.toJS(this.addEditUserModalEditData));
+		const editData = mobx.toJS(this.addEditUserModalEditData);
+		const isEditMode = _.isObject(editData);
 
 		const html =
 		(
 			<SettingsAddEditUserModal
 				onCancel={this.handleAddEditUserCancelled}
 				onConfirm={(!isEditMode) ? this.handleAddUserConfirmed : this.handleEditUserConfirmed}
-				editData={this.addEditUserModalEditData}
+				editData={editData}
 			/>
 		);
 		return html;
@@ -257,7 +258,7 @@ import Table from "../../components/Table/Table.jsx";
 		);
 
 		if(data.length === 0)
-			return htmlHelpers.renderContainer("users-container", title, <div className="empty">No tags have been created.</div>);
+			return htmlHelpers.renderContainer("users-container", title, <div className="empty">No users have been created.</div>);
 		else
 			return htmlHelpers.renderContainer("users-container", title, <Table data={data} columns={columns} />);
 	};

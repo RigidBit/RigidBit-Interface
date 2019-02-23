@@ -187,7 +187,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		formData.append("tags", _.map(_this.selectedFileTags, "value").join(","));
 		_this.formDataAppendFiles(formData, _this.file.current);
 
-		api.postUrl(url, formData, false)
+		api.postUrl(url, formData)
 		.then(function(data)
 		{
 			_this.fileForm.current.reset();
@@ -222,7 +222,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const data = $(_this.textForm.current).serializeObject();
 		data.tags = _.map(_this.selectedTextTags, "value").join(",");
 
-		api.postUrl("/api/text", data, false)
+		api.postUrl("/api/text", data)
 		.then(function(data)
 		{
 			_this.textForm.current.reset();
@@ -359,7 +359,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(store.route !== "upload")
 			return false;
 
-		api.getUrl("/api/tags", false)
+		api.getUrl("/api/tags")
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
