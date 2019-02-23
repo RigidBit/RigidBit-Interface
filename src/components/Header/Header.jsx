@@ -1,3 +1,5 @@
+import iziToast from "izitoast";
+
 import * as alert from "../../components/Alert/alert.js"; 
 import * as misc from "../../common/js/misc.js";
 
@@ -21,7 +23,7 @@ import * as misc from "../../common/js/misc.js";
 
 		api.purgeCache();
 
-		alert.show("All caches have been cleared.");
+		iziToast.success({title: "Success", message: "Cache has been cleared."});
 	};
 
 	handleLogoutClicked = (e) =>
