@@ -351,3 +351,19 @@ export function hashPassword(password)
 {
 	return hash.sha256().update(config.loginPasswordSalt).update(password).digest("hex");
 }
+
+/**
+ * Generate a random integer.
+ *
+ * Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+ * 
+ * @param  {Integer} min The minimum value.
+ * @param  {Integer} max The maximum limit. The output value will always be less than this. 
+ * @return {Integer}     A random integer.
+ */
+export function getRandomInt(min, max)
+{
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
