@@ -49,7 +49,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		let paths = fullpath.split(divider).map(function(path, p)
 		{
-			const leadSlash = (isWindowsPath) ? (p > 0) ? "\\" : "" : "/";
+			const leadSlash = (p > 0) ? (isWindowsPath) ? "\\" : "/" : "";
 
 			if(path.length >= config.minimumSearchPhraseLength)
 			{
