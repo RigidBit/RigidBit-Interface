@@ -217,7 +217,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 	renderTableRows = (data, search) =>
 	{
 		const _this = this;
-		const block_type = data.block.block_type.toLowerCase();
+		const block_type = data.block.type.toLowerCase();
 
 		const metrics =
 		[
@@ -246,12 +246,12 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			if(key === "id")
 			{
 				const id_link = <a href={"/#/block/"+value.id}>{value.id}</a>;
-				const type_link = <a href={"#" + router.buildPath("search", {q: `"type:${value.block_type}"`})}>{value.block_type}</a>;
+				const type_link = <a href={"#" + router.buildPath("search", {q: `"type:${value.type}"`})}>{value.type}</a>;
 				const timestamp = misc.timestampToDate(value.timestamp);
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{id_link} ({type_link}) <div className="timestamp">{timestamp}</div></td><td className="empty"></td></tr>;
 			}
 
-			else if(key === "block_type" || key === "block_time")
+			else if(key === "type" || key === "block_time")
 				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{value}</td><td className="empty"></td></tr>;
 
 			else if(key === "data_hash")

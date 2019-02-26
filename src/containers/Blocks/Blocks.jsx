@@ -203,7 +203,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		else
 			this.data.blocks.forEach(function(row, r)
 			{
-				const linkBlockType = `#/blocks/${store.routeParams.count}/${store.routeParams.offset}?type=${row.block_type.toLowerCase()}`;
+				const linkBlockType = `#/blocks/${store.routeParams.count}/${store.routeParams.offset}?type=${row.type.toLowerCase()}`;
 				const linkId = "#/block/" + row.id;
 				const linkHash = "#/block/" + row.hash;
 				const linkLabel = insertZeroWidthSpaceAt(row.hash, 32);
@@ -213,7 +213,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<tr key={r}>
 						<td className="id item"><a href={linkId} data-id={row.id} onClick={_this.handleViewBlockClick}>{row.id}</a></td>
 						<td className="hash item"><a href={linkHash} data-id={row.hash} onClick={_this.handleViewBlockClick}>{linkLabel}</a></td>
-						<td className="block_type item"><a href={linkBlockType} data-type={row.block_type} onClick={_this.handleViewTypeClick}>{row.block_type}</a></td>
+						<td className="block_type item"><a href={linkBlockType} data-type={row.type} onClick={_this.handleViewTypeClick}>{row.type}</a></td>
 						<td className="timestamp item">{timestampToDate(row.timestamp)}</td>
 					</tr>
 				);
@@ -228,7 +228,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<tr>
 							<th className="id">ID</th>
 							<th className="hash">Block Hash</th>
-							<th className="block_type">Block Type</th>
+							<th className="type">Block Type</th>
 							<th className="timestamp">Timestamp</th>
 						</tr>
 					</thead>
@@ -243,7 +243,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderControls = () =>
 	{
-		const block_type = ("type" in store.routeParams) ? store.routeParams.type : "all";
+		const block_type = ("type" in store.routeParams) ? store.routeParams.type.toLowerCase() : "all";
 		const block_type_count = this.data.block_type_count;
 		const block_type_count_current = valueOrZero(block_type_count, block_type);
 		const count = store.routeParams.count;

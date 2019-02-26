@@ -311,10 +311,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = timestampToDate(value);
 
 			else if(key === "block_height" || key === "last_hash")
-				value = <a href={"#/block/" + value} onClick={_this.handleViewBlockClicked}>{value}</a>;
+				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
 			else if(key === "last_type")
-				value = <a href={`#/blocks/${config.navigationDefaultBlocksParams.count}/${config.navigationDefaultBlocksParams.offset}?type=${value.toLowerCase()}`} data-type={value} onClick={_this.handleViewTypeClicked}>{value}</a>;
+				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>;
 
 			else if(key === "connection")
 				value = <span>Active <i className="fas fa-bolt"></i></span>;

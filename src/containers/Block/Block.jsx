@@ -259,7 +259,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataValid())
 			return false;
 
-		const block_type = data.block.block_type.toLowerCase();
+		const block_type = data.block.type.toLowerCase();
 		if(block_type != "file" && block_type != "text")
 			return false;
 
@@ -413,8 +413,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			["id", "ID"],
 			["hash", "Block Hash"],
 			["data_hash", "Data Hash"],
+			["meta_hash", "Meta Hash"],
 			["prev_hash", "Previous Hash"],
-			["block_type", "Block Type"],
+			["type", "Block Type"],
 			["timestamp", "Timestamp"],
 			// ["version", "Block Version"],
 			["verified", "Verify"],
@@ -430,10 +431,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(key === "id" || key === "hash" || key === "prev_hash")
 				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>
 
-			if(key === "data_hash")
+			else if(key === "data_hash")
 				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>
 
-			else if(key === "block_type")
+			else if(key === "type")
 				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>
 
 			else if(key === "timestamp")
@@ -477,7 +478,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return null;
 			// return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
-		const block_type = this.data.block.block_type.toLowerCase();
+		const block_type = this.data.block.type.toLowerCase();
 		const syncBlockAndValidJson = block_type === "sync" && misc.isJson(this.dataArrayToString(data.data));
 
 		const metrics =
@@ -543,9 +544,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<tr key="download">
 					<td className={"download metric"}>Download:</td>
 					<td className={"download value"}>
-						<a href={api.apiUrlFromRelativePath("/api/file-download/"+data.id)}>Download</a>
+						<a href={api.apiUrlFromRelativePath("/api/file-download/"+data.block_id)}>Download</a>
 						{" "}
-						{(block_type !== "data") && <a href={api.apiUrlFromRelativePath("/api/file-inline/"+data.id)} target="_blank">Open in New Window</a>}
+						{(block_type !== "data") && <a href={api.apiUrlFromRelativePath("/api/file-inline/"+data.block_id)} target="_blank">Open in New Window</a>}
 					</td>
 					<td className="empty" />
 				</tr>
@@ -649,7 +650,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataPreviewAvailable())
 			return null;
 
-		const block_type = data.block.block_type.toLowerCase();
+		const block_type = data.block.type.toLowerCase();
 		const documentExtensions = this.dataPreviewDocumentExtensions;
 		const imageExtensions = this.dataPreviewImageExtensions;
 		const movieExtensions = this.dataPreviewMovieExtensions;
