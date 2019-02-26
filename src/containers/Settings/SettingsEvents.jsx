@@ -231,7 +231,8 @@ import Table from "../../components/Table/Table.jsx";
 		if(!this.isDataReady())
 			return htmlHelpers.renderLoading();
 
-		const data = mobx.toJS(this.data.eventRules);
+		let data = mobx.toJS(this.data.eventRules);
+		data = _.sortBy(data, (o)=>o.rule.name.toLowerCase());
 
 		const columns =
 		[
