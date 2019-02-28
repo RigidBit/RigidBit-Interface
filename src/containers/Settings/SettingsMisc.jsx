@@ -96,7 +96,7 @@ class Component extends React.Component
 				</div>
 				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data">
 					<div className="button-container">
-						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Create Timestamp"><i className="far fa-save icon"></i>Create Timestamp</button>
+						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Create Timestamp"><i className="far fa-clock icon"></i>Create Timestamp</button>
 					</div>
 				</form>
 			</div>
