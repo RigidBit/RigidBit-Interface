@@ -19,7 +19,7 @@ const config =
 	settingsEventsEventRuleActionActions: ["AddTag"],
 	settingsEventsEventRuleConditionObjects: ["Filename", "FilePath"],
 	settingsEventsEventRuleConditionOperators: ["Equals", "BeginsWith", "EndsWith", "Contains", "RegEx", "NotEqual", "NotBeginsWith", "NotEndsWith", "NotContains", "NotRegex"],
-	settingsEventsEventRuleRuleTypes: ["NewBlock", "NewDataBlock", "NewFileBlock", "NewFileHashBlock", "NewTextBlock", "NewTimestampBlock", "NewSyncBlock"],
+	settingsEventsEventRuleRuleTypes: ["NewBlock", "NewDataBlock", "NewEmailBlock", "NewFileBlock", "NewFileHashBlock", "NewTextBlock", "NewTimestampBlock", "NewSyncBlock"],
 	subnavigationDefaultParamsSettings: {subsection: "users"},
 	syncRefreshInterval: 5 * 60 * 1000,
 };
