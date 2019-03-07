@@ -119,20 +119,20 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return null;
 
 		// Sort data by configured ordering.
-		const dashboardBlockTypesDisplayOrder = ["data", "file", "filehash", "text", "timestamp", "sync"];
+		const dashboardBlockTypesDisplayOrder = ["data", "email", "file", "filehash", "text", "timestamp", "sync"];
 		let data = mobx.toJS(this.data.block_type_count);
 		data = _.sortBy(data, function(item)
 		{
 			return _.indexOf(dashboardBlockTypesDisplayOrder, item.block_type.toLowerCase());
 		});
 
-		const blockTypes = ["data", "file", "filehash", "text"];
-		const blockTypesFiltered = ["data", "file", "filehash", "text", "sync", "timestamp"];
+		const blockTypes = ["data", "email", "file", "filehash", "text", "sync", "timestamp"];
+		const blockTypesFiltered = ["data", "email", "file", "filehash", "text"];
 
 		const chartData = _.cloneDeep(charts.dataBaseSet1);
 		data.forEach(function(item)
 		{
-			if(_.includes(blockTypesFiltered, item.block_type.toLowerCase()))
+			if(_.includes(blockTypes, item.block_type.toLowerCase()))
 			{
 				chartData.labels.push(item.block_type);
 				chartData.datasets[0].data.push(item.block_count);
@@ -142,7 +142,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const chartDataFiltered = _.cloneDeep(charts.dataBaseSet1);
 		data.forEach(function(item)
 		{
-			if(_.includes(blockTypes, item.block_type.toLowerCase()))
+			if(_.includes(blockTypesFiltered, item.block_type.toLowerCase()))
 			{
 				chartDataFiltered.labels.push(item.block_type);
 				chartDataFiltered.datasets[0].data.push(item.block_count);
@@ -157,14 +157,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const html1 =
 		(
-			<div className="blockTypeCountsFilteredChart chart">
-				<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
+			<div className="blockTypeCountsChart chart">
+				<DoughnutChart data={chartData} options={chartOptions} />
 			</div>
 		);
 		const html2 =
 		(
-			<div className="blockTypeCountsChart chart">
-				<DoughnutChart data={chartData} options={chartOptions} />
+			<div className="blockTypeCountsFilteredChart chart">
+				<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
 			</div>
 		);
 		return htmlHelpers.renderContainer("block-type-counts-container", "Block Types", html1, html2);
@@ -175,7 +175,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const types = ["data", "file", "filehash", "text", "timestamp", "sync"];
+		const types = ["data", "email", "file", "filehash", "text", "timestamp", "sync"];
 		const dates = Object.keys(this.data.block_type_usage_daily).sort();
 		const block_type_usage_daily = _.mapValues(mobx.toJS(this.data.block_type_usage_daily), function(date)
 		{
@@ -200,8 +200,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			chartData.datasets[t].fill = false;
 			chartData.datasets[t].data = [];
 
-			if(type === "timestamp")
-				chartData.datasets[t].hidden = true;
+			// if(type === "timestamp")
+			// 	chartData.datasets[t].hidden = true;
 
 			dates.forEach(function(date)
 			{
@@ -226,7 +226,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const types = ["data", "file", "filehash", "text", "timestamp", "sync"];
+		const types = ["data", "email", "file", "filehash", "text", "timestamp", "sync"];
 		const dates = Object.keys(this.data.block_type_usage_hourly).sort();
 		const block_type_usage_hourly = _.mapValues(mobx.toJS(this.data.block_type_usage_hourly), function(date)
 		{
@@ -251,8 +251,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			chartData.datasets[t].fill = false;
 			chartData.datasets[t].data = [];
 
-			if(type === "timestamp")
-				chartData.datasets[t].hidden = true;
+			// if(type === "timestamp")
+			// 	chartData.datasets[t].hidden = true;
 
 			dates.forEach(function(date)
 			{

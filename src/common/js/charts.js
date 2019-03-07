@@ -1,4 +1,4 @@
-export const colorsDefault = ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526"];
+export const colorsDefault = ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526", "#aaaaaa", "#777777"];
 
 export const dataBaseSet1 =
 {
@@ -55,7 +55,8 @@ export const optionsBase2 =
 		}
 	},
 	tooltips: {
-		mode: 'index',
+		mode: "index",
+		position: "nearest",
 		intersect: false,
 	},
 };
