@@ -367,3 +367,17 @@ export function getRandomInt(min, max)
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min)) + min;
 }
+
+/**
+ * Map data values returned from the /api/variables endpoint to the global config object. 
+ * 
+ * @param  {Object} data A data object returned from the /api/variables endpoint.
+ */
+export function mapApiVariablesToConfig(data)
+{
+	config.loginPasswordSalt = data.salt;
+	config.settingsEventsEventRuleActionActions = data.event_action_types;
+	config.settingsEventsEventRuleConditionObjects = data.event_object_types;
+	config.settingsEventsEventRuleConditionOperators = data.event_condition_operators;
+	config.settingsEventsEventRuleRuleTypes = data.event_types;
+}

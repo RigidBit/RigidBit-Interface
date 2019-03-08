@@ -1,3 +1,7 @@
+import iziToast from "izitoast";
+
+import * as misc from "../../common/js/misc.js";
+
 import Block from "../Block/Block.jsx";
 import Blocks from "../Blocks/Blocks.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
@@ -25,25 +29,27 @@ import Upload from "../Upload/Upload.jsx";
 		api.getUrl("/api/variables", true)
 		.then(function(data)
 		{
-			config.loginPasswordSalt = data.salt;
-			config.settingsEventsEventRuleActionActions = data.event_action_types;
-			config.settingsEventsEventRuleConditionObjects = data.event_object_types;
-			config.settingsEventsEventRuleConditionOperators = data.event_condition_operators;
-			config.settingsEventsEventRuleRuleTypes = data.event_types;
-		})
-		.then(()=>api.getUrl("/api/login-check"))
-		.then(function(data)
-		{
-			action(() =>
+			misc.mapApiVariablesToConfig(data);
+
+			api.getUrl("/api/login-check")
+			.then(function(data)
 			{
-				store.user = data;
-				_this.isReady = true;
-			})();
+				action(() =>
+				{
+					store.user = data;
+					_this.isReady = true;
+				})();
+			})
+			.catch(function(error)
+			{
+				router.navigate("login", _this.determineRedirect());
+				action(() => { _this.isReady = true; })(); // Must occur after router.navigate().
+			});
 		})
 		.catch(function(error)
 		{
-			router.navigate("login", _this.determineRedirect());
-			action(() => { _this.isReady = true; })(); // Must occur after router.navigate().
+			log.error(String(error));
+			iziToast.error({title: "Error", message: String(error)});
 		});
 	};
 
