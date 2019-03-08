@@ -157,7 +157,6 @@ export function ucwords(str)
  * @param {string} newSubStr The String that is spliced in.
  * @return {string} A new string with the spliced substring.
  */
-
 if(!String.prototype.splice)
 {
 	String.prototype.splice = function(start, delCount, newSubStr)

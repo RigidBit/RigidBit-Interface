@@ -19,6 +19,11 @@ section.search
 						width: 120px; 
 					}
 
+					&.name
+					{
+						text-transform: capitalize;
+					}
+
 					&.value.text > div
 					{
 						max-height: 16px;

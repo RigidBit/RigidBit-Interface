@@ -224,6 +224,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			["id", "ID/Type/Timestamp", data.block],
 			["hash", "Block Hash", data.block.hash],
 			["data_hash", "Data Hash", data.block.data_hash],
+			["email", "Email", data],
 			["filename", "Filename", data.meta],
 			["file_path", "File Path", data.meta],
 			["meta_hash", "Meta Hash", data.block.meta_hash],
@@ -259,6 +260,29 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			{
 				if(block_type === "data" || search.startsWith("data_hash:"))
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
+			}
+
+			else if(key === "email")
+			{
+				if(block_type === "email")
+				{
+					const items = [];
+					// items.push(_this.findItemContainingKey(value.meta, "name", "date"));
+					// items.push(_this.findItemContainingKey(value.meta, "name", "from"));
+					// items.push(_this.findItemContainingKey(value.meta, "name", "to"));
+					items.push(_this.findItemContainingKey(value.meta, "name", "subject"));
+					// items.push(_this.findItemContainingKey(value.meta, "name", "source"));
+
+					const rows = [];
+					items.forEach(function(item, i)
+					{
+						if(item)
+							rows.push(<tr key={i} className={key}><td className="name">{item.name}:</td><td className="value">{item.value}</td><td className="empty"></td></tr>);
+					});
+
+					if(rows.length > 0)
+						row = <React.Fragment>{rows}</React.Fragment>;
+				}
 			}
 
 			else if(key === "filename")

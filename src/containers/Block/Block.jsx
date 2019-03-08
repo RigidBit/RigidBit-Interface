@@ -607,12 +607,19 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(_.has(meta, "name") && meta["name"] === "filename")
 				value = <a href={router.buildUrl("search", {q: `"filename:${value}"`})}>{value}</a>;
 
-			if(_.has(meta, "name") && (meta["name"] === "filesize" || meta["name"] === "data_size"))
+			else if(_.has(meta, "name") && (meta["name"] === "filesize" || meta["name"] === "data_size"))
 				value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
 
-			if(_.has(meta, "name") && meta["name"] === "file_path")
+			else if(_.has(meta, "name") && meta["name"] === "file_path")
 			{
 				value = _this.createSearchPath(value);
+			}
+
+			else if(_.has(meta, "name") && meta["name"] === "source" && misc.isJson(value))
+			{
+				const json = JSON.parse(value);
+				if(_.has(json, "email"))
+					value = json.email;
 			}
 
 			if(value === null)
