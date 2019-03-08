@@ -15,14 +15,23 @@ import Upload from "../Upload/Upload.jsx";
 
 	componentDidMount()
 	{
-		this.checkLogin();
+		this.refreshData();
 	}
 
-	checkLogin = () =>
+	refreshData = () =>
 	{
 		const _this = this;
 
-		api.getUrl("/api/login-check", false)
+		api.getUrl("/api/variables", true)
+		.then(function(data)
+		{
+			config.loginPasswordSalt = data.salt;
+			config.settingsEventsEventRuleActionActions = data.event_action_types;
+			config.settingsEventsEventRuleConditionObjects = data.event_object_types;
+			config.settingsEventsEventRuleConditionOperators = data.event_condition_operators;
+			config.settingsEventsEventRuleRuleTypes = data.event_types;
+		})
+		.then(()=>api.getUrl("/api/login-check"))
 		.then(function(data)
 		{
 			action(() =>

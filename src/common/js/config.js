@@ -9,19 +9,21 @@ const config =
 	debouceDelayLong: 400,
 	debouceDelayShort: 100,
 	footerResizeTimerInterval: 500,
-	loginPasswordSalt: "jUtbdMW7wtrYBYQtL8fUtRsD",
 	maximumSearchDataLength: 140,
 	minimumSearchPhraseLength: 3,
 	monitorRefreshInterval: 5 * 60 * 1000,
 	navigationDefaultBlocksParams: {count: 10, offset: 0, type: "user"},
 	navigationDefaultMonitorParams: {count: 10, offset: 0},
 	navigationDefaultSyncParams: {count: 10, offset: 0},
-	settingsEventsEventRuleActionActions: ["AddTag"],
-	settingsEventsEventRuleConditionObjects: ["Filename", "FilePath"],
-	settingsEventsEventRuleConditionOperators: ["Equals", "BeginsWith", "EndsWith", "Contains", "RegEx", "NotEqual", "NotBeginsWith", "NotEndsWith", "NotContains", "NotRegex"],
-	settingsEventsEventRuleRuleTypes: ["NewBlock", "NewDataBlock", "NewEmailBlock", "NewFileBlock", "NewFileHashBlock", "NewTextBlock", "NewTimestampBlock", "NewSyncBlock"],
 	subnavigationDefaultParamsSettings: {subsection: "users"},
 	syncRefreshInterval: 5 * 60 * 1000,
 };
+
+// The following are loaded through the /api/variables endpoint.
+// loginPasswordSalt
+// settingsEventsEventRuleActionActions
+// settingsEventsEventRuleConditionObjects
+// settingsEventsEventRuleConditionOperators
+// settingsEventsEventRuleRuleTypes
 
 export default config;
