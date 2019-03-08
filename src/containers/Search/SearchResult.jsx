@@ -281,7 +281,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 					});
 
 					if(rows.length > 0)
-						row = <React.Fragment>{rows}</React.Fragment>;
+						row = <React.Fragment key={m}>{rows}</React.Fragment>;
 				}
 			}
 
