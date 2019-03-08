@@ -434,6 +434,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			else if(key === "data_hash")
 				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>
 
+			else if(key === "meta_hash")
+				value = <a href={router.buildUrl("search", {q: "meta_hash:"+value})}>{value}</a>
+
 			else if(key === "type")
 				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>
 

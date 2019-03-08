@@ -4,7 +4,7 @@ import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
 
 const REGEX_ESCAPE = /[-[\]{}()*+?.,\\^$|#\s]/g;
-const REGEX_PREFIXES = /^(?:data\:|data_hash\:|filename\:|file_path\:|hash\:|tag\:)/gi;
+const REGEX_PREFIXES = /^(?:data\:|data_hash\:|filename\:|file_path\:|hash\:|meta_hash\:|tag\:)/gi;
 const REGEX_TERMS = /('.*?'|".*?"|\S+)/g;
 const REGEX_TRIM = /^['"]+|['"]+$/g;
 
@@ -226,6 +226,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			["data_hash", "Data Hash", data.block.data_hash],
 			["filename", "Filename", data.meta],
 			["file_path", "File Path", data.meta],
+			["meta_hash", "Meta Hash", data.block.meta_hash],
 			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
 			["image-preview", "Preview", data],
@@ -296,6 +297,12 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 						row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{image}</td><td className="empty"></td></tr>;
 					}
 				}
+			}
+
+			else if(key === "meta_hash")
+			{
+				if(search.startsWith("meta_hash:"))
+					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{_this.highlightSearches(value, search)}</td><td className="empty"></td></tr>;
 			}
 
 			else if(key === "text")
