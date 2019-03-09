@@ -91,6 +91,7 @@ import Upload from "../Upload/Upload.jsx";
 				html = <Logout />;
 				break;
 			case "monitor":
+			case "monitor.subsection":
 				html = <Monitor />;
 				break;
 			case "settings":

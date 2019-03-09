@@ -24,8 +24,7 @@ class Component extends React.Component
 		[
 			["/#/dashboard", "Dashboard"],
 			[["/#/blocks", "/#/block"], "Blocks"],
-			["/#/monitor", "Monitor"],
-			["/#/sync", "Sync"],
+			[["/#/monitor", "/#/monitor.subsection"], "Monitor"],
 			["/#/upload", "Upload"],
 			[["/#/settings", "/#/settings.subsection"], "Settings"],
 			["/#/search", <i className="fas fa-search"></i>],

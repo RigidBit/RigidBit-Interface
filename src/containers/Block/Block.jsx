@@ -618,8 +618,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			else if(_.has(meta, "name") && meta["name"] === "source" && misc.isJson(value))
 			{
 				const json = JSON.parse(value);
-				if(_.has(json, "email"))
-					value = json.email;
+				if(_.has(json, "email")) value = json.email;
 			}
 
 			if(value === null)
