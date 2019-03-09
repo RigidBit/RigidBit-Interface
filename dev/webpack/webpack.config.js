@@ -9,8 +9,6 @@ const webpack = require("webpack");
 
 module.exports = function(stage = "prod")
 {
-	console.log("STAGE:", stage);
-
 	const exports =
 	{
 		entry:
