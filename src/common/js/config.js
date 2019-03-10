@@ -12,7 +12,7 @@ const config =
 	maximumSearchDataLength: 140,
 	minimumSearchPhraseLength: 3,
 	monitorRefreshInterval: 5 * 60 * 1000,
-	navigationDefaultBlocksParams: {count: 10, offset: 0, type: "user"},
+	navigationDefaultBlocksParams: {count: 10, offset: 0},
 	navigationDefaultMonitorParams: {count: 10, offset: 0},
 	navigationDefaultSyncParams: {count: 10, offset: 0},
 	subnavigationDefaultParamsMonitor: {subsection: "emails", count: 10, offset: 0},
