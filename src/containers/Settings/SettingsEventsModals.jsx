@@ -220,7 +220,7 @@ import * as misc from "../../common/js/misc.js";
 			{
 				Header: "Value",
 				id: "value",
-				accessor: this.renderTagSelect,
+				accessor: this.renderValueField,
 				className: "value",
 				headerClassName: "value",
 			},
@@ -379,6 +379,24 @@ import * as misc from "../../common/js/misc.js";
 		);
 
 		return html;
+	};
+
+	renderValueField = (data) =>
+	{
+		console.log(data);
+
+		if(data.action === "AddTag")
+			return this.renderTagSelect(data);
+
+		else if(data.action === "ExecuteScript")
+		{
+			const value_string = (data.value_string === null) ? "" : data.value_string;
+			const html = <input type="text" name="value_string" data-id={data.id} value={value_string} onChange={(e)=>this.handleActionConditionChanged(e, "dataActions", "value_string")} />;
+
+			return html;
+		}
+
+		return null;
 	};
 
 	renderTagSelect = (data) =>
