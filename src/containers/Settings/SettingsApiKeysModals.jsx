@@ -45,7 +45,7 @@ import ReactModal from 'react-modal';
 
 	renderUserSelect = () =>
 	{
-		const data = _.sortBy(this.props.data, (o)=>o.username);
+		const data = _.sortBy(this.props.data, (o)=>o.username.toLowerCase());
 
 		const options = [];
 		data.forEach(function(user, u)

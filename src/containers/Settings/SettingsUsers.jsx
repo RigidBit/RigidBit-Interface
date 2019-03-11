@@ -148,7 +148,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.getUrl("/api/users")
 		.then(function(data)
 		{
-			data = _.sortBy(data, (o)=>o.username);
+			data = _.sortBy(data, (o)=>o.username.toLowerCase());
 			const newData = _.merge(mobx.toJS(_this.data), {users: null}, {users: data});
 			_this.updateData(newData);
 		})

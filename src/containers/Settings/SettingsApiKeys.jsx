@@ -101,14 +101,12 @@ import Table from "../../components/Table/Table.jsx";
 		api.getUrl("/api/users")
 		.then(function(data)
 		{
-			// data = _.sortBy(data, (o)=>o.username);
 			const newData = _.merge(mobx.toJS(_this.data), {users: null}, {users: data});
 			_this.updateData(newData);
 		})
 		.then(()=>api.getUrl("/api/api-keys"))
 		.then(function(data)
 		{
-			// data = _.sortBy(data, (o)=>o.username);
 			const newData = _.merge(mobx.toJS(_this.data), {apiKeys: null}, {apiKeys: data});
 			_this.updateData(newData);
 		})

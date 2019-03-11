@@ -170,14 +170,14 @@ import Table from "../../components/Table/Table.jsx";
 		api.getUrl("/api/event-rules-complete")
 		.then(function(data)
 		{
-			data = _.sortBy(data, (o)=>o.username);
+			data = _.sortBy(data, (o)=>o.rule.name.toLowerCase());
 			const newData = _.merge(mobx.toJS(_this.data), {eventRules: null}, {eventRules: data});
 			_this.updateData(newData);
 		})
 		.then(()=>api.getUrl("/api/tags"))
 		.then(function(data)
 		{
-			data = _.sortBy(data, (o)=>o.name);
+			data = _.sortBy(data, (o)=>o.name.toLowerCase());
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
 			_this.updateData(newData);
 		})

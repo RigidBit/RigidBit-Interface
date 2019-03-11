@@ -128,7 +128,7 @@ import Table from "../../components/Table/Table.jsx";
 		api.getUrl("/api/tags-with-usage")
 		.then(function(data)
 		{
-			data = _.sortBy(data, (o)=>o.name);
+			data = _.sortBy(data, (o)=>o.name.toLowerCase());
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
 			_this.updateData(newData);
 		})
