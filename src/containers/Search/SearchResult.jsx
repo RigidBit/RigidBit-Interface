@@ -4,7 +4,7 @@ import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
 
 const REGEX_ESCAPE = /[-[\]{}()*+?.,\\^$|#\s]/g;
-const REGEX_PREFIXES = /^(?:data\:|data_hash\:|filename\:|file_path\:|hash\:|meta_hash\:|tag\:)/gi;
+const REGEX_PREFIXES = /^(?:data\:|data_hash\:|email\:|filename\:|file_path\:|hash\:|meta_hash\:|tag\:|type\:)/gi;
 const REGEX_TERMS = /('.*?'|".*?"|\S+)/g;
 const REGEX_TRIM = /^['"]+|['"]+$/g;
 
@@ -268,8 +268,8 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 				{
 					const items = [];
 					// items.push(_this.findItemContainingKey(value.meta, "name", "date"));
-					// items.push(_this.findItemContainingKey(value.meta, "name", "from"));
-					// items.push(_this.findItemContainingKey(value.meta, "name", "to"));
+					items.push(_this.findItemContainingKey(value.meta, "name", "from"));
+					items.push(_this.findItemContainingKey(value.meta, "name", "to"));
 					items.push(_this.findItemContainingKey(value.meta, "name", "subject"));
 					// items.push(_this.findItemContainingKey(value.meta, "name", "source"));
 
@@ -277,7 +277,10 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 					items.forEach(function(item, i)
 					{
 						if(item)
-							rows.push(<tr key={i} className={key}><td className="name">{item.name}:</td><td className="value">{item.value}</td><td className="empty"></td></tr>);
+						{
+							if(item.name === "subject" || _this.areTermsPresent(item.value, search))
+								rows.push(<tr key={i} className={key}><td className="name">{item.name}:</td><td className="value">{_this.highlightSearches(item.value, search)}</td><td className="empty"></td></tr>);
+						}
 					});
 
 					if(rows.length > 0)
@@ -361,7 +364,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "download")
 			{
-				if(block_type === "data" || block_type === "file" || block_type === "text")
+				if(block_type === "data" || block_type === "email" || block_type === "file" || block_type === "text")
 				{
 					row =
 					(
