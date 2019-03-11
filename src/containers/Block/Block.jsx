@@ -598,6 +598,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return null;
 			// return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
+		const block_type = data.block.type;
+
 		const tableRows = [];
 		data.meta.forEach(function(meta, m)
 		{
@@ -615,10 +617,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = _this.createSearchPath(value);
 			}
 
-			else if(_.has(meta, "name") && meta["name"] === "source" && misc.isJson(value))
+			else if(block_type === "Email" && _.has(meta, "name") && (meta["name"] === "from" || meta["name"] === "to" || meta["name"] === "subject"))
+			{
+				value = <a href={router.buildUrl("search", {q: `"email:${value.trim()}"`})}>{value}</a>
+			}
+
+			else if(block_type === "Email" && _.has(meta, "name") && meta["name"] === "source" && misc.isJson(value))
 			{
 				const json = JSON.parse(value);
-				if(_.has(json, "email")) value = json.email;
+				if(_.has(json, "email"))
+					value = json.email;
 			}
 
 			if(value === null)
