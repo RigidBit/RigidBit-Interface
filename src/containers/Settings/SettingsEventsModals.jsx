@@ -383,8 +383,6 @@ import * as misc from "../../common/js/misc.js";
 
 	renderValueField = (data) =>
 	{
-		console.log(data);
-
 		if(data.action === "AddTag")
 			return this.renderTagSelect(data);
 
