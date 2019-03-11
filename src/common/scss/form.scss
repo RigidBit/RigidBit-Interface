@@ -7,7 +7,7 @@ select:focus,
 textarea:focus
 {
 	box-shadow: 0 0 0 2px $background-active;
-	outline: none;
+	// outline: none;
 }
 
 button,
@@ -160,7 +160,7 @@ textarea
 
 select
 {
-	padding: $padding-input / 2;
+	padding: 6px $padding-input 5px $padding-input;
 
 	option
 	{
