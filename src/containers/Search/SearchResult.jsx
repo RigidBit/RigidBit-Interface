@@ -357,7 +357,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 				if(block_type === "sync" && misc.isJson(misc.uintToString(value.data.data)))
 				{
 					const json = JSON.parse(misc.uintToString(value.data.data));
-					const link = <a href={`https://etherscan.io/tx/0x${json.tx_hash}`} target="_blank">View on Etherscan</a>;
+					const link = htmlHelpers.renderTransactionViewLink(json.chain, json.tx_hash);
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{link}</td><td className="empty"></td></tr>;
 				}
 			}
