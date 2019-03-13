@@ -790,8 +790,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const results =
 		{
-			valid: <span className="success">Success</span>,
-			invalid: <span className="failure">Failed</span>,
+			valid: <span className="success"><a href="#verify" onClick={this.verifyBlock}>Success</a></span>,
+			invalid: <span className="failure"><a href="#verify" onClick={this.verifyBlock}>Failed</a></span>,
 			pending: <a href="#verify" onClick={this.verifyBlock}>Click to Verify</a>,
 		};
 
@@ -848,7 +848,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		api.getUrl(`/api/verify/${_this.data.block.id}`, false)
 		.then(function(data)
 		{
-			const newData = _.merge({block: {verified: data}}, mobx.toJS(_this.data));
+			const newData = _.merge(mobx.toJS(_this.data), {block: {verified: data}});
 			_this.updateData(newData);
 		})
 		.catch(function(error)

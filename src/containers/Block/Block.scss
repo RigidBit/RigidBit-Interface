@@ -48,13 +48,15 @@ section.block
 
 	.block-container
 	{
-		.failure
+		.failure > a
 		{
 			color: $color-red;
+			text-decoration: none;
 		}
-		.success
+		.success > a
 		{
 			color: $color-green;
+			text-decoration: none;
 		}
 	}
 
