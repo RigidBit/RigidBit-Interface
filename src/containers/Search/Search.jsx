@@ -22,18 +22,20 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 
 	componentDidMount()
 	{
-		const reaction1 = mobx.reaction(()=>this.searchPhrase, ()=>
+		const reaction1 = mobx.reaction(()=>store.routeParams, ()=>
 		{
-			if(this.searchPhrase.length >= config.minimumSearchPhraseLength)
-				this.refreshData();
-			else
-				this.data = {};
+			this.handleRouteParamChange();
 		});
 		this.autorun.push(reaction1);
 
-		const reaction2 = mobx.reaction(()=>store.routeParams, ()=>
+		const reaction2 = mobx.reaction(()=>this.searchPhrase, ()=>
 		{
-			this.handleRouteParamChange();
+			this.data = {}; // Clear to prevent immediate rendering of old data.
+
+			if(this.searchPhrase.length >= config.minimumSearchPhraseLength)
+			{
+				this.refreshData();
+			}
 		});
 		this.autorun.push(reaction2);
 
