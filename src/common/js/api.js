@@ -225,7 +225,7 @@ export function apiUrlFromRelativePath(relativeUrl)
 	{
 		url = url.replace(window.location.origin, "");
 		url = baseUrl + url;
-		log.debug("apiUrl:", url);
+		log.trace("apiUrl:", url);
 	}
 
 	return url;
