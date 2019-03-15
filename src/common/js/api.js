@@ -3,6 +3,7 @@ import hash from "hash.js";
 import * as loading from "../../components/Loading/loading.js";
 
 import * as config from "./config.js";
+import * as misc from "./misc.js";
 
 /**
  * Time in minutes that cached API requests remain in localStorage.
@@ -138,15 +139,22 @@ export function fetchUrl(url, method="GET", data=null, useCache=false, useJson=f
 			throw reformatError(body);
 		}
 
-		const json = await response.json();
-		log.debug("Fetch JSON:", json);
+		const data = await response.text();
+		lscache.set(cacheKey, data, CACHE_EXPIRATION);
 
-		lscache.set(cacheKey, JSON.stringify(json), CACHE_EXPIRATION);
+		let json = null;
+		if(misc.isJson(data))
+		{
+			json = JSON.parse(data);
+			log.debug("Fetch JSON:", json);
+		}
+		else
+			log.debug("Fetch DATA:", data);
 
 		if(!background)
 			loading.hide();
 
-		return json;
+		return (json) ? json : data;
 	})
 	.catch(function(error)
 	{
