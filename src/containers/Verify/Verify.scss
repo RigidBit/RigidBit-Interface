@@ -1,0 +1,14 @@
+section.verify
+{
+	@include contentMixin;
+
+	> .content > h1 > .controls
+	{
+		display: none;
+
+		&.show
+		{
+			display: block;
+		}
+	}
+}

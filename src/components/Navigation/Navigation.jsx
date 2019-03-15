@@ -26,6 +26,7 @@ class Component extends React.Component
 			[["/#/blocks", "/#/block"], "Blocks"],
 			[["/#/monitor", "/#/monitor.subsection"], "Monitor"],
 			["/#/upload", "Upload"],
+			[["/#/verify", "/#/verify.subsection"], "Verify"],
 			[["/#/settings", "/#/settings.subsection"], "Settings"],
 			["/#/search", <i className="fas fa-search"></i>],
 		];

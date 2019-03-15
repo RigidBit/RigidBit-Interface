@@ -1,0 +1,27 @@
+section.verify
+{
+	.verify-chain-container
+	{
+		@include sectionContainerDefaultMixin;
+
+		.button-container
+		{
+			text-align: center;
+		}
+	}
+
+	.verify-chain-messages-container
+	{
+		@include sectionContainerDefaultMixin;
+
+		margin-top: $margin-default;
+
+		.message
+		{
+			&.last-run
+			{
+				margin-top: $margin-default;
+			}
+		}
+	}
+}

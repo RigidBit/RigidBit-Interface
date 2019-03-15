@@ -17,7 +17,9 @@ const config =
 	navigationDefaultSyncParams: {count: 10, offset: 0},
 	subnavigationDefaultParamsMonitor: {subsection: "emails", count: 10, offset: 0},
 	subnavigationDefaultParamsSettings: {subsection: "users"},
+	subnavigationDefaultParamsVerify: {subsection: "chain"},
 	syncRefreshInterval: 5 * 60 * 1000,
+	verifyRefreshInterval: 1 * 1000,
 };
 
 // The following are loaded through the /api/variables endpoint.

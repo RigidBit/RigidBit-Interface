@@ -2,8 +2,6 @@ import iziToast from "izitoast";
 import Select from "react-select";
 
 import * as htmlHelpers from "../../common/js/html.jsx";
-import * as loading from "../../components/Loading/loading.js";
-import * as misc from "../../common/js/misc.js";
 import * as reactSelect from "../../common/js/react-select.js";
 
 import Footer from "../../components/Footer/Footer.jsx";
@@ -27,9 +25,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		this.textForm = React.createRef();
 		this.textArea = React.createRef();
 		this.counter = React.createRef();
-		this.verify = React.createRef();
-		this.verifyFilename = React.createRef();
-		this.verifyFileForm = React.createRef();
 	}
 
 	componentDidMount()
@@ -43,9 +38,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			this.handleFileChange();
 			this.handleTextAreaChange();
-			this.handleVerifyChange();
 			this.fileInit();
-			this.verifyInit();
 		}
 	}
 
@@ -239,73 +232,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		});
 	};
 
-	handleVerifyChange = (e) =>
-	{
-		const file = this.verify.current;
-		const filename = this.verifyFilename.current;
-		const fileSelected = file.value.length > 0;
-
-		// Toggle file-selected class based on select status.
-		$(file).parent().toggleClass("file-selected", fileSelected);
-
-		if(fileSelected)
-		{
-			// Populate the filename field.
-			filename.innerText = file.value.replace(/.*[\/\\]/, "");
-		}
-		else
-			filename.innerText = "Choose a file, or drag it here.";
-	};
-
-	handleVerifyFileDrop = (e) =>
-	{
-		e.preventDefault();
-		e.stopPropagation();
-
-		this.handleFileDragToggle($(e.currentTarget).closest("form"), false);
-		this.handleFileChange();
-
-		const file = this.verify.current;
-		const files = e.dataTransfer.files;
-
-		if(files.length > 0)
-		{
-			file.files = files;
-		}
-	};
-
-	handleVerifySubmitButtonClick = (e) =>
-	{
-		if(e) e.preventDefault();
-
-		const _this = this;
-
-		if(_this.verify.current.files.length === 0)
-		{
-			iziToast.error({title: "Error", message: "You must select a file before submitting."});
-			return;
-		}
-
-		loading.show();
-
-		const file = _this.verify.current.files[0];
-		misc.hashFile(file)
-		.then(function(hash)
-		{
-			loading.hide();
-
-			const q = "data_hash:" + hash;
-			router.navigate("search", {q});
-		})
-		.catch(function(error)
-		{
-			loading.hide();
-
-			log.error(error);
-			iziToast.error({title: "Error", message: error});
-		});
-	};
-
 	handleTextTagsChange = (data) =>
 	{
 		this.updateSelectedTextTags(data);
@@ -328,22 +254,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		log.debug("UPDATE SELECTED TEXT TAGS:", data);
 	});
 
-	updateSelectedVerifyTags = action((data) =>
-	{
-		this.selectedVerifyTags = data;
-		log.debug("UPDATE SELECTED VERIFY TAGS:", data);
-	});
-
 	updateData = action((data) =>
 	{
 		this.data = data;
 		log.debug("UPDATE DATA:", this.data);
 	});
-
-	verifyInit = () =>
-	{
-		this.verify.current.addEventListener("change", this.handleVerifyChange);
-	};
 
 	refreshClicked = (e) =>
 	{
@@ -442,37 +357,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return htmlHelpers.renderContainer("text-container", "Save a Text Message", html);
 	};
 
-	renderVerify = () =>
-	{
-		if(!this.isDataReady())
-			return htmlHelpers.renderLoading();
-
-		const html =
-		(
-			<div>
-				<div className="description">
-					Check a file by generating a hash in the browser and searching the blockchain for previous inclusion. No data is uploaded stored with this operation.
-				</div>
-				<form ref={this.verifyFileForm} action="" method="post" encType="multipart/form-data" onSubmit={this.handleFormSubmit} onDrop={this.handleFileDrop} onDragOver={this.handleFileDragOver} onDragLeave={this.handleFileDragLeave} onDragExit={this.handleFileDragLeave}>
-					<label className="file">
-						<input ref={this.verify} type="file" name="file" />
-						<i className="fas fa-file-upload"></i>
-						<span ref={this.verifyFilename} className="filename"></span>
-					</label>
-					<div className="button-container">
-						<button type="button" className="submit" onClick={this.handleVerifySubmitButtonClick} title="Verify File"><i className="far fa-save icon"></i><span>Verify</span></button>
-					</div>
-				</form>
-			</div>
-		);
-		return htmlHelpers.renderContainer("verify-container", "Verify a File", html);
-	};
-
 	render()
 	{
 		const file = this.renderFile();
 		const text = this.renderText();
-		const verify = this.renderVerify();
 
 		const html =
 		(
@@ -489,7 +377,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					</h1>
 					{file}
 					{text}
-					{verify}
 				</div>
 
 				<Footer />

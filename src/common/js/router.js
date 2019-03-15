@@ -17,6 +17,8 @@ export const routes =
     { name: "settings.subsection", path: "/:subsection", defaultParams: config.subnavigationDefaultParamsSettings },
     { name: "sync", path: "/sync/:count/:offset" },
 	{ name: "upload", path: "/upload" },
+    { name: "verify", path: "/verify", forwardTo: "verify.subsection" },
+    { name: "verify.subsection", path: "/:subsection", defaultParams: config.subnavigationDefaultParamsVerify },
 ];
 
 const storeUpdatePlugin = function(router, dependencies)

@@ -1,9 +1,6 @@
-section.upload
+section.verify
 {
-	@include contentMixin;
-
-	.file-container,
-	.text-container
+	.verify-file-container
 	{
 		@include sectionContainerDefaultMixin;
 
@@ -13,29 +10,17 @@ section.upload
 		{
 			min-height: 30px;
 			position: relative;
-			text-align: left;
-
-			button.submit
-			{
-				position: absolute;
-				bottom: 0;
-				right: 0;
-			}
-
-			@include media("<tablet")
-			{
-				text-align: center;
-
-				button.submit
-				{
-					position: static;
-				}
-			}
+			text-align: center;
 		}
 	}
 
-	.file-container
+	.verify-file-container
 	{
+		.controls
+		{
+			@include controlsMixin;
+		}
+
 		.filehash-warning
 		{
 			margin-top: $margin-default;
@@ -139,47 +124,5 @@ section.upload
 				}
 			}
 		}
-	}
-
-	.text-container
-	{
-		div.textarea
-		{
-			position: relative;
-
-			textarea
-			{
-				margin-bottom: $margin-default;
-				min-height: 150px;
-				width: 100%;
-			}
-
-			span.counter
-			{
-				font-size: .7rem;
-				height: 12px;
-				line-height: 12px;
-				position: absolute;
-				right: 1px;
-				text-align: right;
-				top: -12px;
-				width: 39px;
-			}
-		}
-	}
-
-	.react-select
-	{
-		min-width: 200px;
-		max-width: 325px;
-		width: 100%;
-
-		@include media("<tablet")
-		{
-			margin-bottom: $margin-default;
-			max-width: none;
-		}
-
-		@include reactSelectMixin;
 	}
 }

@@ -12,6 +12,7 @@ import Search from "../Search/Search.jsx";
 import Settings from "../Settings/Settings.jsx";
 import Sync from "../Sync/Sync.jsx";
 import Upload from "../Upload/Upload.jsx";
+import Verify from "../Verify/Verify.jsx";
 
 @observer class App extends React.Component
 {
@@ -106,6 +107,10 @@ import Upload from "../Upload/Upload.jsx";
 				break;
 			case "search":
 				html = <Search />;
+				break;
+			case "verify":
+			case "verify.subsection":
+				html = <Verify />;
 				break;
 			default:
 				html = `Invalid route: "${store.route}"`;
