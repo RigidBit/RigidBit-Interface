@@ -48,6 +48,16 @@ nav.main
 					display: none;
 				}
 			}
+
+			&:first-child > a
+			{
+				padding-left: 0;
+			}
+
+			&:last-child > a
+			{
+				padding-right: 0;
+			}
 		}
 	}
 
