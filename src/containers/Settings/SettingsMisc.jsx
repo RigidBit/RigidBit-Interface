@@ -74,7 +74,7 @@ class Component extends React.Component
 		(
 			<div>
 				<div className="description">
-					Manually start a sync operation to peg with external blockchains.
+					Manually start an on-demand sync operation to peg with external blockchains.
 				</div>
 				<form ref={this.syncForm} action="/api/sync" method="post" encType="multipart/form-data">
 					<div className="button-container">
