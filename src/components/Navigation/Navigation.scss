@@ -38,12 +38,12 @@ nav.main
 				text-decoration: none;
 				width: 100%;
 
-				&[href="#search"]
+				&[href="/#/search"]
 				{
 					color: rgba($font-color-default, 0.7);
 				}
 
-				&[href="#settings"]
+				&[href="/#/settings"]
 				{
 					display: none;
 				}
@@ -63,7 +63,7 @@ nav.main
 
 	&.admin
 	{
-		ul li a[href="#settings"]
+		ul li a[href="/#/settings"]
 		{
 			display: inline-block;
 		}
