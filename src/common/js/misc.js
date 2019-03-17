@@ -246,15 +246,15 @@ export function calculateContrastColor(hexColor)
  */
 export function isJson(string)
 {
-    try
-    {
-        JSON.parse(string);
-    }
-    catch(e)
-    {
-        return false;
-    }
-    return true;
+	try
+	{
+		JSON.parse(string);
+	}
+	catch(e)
+	{
+		return false;
+	}
+	return true;
 }
 
 /**
@@ -280,7 +280,7 @@ export function hashFile(file)
 	const promise = new Promise((resolve, reject) =>
 	{
 		const fileSize = file.size;
-		const chunkSize = 64 * 1024 * 1024;
+		const chunkSize = 64 * 1024;
 
 		let hasher = hash.sha256();
 		let offset = 0;
@@ -295,8 +295,8 @@ export function hashFile(file)
 		{
 			if(e.target.error === null)
 			{
-				hasher.update(e.target.result);
-				offset += e.target.result.length;
+				hasher.update(new Uint8Array(e.target.result));
+				offset += e.target.result.byteLength;
 			}
 			else
 				return errorHandler(e);
@@ -316,7 +316,7 @@ export function hashFile(file)
 			reader.onabort = errorHandler;
 			reader.onerror = errorHandler;
 			reader.onload = readHandler;
-			reader.readAsBinaryString(blob);
+			reader.readAsArrayBuffer(blob);
 		};
 
 		// Read the first chunk.
