@@ -20,7 +20,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	autorun = null;
 	dataPreviewImageExtensions = config.dataPreviewImageExtensions;
 	dataPreviewMovieExtensions = config.dataPreviewMovieExtensions;
-	dataPreviewDocumentExtensions = ["txt", "pdf"];
+	dataPreviewDocumentExtensions = config.dataPreviewDocumentExtensions;
 	validDataPreviewExtensions = _.concat(this.dataPreviewImageExtensions, this.dataPreviewMovieExtensions, this.dataPreviewDocumentExtensions);
 	textBlockInlineViewThreshold = 1024;
 

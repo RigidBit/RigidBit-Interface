@@ -2,6 +2,7 @@ const config =
 {
 	apiCacheExpiration: 60, // In minutes.
 	blocksRefreshInterval: 5 * 60 * 1000,
+	dataPreviewDocumentExtensions: ["txt", "pdf"],
 	dataPreviewImageExtensions: ["png", "jpg", "jpeg", "gif", "svg"],
 	dataPreviewMovieExtensions: ["mov", "mp4", "m4v", "webm", "mkv", "flv", "ogv", "ogg", "avi", "wmv", "qt", "mpg", "mpeg"],
 	dashboardStatusRefreshInterval: 5 * 60 * 1000,
