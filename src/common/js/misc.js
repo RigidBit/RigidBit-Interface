@@ -379,4 +379,5 @@ export function mapApiVariablesToConfig(data)
 	config.settingsEventsEventRuleConditionObjects = data.event_object_types;
 	config.settingsEventsEventRuleConditionOperators = data.event_condition_operators;
 	config.settingsEventsEventRuleRuleTypes = data.event_types;
+	config.statusUsageDays = data.status_usage_days;
 }

@@ -218,7 +218,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<LineChart data={chartData} options={chartOptions} height={100} />
 			</div>
 		);
-		return htmlHelpers.renderContainer("block-type-usage-daily-container", "Block Types by Date (30d)", html);
+		return htmlHelpers.renderContainer("block-type-usage-daily-container", `Block Types by Date (${config.statusUsageDays}d)`, html);
 	};
 
 	renderBlockTypeUsageHourly = () =>
@@ -269,7 +269,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				<BarChart data={chartData} options={chartOptions} height={100} />
 			</div>
 		);
-		return htmlHelpers.renderContainer("block-type-usage-daily-container", "Block Types by Hour (30d)", html);
+		return htmlHelpers.renderContainer("block-type-usage-daily-container", `Block Types by Hour (${config.statusUsageDays}d)`, html);
 	};
 
 	renderStatus = () =>
