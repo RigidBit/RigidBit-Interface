@@ -57,7 +57,7 @@ export function	openAddTagModal(onConfirm=null)
 
 	    if(onConfirm)
 	    {
-	    	const $form = $('div.add-tag-container > form');
+	    	const $form = $("div.add-tag-container > form");
 	    	const data = $form.serializeObject();
 	    	onConfirm(data);
 	    }
@@ -240,8 +240,9 @@ function renderAddTagForm()
 	`
 		<label class="hidden">
 			Hidden
-			<select disabled>
+			<select name="is_hidden">
 				<option value="0" selected>false</option>
+				<option value="1">true</option>
 			</select>
 		</label>
 	`;
@@ -281,7 +282,7 @@ function renderEditTagForm(data)
 	`
 		<label class="hidden">
 			Hidden
-			<select name="hidden">
+			<select name="is_hidden">
 				<option value="1" ${(hiddenValue==="1")?"selected":""}>true</option>
 				<option value="0" ${(hiddenValue==="0")?"selected":""}>false</option>
 			</select>

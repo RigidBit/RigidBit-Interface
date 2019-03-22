@@ -49,7 +49,11 @@ import Table from "../../components/Table/Table.jsx";
 
 		action(()=>{this.addEditUserModalOpen = false;})();
 
-		api.postUrl("/api/users", data)
+		// Fix types.
+		data.is_admin = data.is_admin === "1";
+		data.is_disabled = data.is_disabled === "1";
+
+		api.postUrlJson("/api/users", data)
 		.then(function(data)
 		{
 			api.removeCache("/api/users"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -120,7 +124,11 @@ import Table from "../../components/Table/Table.jsx";
 			this.addEditUserModalEditData = null;
 		})();
 
-		api.patchUrl("/api/users/"+data.id, data)
+		// Fix types.
+		data.is_admin = data.is_admin === "1";
+		data.is_disabled = data.is_disabled === "1";
+
+		api.patchUrlJson("/api/users/"+data.id, data)
 		.then(function(data)
 		{
 			api.removeCache("/api/users"); // Remove here since this is the only point of change, which allows other pages to used cached responses.

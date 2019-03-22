@@ -43,7 +43,10 @@ import Table from "../../components/Table/Table.jsx";
 
 		action(()=>{this.addApiKeyModalOpen = false;})();
 
-		api.postUrl("/api/api-keys", data)
+		// Fix types.
+		data.user_id = Number(data.user_id);
+
+		api.postUrlJson("/api/api-keys", data)
 		.then(function(data)
 		{
 			api.removeCache("/api/api-keys"); // Remove here since this is the only point of change, which allows other pages to used cached responses.

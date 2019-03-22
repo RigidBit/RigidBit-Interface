@@ -37,7 +37,10 @@ import Table from "../../components/Table/Table.jsx";
 	{
 		const _this = this;
 
-		api.postUrl("/api/tags", data)
+		// Fix types.
+		data.is_hidden = data.is_hidden === "1";
+
+		api.postUrlJson("/api/tags", data)
 		.then(function(data)
 		{
 			api.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.
@@ -92,7 +95,10 @@ import Table from "../../components/Table/Table.jsx";
 	{
 		const _this = this;
 
-		api.patchUrl("/api/tags/"+data.id, data)
+		// Fix types.
+		data.is_hidden = data.is_hidden === "1";
+
+		api.patchUrlJson("/api/tags/"+data.id, data)
 		.then(function(data)
 		{
 			api.removeCache("/api/tags"); // Remove here since this is the only point of change, which allows other pages to used cached responses.

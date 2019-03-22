@@ -60,7 +60,7 @@ import * as misc from "../../common/js/misc.js";
 		// Hash password before transmitting.
 		data.password = misc.hashPassword(data.password);
 
-		api.postUrl("/api/login", data)
+		api.postUrlJson("/api/login", data)
 		.then(function(data)
 		{
 			action(() => { store.user = data; })();
