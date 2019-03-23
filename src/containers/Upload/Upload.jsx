@@ -177,7 +177,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const formData = new FormData();
 		const url = (!this.fileHash.current.checked) ? "/api/file" : "/api/filehash";
 
-		formData.append("tags", _.map(_this.selectedFileTags, "value").join(","));
+		formData.append("tags", JSON.stringify(_.map(_this.selectedFileTags, "value")));
 		_this.formDataAppendFiles(formData, _this.file.current);
 
 		api.postUrl(url, formData)
@@ -213,7 +213,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		}
 
 		const data = $(_this.textForm.current).serializeObject();
-		data.tags = _.map(_this.selectedTextTags, "value").join(",");
+		data.tags = JSON.stringify(_.map(_this.selectedTextTags, "value"));
 
 		api.postUrl("/api/text", data)
 		.then(function(data)

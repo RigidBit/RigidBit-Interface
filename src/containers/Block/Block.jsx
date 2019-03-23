@@ -174,9 +174,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			return tag.value;
 		});
-		data = {tags: data.join(",")};
+		data = {tags: data};
 
-		api.putUrl(`/api/tags-for-block/${_this.data.block.id}`, data)
+		api.putUrlJson(`/api/tags-for-block/${_this.data.block.id}`, data)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {tags: null}, {tags: data});
