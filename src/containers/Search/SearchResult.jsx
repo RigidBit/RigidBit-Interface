@@ -342,6 +342,11 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 					const highlightedText = _this.highlightSearches(misc.uintToString(value.data).substr(location, config.maximumSearchDataLength), search);
 					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value text"><div>{highlightedText}</div></td><td className="empty"></td></tr>;
 				}
+				else if(_.has(value, "data") && block_type === "hash")
+				{
+					const text = misc.uintToString(value.data);
+					row = <tr key={m} className={key}><td className="name">Hash:</td><td className="value text"><div>{text}</div></td><td className="empty"></td></tr>;
+				}
 			}
 
 			else if(key === "tags")
