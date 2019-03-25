@@ -59,6 +59,10 @@ export function renderTransactionViewLink(chain, tx_hash, linkHtml=null)
 		const label = (linkHtml) ? linkHtml : "View on Horizen Explorer";
 		link = <a href={`https://explorer.zensystem.io/tx/${tx_hash}`} target="_blank">{label}</a>
 	}
+	else if(chain === "rigidbit")
+	{
+		link = tx_hash;
+	}
 	else
 	{
 		log.error(`Invalid chain specified: ${chain}`);
