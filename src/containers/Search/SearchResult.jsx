@@ -231,7 +231,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			["text", "Text", data.data],
 			["tags", "Tags", data.tags],
 			["image-preview", "Preview", data],
-			["view-on-etherscan", "View", data],
+			["view-on-block-explorer", "View", data],
 			["download", "Download", data.block.id],
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
 		];
@@ -352,7 +352,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 				}
 			}
 
-			else if(key === "view-on-etherscan")
+			else if(key === "view-on-block-explorer")
 			{
 				if(block_type === "sync" && misc.isJson(misc.uintToString(value.data.data)))
 				{
