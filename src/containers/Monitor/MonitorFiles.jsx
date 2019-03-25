@@ -84,9 +84,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		{
 			count: parseInt(this.controlCount.current.value),
 			offset: (e.target === this.controlOffset.current) ? parseInt(store.routeParams.offset) : 0,
+			subsection: "files",
 		};
 
-		router.navigate("monitor", params);
+		router.navigate("monitor.subsection", params);
 	};
 
 	handleOffsetUpdate = (modifier) =>
