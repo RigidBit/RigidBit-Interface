@@ -10,7 +10,6 @@ import Logout from "../Logout/Logout.jsx";
 import Monitor from "../Monitor/Monitor.jsx";
 import Search from "../Search/Search.jsx";
 import Settings from "../Settings/Settings.jsx";
-import Sync from "../Sync/Sync.jsx";
 import Upload from "../Upload/Upload.jsx";
 import Verify from "../Verify/Verify.jsx";
 
@@ -98,9 +97,6 @@ import Verify from "../Verify/Verify.jsx";
 			case "settings":
 			case "settings.subsection":
 				html = <Settings />;
-				break;
-			case "sync":
-				html = <Sync />;
 				break;
 			case "upload":
 				html = <Upload />;
