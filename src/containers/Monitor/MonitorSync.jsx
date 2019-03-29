@@ -71,6 +71,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	{
 		const params =
 		{
+			subsection: store.routeParams.subsection,
 			count: parseInt(this.controlCount.current.value),
 			offset: parseInt(store.routeParams.offset),
 		};
@@ -86,7 +87,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(params.offset < 0)
 			params.offset = 0;
 
-		router.navigate("sync", params);
+		router.navigate(store.route, params);
 	};
 
 	isDataReady = () =>
