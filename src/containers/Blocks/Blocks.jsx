@@ -62,27 +62,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		router.navigate("blocks", params);
 	};
 
-	handleViewBlockClick = (e) =>
-	{
-		e.preventDefault();
-
-		router.navigate("block", {id: e.currentTarget.dataset.id});
-	};
-
-	handleViewTypeClick = (e) =>
-	{
-		e.preventDefault();
-
-		const params =
-		{
-			count: parseInt(store.routeParams.count),
-			offset: 0,
-			type: String(e.currentTarget.dataset.type).toLowerCase(),
-		};
-
-		router.navigate("blocks", params);
-	};
-
 	handleOffsetUpdate = (modifier) =>
 	{
 		const params =
@@ -211,9 +190,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				const html =
 				(
 					<tr key={r}>
-						<td className="id item"><a href={linkId} data-id={row.id} onClick={_this.handleViewBlockClick}>{row.id}</a></td>
-						<td className="hash item"><a href={linkHash} data-id={row.hash} onClick={_this.handleViewBlockClick}>{linkLabel}</a></td>
-						<td className="block_type item"><a href={linkBlockType} data-type={row.type} onClick={_this.handleViewTypeClick}>{row.type}</a></td>
+						<td className="id item"><a href={linkId}>{row.id}</a></td>
+						<td className="hash item"><a href={linkHash}>{linkLabel}</a></td>
+						<td className="block_type item"><a href={linkBlockType}>{row.type}</a></td>
 						<td className="timestamp item">{timestampToDate(row.timestamp)}</td>
 					</tr>
 				);
