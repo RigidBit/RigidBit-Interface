@@ -187,7 +187,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				_this.tagsEditModeEnabled = false;
 			})();
 
-			api.removeCache(`/api/block-complete/${_this.data.block.id}`, "GET");
+			api.removeCache(`/api/block-complete/${_this.data.block.id}?inline=true`, "GET");
 		})
 		.catch(function(error)
 		{
@@ -363,10 +363,14 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.refreshDataFailure(error);
 		});
 
-		api.getUrl(`/api/block-complete/${store.routeParams.id}`, useCache)
+		api.getUrl(`/api/block-complete/${store.routeParams.id}?inline=true`, useCache)
 		.then(function(data)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null}, data);
+			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null, inline: null}, data);
+
+			// TODO: This is a compatibility fix with the previous block structure. It should be reinvestigated.
+			if(newData.inline !== null) { newData.data.data = newData.inline; }
+
 			_this.updateData(newData);
 		})
 		.catch(function(error)
@@ -388,7 +392,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	refreshDataFailure = (error) =>
 	{
-		this.updateData({block: null, data: null, meta: null, tags: null, block_count: null});
+		this.updateData({block: null, data: null, meta: null, tags: null, inline: null, block_count: null});
 
 		log.error(error);
 		iziToast.error({title: "Error", message: error});
