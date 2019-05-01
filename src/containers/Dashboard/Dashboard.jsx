@@ -15,6 +15,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 @observer class Component extends React.Component
 {
 	@observable data = {};
+	@observable expandBlockTypeUsageDaily = false;
+	@observable expandBlockTypeUsageHourly = false;
 	@observable showGenesisHash = false;
 	refreshTimer = null;
 
@@ -38,6 +40,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.refreshTimer = null;
 		}
 	};
+
+	expandClicked = action((e, id) =>
+	{
+		if(e) e.preventDefault();
+
+		this[id] = !this[id];
+	});
 
 	refreshClicked = action((e) =>
 	{
@@ -212,13 +221,44 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const chartOptions = _.cloneDeep(charts.optionsBase2);
 		chartOptions.title.display = false;
 
+		const section = "expandBlockTypeUsageDaily";
+		const chartExpandButton = this.renderChartExpandButton(section);
+
+		let containerClassName = ["block-type-usage-daily-container"];
+		if(this[section]) containerClassName.push("expanded");
+		containerClassName = containerClassName.join(" ");
+
+		let chartClassName = ["chart"];
+		if(this[section]) chartClassName.push("expanded");
+		chartClassName = chartClassName.join(" ");
+
 		const html =
 		(
-			<div className="chart">
-				<LineChart data={chartData} options={chartOptions} height={100} />
-			</div>
+			<React.Fragment>
+				{chartExpandButton}
+				<div className={chartClassName}>
+					<LineChart data={chartData} options={chartOptions} />
+				</div>
+			</React.Fragment>
 		);
-		return htmlHelpers.renderContainer("block-type-usage-daily-container", `Block Types by Date (${config.statusUsageDays}d)`, html);
+		return htmlHelpers.renderContainer(containerClassName, `Block Types by Date (${config.statusUsageDays}d)`, html);
+	};
+
+	renderChartExpandButton = (section) =>
+	{
+		let buttonClassNames = ["expand-button"];
+		if(this[section]) buttonClassNames.push("expanded");
+		buttonClassNames = buttonClassNames.join(" ");
+
+		const expandIcon = (this[section]) ? <i className="fas fa-compress"></i> : <i className="fas fa-expand"></i>;
+
+		const html =
+		(
+			<button type="button" className={buttonClassNames} onClick={(e)=>this.expandClicked(e, section)}>
+				{expandIcon}
+			</button>
+		);
+		return html;
 	};
 
 	renderBlockTypeUsageHourly = () =>
@@ -263,13 +303,27 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const chartOptions = _.cloneDeep(charts.optionsBase2);
 		chartOptions.title.display = false;
 
+		const section = "expandBlockTypeUsageHourly";
+		const chartExpandButton = this.renderChartExpandButton(section);
+
+		let containerClassName = ["block-type-usage-hourly-container"];
+		if(this[section]) containerClassName.push("expanded");
+		containerClassName = containerClassName.join(" ");
+
+		let chartClassName = ["chart"];
+		if(this[section]) chartClassName.push("expanded");
+		chartClassName = chartClassName.join(" ");
+
 		const html =
 		(
-			<div className="chart">
-				<BarChart data={chartData} options={chartOptions} height={100} />
-			</div>
+			<React.Fragment>
+				{chartExpandButton}
+				<div className={chartClassName}>
+					<BarChart data={chartData} options={chartOptions} />
+				</div>
+			</React.Fragment>
 		);
-		return htmlHelpers.renderContainer("block-type-usage-daily-container", `Block Types by Hour (${config.statusUsageDays}d)`, html);
+		return htmlHelpers.renderContainer(containerClassName, `Block Types by Hour (${config.statusUsageDays}d)`, html);
 	};
 
 	renderStatus = () =>
