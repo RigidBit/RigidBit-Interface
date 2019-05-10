@@ -2,6 +2,11 @@ section.dashboard
 {
 	@include contentMixin;
 
+	.notifications-container
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
 	.status-container
 	{
 		@include sectionContainerDefaultMixin;

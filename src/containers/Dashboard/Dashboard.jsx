@@ -326,6 +326,36 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return htmlHelpers.renderContainer(containerClassName, `Block Types by Hour (${config.statusUsageDays}d)`, html);
 	};
 
+	renderNotifications = () =>
+	{
+		if(!this.isDataReady())
+			return null;
+
+		const notifications = mobx.toJS(this.data.notifications);
+
+		if(notifications.length === 0)
+			return null;
+
+		const rows = [];
+		for(let n in notifications)
+		{
+			let notification = notifications[n];
+
+			let classes = "";
+			const matches = notification.match(/^([\w]+:)/);
+			if(_.isObject(matches)) // If a "prefix:" was used.
+			{
+				const prefix = matches[1];
+				classes = prefix.replace(":", "").toLowerCase(); // Set class to prefix.
+				notification = <React.Fragment><span className="prefix">{prefix}</span> {notification.replace(prefix, "")}</React.Fragment>; // Add prefix class to prefix string.
+			}
+
+			const html = <div key={n} className={classes}>{notification}</div>;
+			rows.push(html);
+		}
+		return htmlHelpers.renderContainer("notifications-container", "Notifications", rows);
+	};
+
 	renderStatus = () =>
 	{
 		const _this = this;
@@ -401,6 +431,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const blockTypeCounts = this.renderBlockTypeCounts();
 		const blockTypeUsageDaily = this.renderBlockTypeUsageDaily();
 		const blockTypeUsageHourly = this.renderBlockTypeUsageHourly();
+		const notifications = this.renderNotifications();
 
 		const html =
 		(
@@ -415,6 +446,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 							<button type="button" className="refresh" onClick={this.refreshClicked} title="Refresh"><i className="fas fa-sync-alt"></i></button>
 						</div>
 					</h1>
+					{notifications}
 					{status}
 					{blockTypeCounts}
 					{blockTypeUsageDaily}
