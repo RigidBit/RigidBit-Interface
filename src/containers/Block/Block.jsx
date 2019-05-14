@@ -187,7 +187,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				_this.tagsEditModeEnabled = false;
 			})();
 
-			api.removeCache(`/api/block-complete/${_this.data.block.id}?inline=true`, "GET");
+			api.removeCache(`/api/block-complete/${_this.data.block.id}?inlinetext=true`, "GET");
 		})
 		.catch(function(error)
 		{
@@ -363,7 +363,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.refreshDataFailure(error);
 		});
 
-		api.getUrl(`/api/block-complete/${store.routeParams.id}?inline=true`, useCache)
+		api.getUrl(`/api/block-complete/${store.routeParams.id}?inlinetext=true`, useCache)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {block: null, data: null, meta: null, tags: null, inline: null}, data);
