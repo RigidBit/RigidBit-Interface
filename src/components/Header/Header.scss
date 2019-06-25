@@ -14,9 +14,15 @@ header.main
 
 		img
 		{
+			filter: grayscale(100%);
 			height: $height;
 			position: relative;
 			top: 5px;
+
+			&:hover
+			{
+				filter: none;
+			}
 		}
 	}
 
