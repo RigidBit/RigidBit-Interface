@@ -16,12 +16,15 @@ header.main
 		{
 			filter: grayscale(100%);
 			height: $height;
+			opacity: 0.65;
 			position: relative;
 			top: 5px;
+			transition: all $transition-duration-default;
 
 			&:hover
 			{
-				filter: none;
+				filter: grayscale(0%);
+				opacity: 1;
 			}
 		}
 	}
