@@ -26,7 +26,7 @@ import Verify from "../Verify/Verify.jsx";
 	{
 		const _this = this;
 
-		api.getUrl("/api/variables", true)
+		api.getUrl("/api/variables", false)
 		.then(function(data)
 		{
 			misc.mapApiVariablesToConfig(data);
