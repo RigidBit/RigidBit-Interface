@@ -381,3 +381,16 @@ export function mapApiVariablesToConfig(data)
 	config.settingsEventsEventRuleRuleTypes = data.event_types;
 	config.statusUsageDays = data.status_usage_days;
 }
+
+/**
+ * Converts a CamelCase string into individual words.
+ *
+ * Source: https://stackoverflow.com/a/18379358/9979
+ * 
+ * @param  {string} data A CamelCase string.
+ * @return {string}      A split word string.
+ */
+export function camelCaseToWords(data)
+{
+	return data.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+}

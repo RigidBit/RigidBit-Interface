@@ -253,7 +253,7 @@ import Table from "../../components/Table/Table.jsx";
 			{
 				Header: "Type",
 				id: "type",
-				accessor: "rule.type",
+				accessor: (d)=>misc.camelCaseToWords(d.rule.type),
 				className: "type",
 				headerClassName: "type",
 				maxWidth: 160,

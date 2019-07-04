@@ -359,13 +359,18 @@ import * as misc from "../../common/js/misc.js";
 
 		const optionsHtml = options.map(function(value, v)
 		{
-			let optionLabel = value;
-			let optionValue = value;
+			let optionLabel;
+			let optionValue;
 
 			if(_.isObject(value))
 			{
-				optionLabel = value.label;
+				optionLabel = misc.camelCaseToWords(value.label);
 				optionValue = value.value;
+			}
+			else
+			{
+				optionLabel = misc.camelCaseToWords(value);
+				optionValue = value;
 			}
 
 			return <option key={v} value={optionValue}>{optionLabel}</option>;
