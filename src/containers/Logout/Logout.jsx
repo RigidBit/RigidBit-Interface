@@ -13,6 +13,10 @@ class Login extends React.Component
 		const _this = this;
 
 		api.getUrl("/api/logout")
+		.then(function(data)
+		{
+			api.purgeCache();
+		})
 		.catch(function(error)
 		{
 			log.error(error);
