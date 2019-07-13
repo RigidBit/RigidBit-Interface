@@ -1,3 +1,4 @@
+$border-color: #0057b8;
 $height: 34px;
 
 nav.main
@@ -23,7 +24,7 @@ nav.main
 
 			&.active a
 			{
-				border-bottom: 2px solid $border-color-default;
+				border-bottom: 2px solid $border-color;
 			}
 
 			a

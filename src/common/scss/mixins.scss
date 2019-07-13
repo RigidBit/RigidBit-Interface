@@ -63,8 +63,7 @@
 {
 	&:hover
 	{
-		background: $background-color-box-light;
-		border: 1px solid $border-color-light;
+		border: 1px solid $border-color-default;
 	}
 }
 
@@ -72,8 +71,8 @@
 {
 	@include sectionHoverMixin;
 
-	background: rgba($background-color-box-light, 0.00);
-	border: 1px solid rgba($border-color-light, 0.30);
+	background: $background-color-box-light;
+	border: 1px solid $border-color-light;
 	border-radius: $border-radius-default;
 	margin-bottom: $margin-default;
 	overflow: auto;
@@ -121,7 +120,7 @@
 	&:active,
 	&:hover
 	{
-		background: $color-grey-dark;
+		background: $color-rigidbit-blue;
 	}
 }
 
