@@ -245,6 +245,14 @@ import Table from "../../components/Table/Table.jsx";
 				maxWidth: 80,
 			},
 			{
+				Header: "Mode",
+				id: "mode",
+				accessor: (d)=>misc.camelCaseToWords(d.mode),
+				className: "mode",
+				headerClassName: "mode",
+				maxWidth: 120,
+			},
+			{
 				Header: "Actions",
 				id: "actions",
 				accessor: (d)=>this.renderUsersRowActions(d.id),

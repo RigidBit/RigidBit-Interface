@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import ReactModal from 'react-modal';
 
+import * as misc from "../../common/js/misc.js";
+
 @observer class SettingsAddEditUserModal extends React.Component
 {
 	@observable modalOpen = true;
@@ -29,6 +31,7 @@ import ReactModal from 'react-modal';
 			password: "",
 			is_admin: 0,
 			is_disabled: 0,
+			mode: 0,
 		};
 
 		if(isEditMode)
@@ -37,6 +40,7 @@ import ReactModal from 'react-modal';
 			// defaultValues.password = this.props.editData.password;
 			defaultValues.is_admin = this.props.editData.is_admin ? 1 : 0;
 			defaultValues.is_disabled = this.props.editData.is_disabled ? 1 : 0;
+			defaultValues.mode = this.props.editData.mode;
 		}
 
 		return defaultValues;
@@ -73,6 +77,39 @@ import ReactModal from 'react-modal';
 		{
 			this.props.onCancel();
 		}, 310);
+	};
+
+	renderSelect = (options, value, name="") =>
+	{
+		value = String(value);
+
+		const optionsHtml = options.map(function(value, v)
+		{
+			let optionLabel;
+			let optionValue;
+
+			if(_.isObject(value))
+			{
+				optionLabel = misc.camelCaseToWords(value.label);
+				optionValue = value.value;
+			}
+			else
+			{
+				optionLabel = misc.camelCaseToWords(value);
+				optionValue = value;
+			}
+
+			return <option key={v} value={optionValue}>{optionLabel}</option>;
+		});
+
+		const html =
+		(
+			<select name={name} defaultValue={value}>
+				{optionsHtml}
+			</select>
+		);
+
+		return html;
 	};
 
 	render()
@@ -133,6 +170,11 @@ import ReactModal from 'react-modal';
 								<option value="0">false</option>
 								<option value="1">true</option>
 							</select>
+						</label>
+
+						<label className="mode">
+							Mode
+							{this.renderSelect(config.settingsUsersUserModes, defaultValues.mode, "mode")}
 						</label>
 					</form>
 
