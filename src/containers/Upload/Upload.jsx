@@ -177,6 +177,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const formData = new FormData();
 		const url = (!this.fileHash.current.checked) ? "/api/file" : "/api/filehash";
 
+		formData.append("meta", "");
 		formData.append("tags", JSON.stringify(_.map(_this.selectedFileTags, "value")));
 		_this.formDataAppendFiles(formData, _this.file.current);
 
@@ -214,6 +215,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const data = $(_this.textForm.current).serializeObject();
 		data.tags = JSON.stringify(_.map(_this.selectedTextTags, "value"));
+		data.meta = null;
 
 		api.postUrl("/api/text", data)
 		.then(function(data)
