@@ -16,9 +16,11 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 	{
 		const _this = this;
 		const isWindowsPath = misc.isWindowsPath(fullpath);
+		const isWindowsElp = misc.isWindowsElp(fullpath);
+		const processedPath = (isWindowsPath && isWindowsElp) ? misc.stripWindowsElp(fullpath) : fullpath;
 		const divider = (isWindowsPath) ? "\\" : "/";
 
-		let paths = fullpath.split(divider).map(function(path, p)
+		let paths = processedPath.split(divider).map(function(path, p)
 		{
 			const leadSlash = (p > 0) ? (isWindowsPath) ? "\\" : "/" : "";
 

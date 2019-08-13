@@ -341,6 +341,33 @@ export function isWindowsPath(path)
 }
 
 /**
+ * Determines if the specified path is a Windows extended length (ELP) path.
+ * 
+ * @param  {String}  path The path to be tested.
+ * @return {Boolean}      True if the path is a Windows ELP, otherwise false.
+ */
+export function isWindowsElp(path)
+{
+	const regex1 = /^\\\\\?\\[a-z]:\\.*/gi;
+
+	return regex1.test(path);
+}
+
+/**
+ * Remove the extended length path (ELP) prefix.
+ * 
+ * @param  {String}  path The path to remove the ELP prefix from.
+ * @return {Boolean}      The final path string.
+ */
+export function stripWindowsElp(path)
+{
+	if(path.substring(0, 4) === "\\\\?\\")
+		return path.substring(4);
+	else
+		return path;
+}
+
+/**
  * Hashes the specified password with the default salt.
  * 
  * @param  {String} password A string of the password to hash.

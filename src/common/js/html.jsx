@@ -1,3 +1,36 @@
+import * as misc from "./misc.js";
+
+/**
+ * Convert a path string into a React element with clickable path componets. 
+ * 
+ * @param  {String} fullpath The path to be converted.
+ * @return {Object}          A React element with clickable path components.
+ */
+export function createSearchPath(fullpath)
+{
+	const isWindowsPath = misc.isWindowsPath(fullpath);
+	const isWindowsElp = misc.isWindowsElp(fullpath);
+	const processedPath = (isWindowsPath && isWindowsElp) ? misc.stripWindowsElp(fullpath) : fullpath;
+	const divider = (isWindowsPath) ? "\\" : "/";
+
+	let paths = processedPath.split(divider).map(function(path, p)
+	{
+		const leadSlash = (p > 0) ? (isWindowsPath) ? "\\" : "/" : "";
+
+		if(path.length >= config.minimumSearchPhraseLength)
+		{
+			const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
+			return <span key={p}>{leadSlash}{link}</span>;
+		}
+		else
+			return <span key={p}>{leadSlash}{path}</span>;
+
+		return path;
+	});
+
+	return paths;
+}
+
 export function renderContainer(containerClassName, title, content1=null, content2=null, content3=null)
 {
 	const html =
