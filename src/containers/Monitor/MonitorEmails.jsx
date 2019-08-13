@@ -55,29 +55,6 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		}
 	};
 
-	createSearchPath = (fullpath) =>
-	{
-		const isWindowsPath = misc.isWindowsPath(fullpath);
-		const divider = (isWindowsPath) ? "\\" : "/";
-
-		let paths = fullpath.split(divider).map(function(path, p)
-		{
-			const leadSlash = (p > 0) ? (isWindowsPath) ? "\\" : "/" : "";
-
-			if(path.length >= config.minimumSearchPhraseLength)
-			{
-				const link = <a href={"#" + router.buildPath("search", {q: `"file_path:${path}"`})}>{path}</a>;
-				return <span key={p}>{leadSlash}{link}</span>;
-			}
-			else
-				return <span key={p}>{leadSlash}{path}</span>;
-
-			return path;
-		});
-
-		return paths;
-	}
-
 	handleControlChange = (e) =>
 	{
 		const params =
