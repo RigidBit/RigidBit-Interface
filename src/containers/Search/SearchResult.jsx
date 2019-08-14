@@ -4,7 +4,7 @@ import * as htmlHelpers from "../../common/js/html.jsx";
 import * as misc from "../../common/js/misc.js";
 
 const REGEX_ESCAPE = /[-[\]{}()*+?.,\\^$|#\s]/g;
-const REGEX_PREFIXES = /^(?:data\:|data_hash\:|email\:|filename\:|file_path\:|hash\:|meta_hash\:|tag\:|type\:)/gi;
+const REGEX_PREFIXES = /^(?:data\:|data_hash\:|email\:|filename\:|file_path\:|hash\:|meta\:|meta_hash\:|tag\:|type\:)/gi;
 const REGEX_TERMS = /('.*?'|".*?"|\S+)/g;
 const REGEX_TRIM = /^['"]+|['"]+$/g;
 
