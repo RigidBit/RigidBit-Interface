@@ -76,7 +76,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			offset: parseInt(store.routeParams.offset),
 		};
 
-		const monitor_records_count = this.data.monitor_email_records_count;
+		const monitor_records_count = this.data.monitor_history_email_records_count;
 
 		params.offset += modifier;
 
@@ -92,7 +92,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isDataReady = () =>
 	{
-		if(this.data.hasOwnProperty("monitor_email_records") && this.data.hasOwnProperty("monitor_email_records_count"))
+		if(this.data.hasOwnProperty("monitor_history_email_records") && this.data.hasOwnProperty("monitor_history_email_records_count"))
 			return true;
 
 		return false;
@@ -100,7 +100,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	isDataValid = () =>
 	{
-		return this.isDataReady() && _.isObject(this.data.monitor_email_records);
+		return this.isDataReady() && _.isObject(this.data.monitor_history_email_records);
 	};
 
 	startRefreshTimer = () =>
@@ -132,10 +132,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!store.route.startsWith("monitor"))
 			return false;
 
-		api.getUrl(`/api/monitor-emails/${store.routeParams.count}/${store.routeParams.offset}/1`)
+		api.getUrl(`/api/monitor-email-history/${store.routeParams.count}/${store.routeParams.offset}/1`)
 		.then(function(data)
 		{
-			const newData = _.merge(mobx.toJS(_this.data), {monitor_email_records: null, monitor_email_records_count: null}, data);
+			const newData = _.merge(mobx.toJS(_this.data), {monitor_history_email_records: null, monitor_history_email_records_count: null}, data);
 			_this.updateData(newData);
 		})
 		.catch(function(error)
@@ -161,10 +161,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		const tableRows = [];
 
-		if(this.data.monitor_email_records.length === 0)
+		if(this.data.monitor_history_email_records.length === 0)
 			tableRows.push(<tr key={0}><td className="empty-table" colSpan={5}>No data available to display.</td></tr>);
 		else
-			this.data.monitor_email_records.forEach(function(row, r)
+			this.data.monitor_history_email_records.forEach(function(row, r)
 			{
 				const block_id_link = <a href={"#" + router.buildPath("block", {id: row.block_id})}>{row.block_id}</a>;
 
@@ -175,7 +175,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<td className="email item">{row.email}</td>
 						<td className="mailbox item">{row.mailbox}</td>
 						<td className="uid item">{row.uid}</td>
-						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>
+						<td className="timestamp item">{misc.timestampToDate(row.timestamp_updated)}</td>
 					</tr>
 				);
 				tableRows.push(html);
@@ -206,7 +206,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	renderControls = () =>
 	{
-		const monitor_records_count = this.data.monitor_email_records_count;
+		const monitor_records_count = this.data.monitor_history_email_records_count;
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
