@@ -161,13 +161,13 @@ import Table from "../../components/Table/Table.jsx";
 
 		const columns =
 		[
-			// {
-			// 	Header: "ID",
-			// 	accessor: "id",
-			// 	className: "id",
-			// 	headerClassName: "id",
-			// 	maxWidth: 50,
-			// },
+			{
+				Header: "ID",
+				accessor: "id",
+				className: "id",
+				headerClassName: "id",
+				maxWidth: 50,
+			},
 			{
 				Header: "Name",
 				id: "name",
