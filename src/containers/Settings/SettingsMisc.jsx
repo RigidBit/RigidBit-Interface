@@ -9,8 +9,6 @@ class Component extends React.Component
 		super(props);
 
 		this.chainIdData = React.createRef();
-		this.syncForm = React.createRef();
-		this.timestampForm = React.createRef();
 	}
 
 	handleClearCacheButtonClick = (e) =>
@@ -95,7 +93,7 @@ class Component extends React.Component
 				<div className="description">
 					Manually start an on-demand sync operation to peg with external blockchains.
 				</div>
-				<form ref={this.syncForm} action="/api/sync" method="post" encType="multipart/form-data">
+				<form action="/api/sync" method="post" encType="multipart/form-data">
 					<div className="button-container">
 						<button type="button" className="submit" onClick={this.handleSyncSubmitButtonClick} title="Start Sync"><i className="far fa-save icon"></i>Start Sync</button>
 					</div>
@@ -113,7 +111,7 @@ class Component extends React.Component
 				<div className="description">
 					Create a manual timestamp entry in the blockchain.
 				</div>
-				<form ref={this.timestampForm} action="/api/timestamp" method="post" encType="multipart/form-data">
+				<form action="/api/timestamp" method="post" encType="multipart/form-data">
 					<div className="button-container">
 						<button type="button" className="submit" onClick={this.handleTimestampSubmitButtonClick} title="Create Timestamp"><i className="far fa-clock icon"></i>Create Timestamp</button>
 					</div>
