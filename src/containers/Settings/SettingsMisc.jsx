@@ -8,6 +8,7 @@ class Component extends React.Component
 	{
 		super(props);
 
+		this.chainIdData = React.createRef();
 		this.syncForm = React.createRef();
 		this.timestampForm = React.createRef();
 	}
@@ -44,6 +45,24 @@ class Component extends React.Component
 		{
 			const linkUrl = "/#/block/"+data.id;
 			iziToast.success({title: "Success", message: `Timestamp has been created.&nbsp; <a href="${linkUrl}">View</a>`});
+		})
+		.catch(function(error)
+		{
+			log.error(error);
+			iziToast.error({title: "Error", message: error});
+		});
+	};
+
+	handleViewChainIdButtonClick = (e) =>
+	{
+		if(e) e.preventDefault();
+
+		const _this = this;
+
+		api.getUrl("/api/chain_id", null)
+		.then(function(data)
+		{
+			$(_this.chainIdData.current).text(data).addClass("visible");
 		})
 		.catch(function(error)
 		{
@@ -104,6 +123,25 @@ class Component extends React.Component
 		return htmlHelpers.renderContainer("timestamp-container", "Timestamp", html);
 	};
 
+	renderViewChainId = () =>
+	{
+		const html =
+		(
+			<div>
+				<div className="description">
+					Your Chain ID is used for identification with RigidBit Premium services.
+					This identifier is derived directly from your blockchain and cannot be changed.
+				</div>
+				<div className="chain-id-data" ref={this.chainIdData}>
+				</div>
+				<div className="button-container">
+					<button type="button" className="view-chain-id" onClick={this.handleViewChainIdButtonClick} title="View Chain ID"><i className="far fa-eye icon"></i>View Chain ID</button>
+				</div>
+			</div>
+		);
+		return htmlHelpers.renderContainer("chain-id-container", "View Chain ID", html);
+	};
+
 	render()
 	{
 		const html =
@@ -112,6 +150,7 @@ class Component extends React.Component
 				{this.renderSync()}
 				{this.renderTimestamp()}
 				{this.renderCache()}
+				{this.renderViewChainId()}
 			</div>
 		);
 		return html;

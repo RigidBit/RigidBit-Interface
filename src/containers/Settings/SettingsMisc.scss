@@ -1,6 +1,7 @@
 section.settings
 {
 	.cache-container,
+	.chain-id-container,
 	.sync-container,
 	.timestamp-container
 	{
@@ -8,6 +9,7 @@ section.settings
 	}
 
 	.cache-container,
+	.chain-id-container,
 	.sync-container,
 	.timestamp-container
 	{
@@ -16,5 +18,12 @@ section.settings
 			position: relative;
 			text-align: center;
 		}
+	}
+
+	.chain-id-data.visible
+	{
+		margin-bottom: $margin-thick;
+		margin-top: $margin-thick;
+		text-align: center;
 	}
 }
