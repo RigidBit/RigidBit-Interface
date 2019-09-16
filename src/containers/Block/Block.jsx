@@ -610,6 +610,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					value = json.email;
 			}
 
+			else if(block_type === "Delete" && _.has(meta, "name") && meta["name"] === "deleted_block_id")
+			{
+				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
+			}
+
 			if(value === null)
 				value = <i>null</i>;
 

@@ -23,11 +23,15 @@ const config =
 	verifyRefreshInterval: 1 * 1000,
 };
 
-// The following are loaded through the /api/variables endpoint.
+// The following are loaded through the /api/variables endpoint using misc.mapApiVariablesToConfig().
+//
 // loginPasswordSalt
+// settingsBlockTypes
 // settingsEventsEventRuleActionActions
 // settingsEventsEventRuleConditionObjects
 // settingsEventsEventRuleConditionOperators
 // settingsEventsEventRuleRuleTypes
+// settingsUsersUserModes
+// statusUsageDays
 
 export default config;

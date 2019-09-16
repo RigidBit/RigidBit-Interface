@@ -225,6 +225,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const block_type = ("type" in store.routeParams) ? store.routeParams.type.toLowerCase() : "all";
 		const block_type_count = this.data.block_type_count;
 		const block_type_count_current = valueOrZero(block_type_count, block_type);
+		const block_type_options = config.settingsBlockTypes.map(x=><option value={x.toLowerCase()}>{x} ({valueOrZero(block_type_count, x.toLowerCase())})</option>);
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
@@ -245,15 +246,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<select ref={this.controlType} value={block_type} onChange={this.handleControlChange} title="Filter by Block Type">
 							<option value="all">All ({valueOrZero(block_type_count, "all")})</option>
 							<option value="user">All User ({valueOrZero(block_type_count, "user")})</option>
-							<option value="data">Data ({valueOrZero(block_type_count, "data")})</option>
-							<option value="email">Email ({valueOrZero(block_type_count, "email")})</option>
-							<option value="file">File ({valueOrZero(block_type_count, "file")})</option>
-							<option value="filehash">Filehash ({valueOrZero(block_type_count, "filehash")})</option>
-							<option value="genesis">Genesis ({valueOrZero(block_type_count, "genesis")})</option>
-							<option value="hash">Hash ({valueOrZero(block_type_count, "hash")})</option>
-							<option value="sync">Sync ({valueOrZero(block_type_count, "sync")})</option>
-							<option value="text">Text ({valueOrZero(block_type_count, "text")})</option>
-							<option value="timestamp">Timestamp ({valueOrZero(block_type_count, "timestamp")})</option>
+							{block_type_options}
 						</select>
 					</label>
 				</div>

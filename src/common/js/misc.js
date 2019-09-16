@@ -402,6 +402,7 @@ export function getRandomInt(min, max)
 export function mapApiVariablesToConfig(data)
 {
 	config.loginPasswordSalt = data.salt;
+	config.settingsBlockTypes = data.block_types;
 	config.settingsEventsEventRuleActionActions = data.event_action_types;
 	config.settingsEventsEventRuleConditionObjects = data.event_object_types;
 	config.settingsEventsEventRuleConditionOperators = data.event_condition_operators;
