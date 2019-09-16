@@ -584,7 +584,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const tableRows = [];
 		data.meta.forEach(function(meta, m)
 		{
-			const label = meta["name"].replace("_", " ");
+			const label = meta["name"].replace(/_/g, " ");
 			let value = meta["value"];
 
 			if(_.has(meta, "name") && meta["name"] === "filename")
