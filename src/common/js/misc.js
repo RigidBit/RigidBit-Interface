@@ -422,3 +422,16 @@ export function camelCaseToWords(data)
 {
 	return data.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
 }
+
+/**
+ * Capitalizes the first letter of a string.
+ *
+ * Source: https://stackoverflow.com/a/1026087/9979
+ * 
+ * @param  {string} string The string to be capitalized.
+ * @return {string}        The capitalized string.
+ */
+export function capitalizeFirstLetter(string)
+{
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
