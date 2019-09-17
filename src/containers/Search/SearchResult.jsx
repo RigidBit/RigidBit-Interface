@@ -236,6 +236,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			["view-on-block-explorer", "View", data],
 			["download", "Download", data.block.id],
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
+			["deleted_block_id", "Deleted Block ID", data.meta],
 		];
 
 		const rows = [];
@@ -385,6 +386,19 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 							<td className="empty"></td>
 						</tr>
 					);
+				}
+			}
+
+			else if(key === "deleted_block_id")
+			{
+				if(block_type === "delete")
+				{
+					const item = _this.findItemContainingKey(value, "name", key);
+					if(item)
+					{
+						const link = <a href={"#" + router.buildPath("block", {id: item.value})}>{item.value}</a>;
+						row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{link}</td><td className="empty"></td></tr>;
+					}
 				}
 			}
 
