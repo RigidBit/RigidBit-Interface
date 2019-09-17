@@ -16,7 +16,7 @@ const config =
 	navigationDefaultBlocksParams: {count: 10, offset: 0},
 	navigationDefaultMonitorParams: {count: 10, offset: 0},
 	navigationDefaultSyncParams: {count: 10, offset: 0},
-	subnavigationDefaultParamsMonitor: {subsection: "emails", count: 10, offset: 0},
+	subnavigationDefaultParamsMonitor: {subsection: "data", count: 10, offset: 0},
 	subnavigationDefaultParamsSettings: {subsection: "users"},
 	subnavigationDefaultParamsVerify: {subsection: "chain"},
 	syncRefreshInterval: 5 * 60 * 1000,

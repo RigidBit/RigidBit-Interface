@@ -7,6 +7,7 @@ import * as htmlHelpers from "../../common/js/html.jsx";
 
 import Footer from "../../components/Footer/Footer.jsx";
 import Header from "../../components/Header/Header.jsx";
+import MonitorData from "./MonitorData.jsx";
 import MonitorEmails from "./MonitorEmails.jsx";
 import MonitorFiles from "./MonitorFiles.jsx";
 import MonitorSync from "./MonitorSync.jsx";
@@ -43,6 +44,9 @@ import Subnavigation from "../../components/Subnavigation/Subnavigation.jsx";
 
 		switch(subsection)
 		{
+			case "data":
+				html = <MonitorData refreshSubscribe={this.refreshSubscribe} />;
+				break;
 			case "emails":
 				html = <MonitorEmails refreshSubscribe={this.refreshSubscribe} />;
 				break;
@@ -64,6 +68,7 @@ import Subnavigation from "../../components/Subnavigation/Subnavigation.jsx";
 		const selectedName = mobx.toJS(store.routeParams.subsection);
 		const subnavigationItems =
 		[
+			{ name: "data", label: "Data", route: "monitor.subsection", routeParams:{subsection: "data", count: 10, offset: 0} },
 			{ name: "emails", label: "Emails", route: "monitor.subsection", routeParams:{subsection: "emails", count: 10, offset: 0} },
 			{ name: "files", label: "Files", route: "monitor.subsection", routeParams:{subsection: "files", count: 10, offset: 0} },
 			{ name: "sync", label: "Sync", route: "monitor.subsection", routeParams:{subsection: "sync", count: 10, offset: 0} },
