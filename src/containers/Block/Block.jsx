@@ -582,6 +582,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const block_type = data.block.type;
 
 		const tableRows = [];
+		data.meta = _.sortBy(data.meta, "name");
 		data.meta.forEach(function(meta, m)
 		{
 			const label = meta["name"].replace(/_/g, " ");
