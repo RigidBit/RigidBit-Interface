@@ -167,13 +167,15 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.data.monitor_history_data_records.forEach(function(row, r)
 			{
 				const block_id_link = <a href={"#" + router.buildPath("block", {id: row.block_id})}>{row.block_id}</a>;
+				const monitor_id_link = <a href={router.buildUrl("search", {q: `"meta:monitor_id:${row.monitor_id}"`})}>{row.monitor_id}</a>
+				const data_id_link = <a href={router.buildUrl("search", {q: `"meta:data_id:${row.data_id}"`})}>{row.data_id}</a>
 
 				const html =
 				(
 					<tr key={r}>
 						<td className="block_id item">{block_id_link}</td>
-						<td className="monitor_id item">{row.monitor_id}</td>
-						<td className="data_id item">{row.data_id}</td>
+						<td className="monitor_id item">{monitor_id_link}</td>
+						<td className="data_id item">{data_id_link}</td>
 						<td className="action item">{row.action}</td>
 						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>
 					</tr>
