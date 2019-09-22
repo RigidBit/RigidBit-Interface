@@ -530,7 +530,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<td className={"download value"}>
 						<a href={api.apiUrlFromRelativePath("/api/file-download/"+data.block_id)}>Download</a>
 						{" "}
-						{(block_type !== "data") && <a href={api.apiUrlFromRelativePath("/api/file-inline/"+data.block_id)} target="_blank">Open in New Window</a>}
+						<a href={api.apiUrlFromRelativePath("/api/file-inline/"+data.block_id)} target="_blank">Open in New Window</a>
 					</td>
 					<td className="empty" />
 				</tr>

@@ -381,7 +381,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 							<td className="value">
 								<a href={api.apiUrlFromRelativePath("/api/file-download/"+value)}>Download</a>
 								{" "}
-								{(block_type !== "data") && <a href={api.apiUrlFromRelativePath("/api/file-inline/"+value)} target="_blank">Open in New Window</a>}
+								<a href={api.apiUrlFromRelativePath("/api/file-inline/"+value)} target="_blank">Open in New Window</a>
 							</td>
 							<td className="empty"></td>
 						</tr>
