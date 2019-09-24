@@ -178,7 +178,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 						<td className="file_path item">{htmlHelpers.createSearchPath(row.file_path)}</td>
 						<td className="file_size item">{filesize(row.file_size)}</td>
 						<td className="last_modified item">{misc.timestampToDate(row.last_modified)}</td>
-						<td className="timestamp item">{misc.timestampToDate(row.timestamp_updated)}</td>
+						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>
 					</tr>
 				);
 				tableRows.push(html);
