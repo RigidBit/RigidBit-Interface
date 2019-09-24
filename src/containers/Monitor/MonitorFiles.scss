@@ -25,6 +25,14 @@ section.monitor
 					{
 					}
 
+					&.file_path
+					{
+						max-width: 450px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+
 					&.file_size
 					{
 						white-space: nowrap;

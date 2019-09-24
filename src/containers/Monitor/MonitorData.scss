@@ -23,10 +23,15 @@ section.monitor
 
 					&.monitor_id
 					{
+						white-space: nowrap;
 					}
 
 					&.data_id
 					{
+						max-width: 450px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 
 					&.action
