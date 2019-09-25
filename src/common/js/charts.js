@@ -1,4 +1,4 @@
-export const colorsDefault = ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526", "#62340c", "#aaaaaa", "#777777"];
+export const colorsDefault = ["#0e3d59", "#89a51c", "#f29f05", "#f25c05", "#d92526", "#62340c", "#1e92d0", "#5a71c2", "#aaaaaa", "#777777"];
 
 export const dataBaseSet1 =
 {
