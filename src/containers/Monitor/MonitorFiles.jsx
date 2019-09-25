@@ -167,7 +167,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.data.monitor_history_file_records.forEach(function(row, r)
 			{
 				const block_id_link = <a href={"#" + router.buildPath("block", {id: row.block_id})}>{row.block_id}</a>;
-				const filename = misc.filenameFromPath(row.file_path);
+				const filename = misc.filenameFromPath(row.data_id);
 				const filename_link = <a href={"#" + router.buildPath("search", {q: "\"filename:"+filename+"\""})}>{filename}</a>;
 
 				const html =
@@ -175,9 +175,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 					<tr key={r}>
 						<td className="block_id item">{block_id_link}</td>
 						<td className="filename item">{filename_link}</td>
-						<td className="file_path item">{htmlHelpers.createSearchPath(row.file_path)}</td>
-						<td className="file_size item">{filesize(row.file_size)}</td>
-						<td className="last_modified item">{misc.timestampToDate(row.last_modified)}</td>
+						<td className="file_path item">{htmlHelpers.createSearchPath(row.data_id)}</td>
+						<td className="action item">{row.action}</td>
 						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>
 					</tr>
 				);
@@ -193,8 +192,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 							<th className="block_id">ID</th>
 							<th className="filename">Filename</th>
 							<th className="file_path">File Path</th>
-							<th className="file_size">Filesize</th>
-							<th className="last_modified">Last Modified</th>
+							<th className="action">Action</th>
 							<th className="timestamp">Timestamp</th>
 						</tr>
 					</thead>

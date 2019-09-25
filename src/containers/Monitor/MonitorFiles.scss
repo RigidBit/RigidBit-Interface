@@ -33,15 +33,11 @@ section.monitor
 						white-space: nowrap;
 					}
 
-					&.file_size
+					&.action
 					{
-						white-space: nowrap;
-					}
-
-					&.last_modified
-					{
-						display: none;
-						min-width: 180px;
+						max-width: 90px;
+						min-width: 90px;
+						width: 90px;
 					}
 
 					&.timestamp

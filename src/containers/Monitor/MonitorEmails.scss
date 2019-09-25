@@ -36,6 +36,13 @@ section.monitor
 						width: 90px;
 					}
 
+					&.action
+					{
+						max-width: 90px;
+						min-width: 90px;
+						width: 90px;
+					}
+
 					&.timestamp
 					{
 						max-width: 180px;

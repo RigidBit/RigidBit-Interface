@@ -167,15 +167,20 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			this.data.monitor_history_email_records.forEach(function(row, r)
 			{
 				const block_id_link = <a href={"#" + router.buildPath("block", {id: row.block_id})}>{row.block_id}</a>;
+				const data_id = JSON.parse(row.data_id);
+				const email = data_id.email;
+				const mailbox = data_id.mailbox;
+				const uid = data_id.uid;
 
 				const html =
 				(
 					<tr key={r}>
 						<td className="block_id item">{block_id_link}</td>
-						<td className="email item">{row.email}</td>
-						<td className="mailbox item">{row.mailbox}</td>
-						<td className="uid item">{row.uid}</td>
-						<td className="timestamp item">{misc.timestampToDate(row.timestamp_updated)}</td>
+						<td className="email item">{email}</td>
+						<td className="mailbox item">{mailbox}</td>
+						<td className="uid item">{uid}</td>
+						<td className="action item">{row.action}</td>
+						<td className="timestamp item">{misc.timestampToDate(row.timestamp)}</td>
 					</tr>
 				);
 				tableRows.push(html);
@@ -192,6 +197,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 							<th className="email">Email</th>
 							<th className="mailbox">Mailbox</th>
 							<th className="uid">UID</th>
+							<th className="action">Action</th>
 							<th className="timestamp">Timestamp</th>
 						</tr>
 					</thead>

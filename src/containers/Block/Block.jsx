@@ -591,39 +591,29 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(_.has(meta, "name") && meta["name"] === "filename")
 				value = <a href={router.buildUrl("search", {q: `"filename:${value}"`})}>{value}</a>;
 
+			else if(_.has(meta, "name") && meta["name"] === "block_id")
+				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
+
 			else if(_.has(meta, "name") && (meta["name"] === "filesize" || meta["name"] === "data_size"))
 				value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
 
 			else if(_.has(meta, "name") && meta["name"] === "file_path")
-			{
 				value = htmlHelpers.createSearchPath(value);
-			}
 
 			else if(_.has(meta, "name") && meta["name"] === "monitor_id")
-			{
 				value = <a href={router.buildUrl("search", {q: `"meta:monitor_id:${value.trim()}"`})}>{value}</a>
-			}
 
 			else if(_.has(meta, "name") && meta["name"] === "data_id")
-			{
 				value = <a href={router.buildUrl("search", {q: `"meta:data_id:${value.trim()}"`})}>{value}</a>
-			}
 
 			else if(block_type === "Email" && _.has(meta, "name") && (meta["name"] === "from" || meta["name"] === "to" || meta["name"] === "subject"))
-			{
 				value = <a href={router.buildUrl("search", {q: `"email:${value.trim()}"`})}>{value}</a>
-			}
 
 			else if(block_type === "Email" && _.has(meta, "name") && meta["name"] === "source" && misc.isJson(value))
 			{
 				const json = JSON.parse(value);
 				if(_.has(json, "email"))
 					value = json.email;
-			}
-
-			else if(block_type === "Delete" && _.has(meta, "name") && meta["name"] === "deleted_block_id")
-			{
-				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 			}
 
 			if(value === null)
