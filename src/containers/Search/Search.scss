@@ -11,10 +11,39 @@ section.search
 			display: none;
 		}
 
-		input[name="search"]
+		.search
 		{
-			font-size: 1.4em;
-			line-height: 1.4em;
+			position: relative;
+
+			input[name="search"]
+			{
+				font-size: 1.4em;
+				line-height: 1.4em;
+				padding-right: 18px + $padding-thin * 4;
+			}
+
+			button.clear
+			{
+				@include flatButtonMixin;
+
+				$button-size: 18px + $padding-thin * 2;
+
+				border-radius: $button-size;
+				display: none;
+				font-size: 16px;
+				height: $button-size;
+				padding: $padding-thin;
+				position: absolute;
+				right: $padding-thin;
+				top: 50%;
+				transform: translateY(-50%);
+				width: $button-size;
+
+				&.visible
+				{
+					display: inline;
+				}
+			}
 		}
 
 		.search-results

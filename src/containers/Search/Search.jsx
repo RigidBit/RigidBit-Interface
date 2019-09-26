@@ -55,6 +55,12 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 	    this.search.current.removeEventListener("keydown", this.handleSearchKeyPress, false);
 	}
 
+	handleClearSearchClicked = action(() =>
+	{
+		this.searchPhrase = "";
+		this.search.current.value = "";
+	});
+
 	handleRouteParamChange = action(() =>
 	{
 		if("q" in store.routeParams && store.routeParams.q.length > 0)
@@ -126,12 +132,14 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 	{
 		const containerClassName = "search-container";
 		const containerTitle = "Search";
+		const clearClassName = (this.searchPhrase.length > 0) ? "clear visible" : "clear";
 
 		const html =
 		(
 			<div>
 				<div className="search">
 					<input ref={this.search} type="text" name="search" placeholder="Begin typing to search..." onChange={this.handleSearchChange} />
+					<button className={clearClassName}  onClick={this.handleClearSearchClicked}><i className="far fa-times-circle"></i></button>
 				</div>
 				{this.renderSearchResults()}
 			</div>
