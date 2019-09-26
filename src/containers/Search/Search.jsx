@@ -11,6 +11,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 {
 	@observable data = {};
 	@observable searchPhrase = "";
+	@observable variables = {};
 	autorun = [];
 
 	constructor(props)
@@ -39,6 +40,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		});
 		this.autorun.push(reaction2);
 
+		this.refreshDataVariables();
 		this.handleRouteParamChange();
 
 		this.search.current.focus();
@@ -57,6 +59,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 
 	handleClearSearchClicked = action(() =>
 	{
+		router.replaceHistoryState("search", {});
 		this.searchPhrase = "";
 		this.search.current.value = "";
 	});
@@ -92,9 +95,15 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		}
 	};
 
+	isDataReady = () =>
+	{
+		return (this.variables.hasOwnProperty("savedSearches"));
+	};
+
 	refreshClicked = (e) =>
 	{
 		this.refreshData(false);
+		this.refreshDataVariables(false);
 	};
 
 	_refreshData = (useCache=false) =>
@@ -120,6 +129,26 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 	};
 	refreshData = _.debounce(this._refreshData, config.debouceDelayLong);
 
+	refreshDataVariables = (useCache=false) =>
+	{
+		const _this = this;
+
+		if(!store.route.startsWith("search"))
+			return false;
+
+		api.getUrl("/api/program_data/front_end_ui/saved_search")
+		.then(function(data)
+		{
+			data = _.map(data, (x)=>{x.value=JSON.parse(x.value); return x;});
+			const newData = _.merge(mobx.toJS(_this.variables), {savedSearches: null}, {savedSearches: data});
+			_this.updateDataVariables(newData);
+		})
+		.catch(function(error)
+		{
+			_this.refreshDataFailure(error);
+		});
+	};
+
 	refreshDataFailure = (error) =>
 	{
 		action(()=> { this.data = {searchResults: null}; })();
@@ -128,11 +157,34 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		iziToast.error({title: "Error", message: error});
 	};
 
+	renderSavedSearches = () =>
+	{
+		if(!this.isDataReady() || this.variables.savedSearches.length == 0)
+			return null;
+
+		let buttons = [];
+		for(let search of this.variables.savedSearches)
+		{
+			const button = <a className="button" href={router.buildUrl("search", {q: search.value.search})}>{search.value.label}</a>;
+			buttons.push(button);
+		}
+
+		const html =
+		(
+			<div className="saved-search-container">
+				{buttons}
+			</div>
+		);
+
+		return html;
+	};
+
 	renderSearch = () =>
 	{
 		const containerClassName = "search-container";
 		const containerTitle = "Search";
 		const clearClassName = (this.searchPhrase.length > 0) ? "clear visible" : "clear";
+		const savedSearches = (this.searchPhrase.length == 0) ? this.renderSavedSearches() : null;
 
 		const html =
 		(
@@ -142,6 +194,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 					<button className={clearClassName}  onClick={this.handleClearSearchClicked}><i className="far fa-times-circle"></i></button>
 				</div>
 				{this.renderSearchResults()}
+				{savedSearches}
 			</div>
 		);
 
@@ -186,6 +239,12 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		);
 		return html;
 	}
+
+	updateDataVariables = action((data) =>
+	{
+		this.variables = data;
+		log.debug("UPDATE DATA VARIABLES:", this.variables);
+	});
 
 	render()
 	{

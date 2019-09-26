@@ -62,5 +62,23 @@ section.search
 				text-align: center;
 			}
 		}
+
+		.saved-search-container
+		{
+			margin: $margin-default 0 $margin-default 0;
+			padding: $padding-default;
+
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: flex-start;
+			align-content: flex-start;
+
+			a
+			{
+				flex: 0 0 auto;
+				margin: $margin-button;
+			}
+		}
 	}
 }

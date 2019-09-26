@@ -1,6 +1,7 @@
 $background: white;
 $background-active: rgba(255, 255, 255, 0.2);
 
+a.button:focus,
 button:focus,
 input:focus,
 select:focus,
@@ -10,6 +11,7 @@ textarea:focus
 	// outline: none;
 }
 
+a.button,
 button,
 input,
 select,
@@ -63,6 +65,7 @@ input[type="text"]
 	overflow: visible;
 }
 
+a.button,
 button,
 input[type="button"],
 input[type="submit"],
@@ -74,6 +77,7 @@ input[type="submit"],
 	cursor: pointer;
 	display: inline-block;
 	padding: $padding-input*0.75 $padding-input $padding-input*0.75 $padding-input;
+	text-decoration: none;
 	user-select: none;
 
 	&.flat
