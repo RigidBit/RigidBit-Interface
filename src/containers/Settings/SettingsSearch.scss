@@ -1,0 +1,15 @@
+section.settings
+{
+	.searches-container
+	{
+		@include sectionContainerDefaultMixin;
+	}
+
+	.searches-container
+	{
+		.controls
+		{
+			@include controlsMixin;
+		}
+	}
+}

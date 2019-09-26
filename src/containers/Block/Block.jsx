@@ -410,16 +410,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			let value = data[metric[0]];
 
 			if(key === "id" || key === "hash" || key === "prev_hash")
-				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>
+				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
 			else if(key === "data_hash")
-				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>
+				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>;
 
 			else if(key === "meta_hash")
-				value = <a href={router.buildUrl("search", {q: "meta_hash:"+value})}>{value}</a>
+				value = <a href={router.buildUrl("search", {q: "meta_hash:"+value})}>{value}</a>;
 
 			else if(key === "type")
-				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>
+				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>;
 
 			else if(key === "timestamp")
 				value = misc.timestampToDate(value);
