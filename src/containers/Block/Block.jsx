@@ -588,46 +588,55 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const label = meta["name"].replace(/_/g, " ");
 			let value = meta["value"];
 
-			if(_.has(meta, "name") && meta["name"] === "filename")
-				value = <a href={router.buildUrl("search", {q: `"filename:${value}"`})}>{value}</a>;
-
-			else if(_.has(meta, "name") && meta["name"] === "block_id")
-				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
-
-			else if(_.has(meta, "name") && (meta["name"] === "filesize" || meta["name"] === "data_size"))
-				value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
-
-			else if(_.has(meta, "name") && meta["name"] === "file_path")
-				value = htmlHelpers.createSearchPath(value);
-
-			else if(_.has(meta, "name") && meta["name"] === "monitor_id")
-				value = <a href={router.buildUrl("search", {q: `"meta:monitor_id:${value.trim()}"`})}>{value}</a>
-
-			else if(_.has(meta, "name") && meta["name"] === "data_id")
-				value = <a href={router.buildUrl("search", {q: `"meta:data_id:${value.trim()}"`})}>{value}</a>
-
-			else if(block_type === "Email" && _.has(meta, "name") && (meta["name"] === "from" || meta["name"] === "to" || meta["name"] === "subject"))
-				value = <a href={router.buildUrl("search", {q: `"email:${value.trim()}"`})}>{value}</a>
-
-			else if(block_type === "Email" && _.has(meta, "name") && meta["name"] === "source" && misc.isJson(value))
+			if(meta["name"][0] !== "_") // Keys starting with an underscore should be hidden.
 			{
-				const json = JSON.parse(value);
-				if(_.has(json, "email"))
-					value = json.email;
+				// if(meta["name"] === "content_type")
+				// 	value = <a href={router.buildUrl("search", {q: `"meta:content_type:${value}"`})}>{value}</a>;
+
+				if(meta["name"] === "email")
+					value = <a href={router.buildUrl("search", {q: `"email:${value}"`})}>{value}</a>;
+
+				else if(meta["name"] === "filename")
+					value = <a href={router.buildUrl("search", {q: `"filename:${value}"`})}>{value}</a>;
+
+				else if(meta["name"] === "block_id")
+					value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
+
+				else if((meta["name"] === "filesize" || meta["name"] === "data_size"))
+					value = `${filesize(value)} (${parseInt(value).toLocaleString()} bytes)`;
+
+				else if(meta["name"] === "file_path")
+					value = htmlHelpers.createSearchPath(value);
+
+				else if(meta["name"] === "monitor_id")
+					value = <a href={router.buildUrl("search", {q: `"meta:monitor_id:${value.trim()}"`})}>{value}</a>
+
+				else if(meta["name"] === "data_id")
+					value = <a href={router.buildUrl("search", {q: `'meta:data_id:${value.trim()}'`})}>{value}</a>
+
+				else if(block_type === "Email" && (meta["name"] === "from" || meta["name"] === "to" || meta["name"] === "subject"))
+					value = <a href={router.buildUrl("search", {q: `"email:${value.trim()}"`})}>{value}</a>
+
+				else if(block_type === "Email" && meta["name"] === "source" && misc.isJson(value))
+				{
+					const json = JSON.parse(value);
+					if(_.has(json, "email"))
+						value = <a href={router.buildUrl("search", {q: `"email:${json.email}"`})}>{json.email}</a>;
+				}
+
+				if(value === null)
+					value = <i>null</i>;
+
+				const html =
+				(
+					<tr key={m}>
+						<td className="metric">{label}:</td>
+						<td className="value">{value}</td>
+						<td className="empty" />
+					</tr>
+				);
+				tableRows.push(html);
 			}
-
-			if(value === null)
-				value = <i>null</i>;
-
-			const html =
-			(
-				<tr key={m}>
-					<td className="metric">{label}:</td>
-					<td className="value">{value}</td>
-					<td className="empty" />
-				</tr>
-			);
-			tableRows.push(html);
 		});
 
 		// Add a single timestamp to the end. Use the first meta data entry for this.
