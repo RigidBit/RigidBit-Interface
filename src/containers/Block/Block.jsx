@@ -409,7 +409,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			const label = metric[1];
 			let value = data[metric[0]];
 
-			if(key === "id" || key === "hash" || key === "prev_hash")
+			if(key === "id" || key === "hash")
+				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
+
+			if(key === "prev_hash" && value !== "0000000000000000000000000000000000000000000000000000000000000000")
 				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
 			else if(key === "data_hash")
