@@ -95,11 +95,12 @@ section.dashboard
 
 		.block-type-counts-container
 		{
-			margin: 0;
+			margin: 0 0 20px 0;
 
 			@include media(">=tablet")
 			{
 				flex: 1 0 auto;
+				margin: 0;
 				max-width: calc(50% - 10px);
 			}
 
