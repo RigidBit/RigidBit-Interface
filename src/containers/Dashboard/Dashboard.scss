@@ -26,7 +26,7 @@ section.dashboard
 		}
 	}
 
-	.block-type-counts-container,
+	.block-type-counts-container-container .block-type-counts-container,
 	.block-type-usage-daily-container,
 	.block-type-usage-hourly-container
 	{
@@ -47,6 +47,7 @@ section.dashboard
 			height: 100%;
 			left: 0;
 			margin: 0;
+			max-width: none;
 			min-width: $width-min;
 			position: fixed;
 			top: 0;
@@ -56,20 +57,14 @@ section.dashboard
 
 		.chart
 		{
-			display: inline-block;
 			height: 200px;
 			position: relative;
-
-			&:first-child
-			{
-				background: blue;
-				border: 1px solid red;
-				outline: 1px solid red;
-			}
 
 			&.expanded
 			{
 				height: calc(100% - 40px);
+				margin: 0;
+				width: auto;
 			}
 		}
 
@@ -83,27 +78,35 @@ section.dashboard
 		}
 	}
 
-	.block-type-counts-container
+	.block-type-counts-container-container
 	{
-		.chart
+		margin: 0;
+		padding: 0;
+
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		position: relative;
+
+		@include media("<tablet")
 		{
-			&:nth-of-type(1)
+			display: block;
+		}
+
+		.block-type-counts-container
+		{
+			margin: 0;
+
+			@include media(">=tablet")
 			{
-				width: 55%;
+				flex: 1 0 auto;
+				max-width: calc(50% - 10px);
 			}
 
-			&:nth-of-type(2)
+			.chart
 			{
-				width: 45%;
-			}
-
-			@include media("<desktop")
-			{
-				&:nth-of-type(1),
-				&:nth-of-type(2)
-				{
-					width: 100%;
-				}
+				margin: 0 auto 0 auto;
+				width: 300px;
 			}
 		}
 	}
@@ -113,7 +116,7 @@ section.dashboard
 	{
 		.chart
 		{
-			height: 220px;
+			height: 250px;
 			width: 100%;
 
 			@include media("<tablet")

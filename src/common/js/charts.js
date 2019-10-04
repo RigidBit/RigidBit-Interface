@@ -26,11 +26,11 @@ export const optionsBase1 =
 	maintainAspectRatio: false,
 	title:
 	{
-		display: true,
+		display: false,
 	},
 	legend:
 	{
-		position: "bottom",
+		position: "right",
 		labels:
 		{
 			boxWidth: 12,

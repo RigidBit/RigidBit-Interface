@@ -15,6 +15,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 @observer class Component extends React.Component
 {
 	@observable data = {};
+	@observable expandBlockTypesAllTypes = false;
+	@observable expandBlockTypesUserTypes = false;
 	@observable expandBlockTypeUsageDaily = false;
 	@observable expandBlockTypeUsageHourly = false;
 	@observable showGenesisHash = false;
@@ -164,19 +166,58 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const chartOptionsFiltered = _.cloneDeep(charts.optionsBase1);
 		chartOptionsFiltered.title.text = "User Blocks";
 
+		const section1 = "expandBlockTypesAllTypes";
+		const chartExpandButton1 = this.renderChartExpandButton(section1);
+
+		let containerClassName1 = ["block-type-counts-container"];
+		if(this[section1]) containerClassName1.push("expanded");
+		containerClassName1 = containerClassName1.join(" ");
+
+		let chartClassName1 = ["blockTypeCountsChart", "chart"];
+		if(this[section1]) chartClassName1.push("expanded");
+		chartClassName1 = chartClassName1.join(" ");
+
+		const section2 = "expandBlockTypesUserTypes";
+		const chartExpandButton2 = this.renderChartExpandButton(section2);
+
+		let containerClassName2 = ["block-type-counts-container"];
+		if(this[section2]) containerClassName2.push("expanded");
+		containerClassName2 = containerClassName2.join(" ");
+
+		let chartClassName2 = ["blockTypeCountsFilteredChart", "chart"];
+		if(this[section2]) chartClassName2.push("expanded");
+		chartClassName2 = chartClassName2.join(" ");
+
 		const html1 =
 		(
-			<div className="blockTypeCountsChart chart">
-				<DoughnutChart data={chartData} options={chartOptions} />
-			</div>
+			<React.Fragment>
+				{chartExpandButton1}
+				<div className={chartClassName1}>
+					<DoughnutChart data={chartData} options={chartOptions} />
+				</div>
+			</React.Fragment>
 		);
+		const container1 = htmlHelpers.renderContainer(containerClassName1, "Block Types - All Blocks", html1);
+
 		const html2 =
 		(
-			<div className="blockTypeCountsFilteredChart chart">
-				<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
+			<React.Fragment>
+				{chartExpandButton2}
+				<div className={chartClassName2}>
+					<DoughnutChart data={chartDataFiltered} options={chartOptionsFiltered} redraw />
+				</div>
+			</React.Fragment>
+		);
+		const container2 = htmlHelpers.renderContainer(containerClassName2, "Block Types - User Blocks", html2);
+
+		const html =
+		(
+			<div className="block-type-counts-container-container">
+				{container1}
+				{container2}
 			</div>
 		);
-		return htmlHelpers.renderContainer("block-type-counts-container", "Block Types", html1, html2);
+		return html;
 	};
 
 	renderBlockTypeUsageDaily = () =>
