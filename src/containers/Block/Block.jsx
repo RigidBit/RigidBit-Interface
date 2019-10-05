@@ -77,6 +77,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		return value;
 	};
 
+	dataArrayToHexString = (data) =>
+	{
+		return misc.decimalArrayToHex(data);
+	};
+
 	filenameExtensionFromBlockMetaData = (metaData) =>
 	{
 		let extension = null;
@@ -466,6 +471,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			// return htmlHelpers.renderContainer(containerClassName, containerTitle, "No data is available for this block.");
 
 		const block_type = this.data.block.type.toLowerCase();
+		const hashBlock = block_type === "hash";
 		const syncBlockAndValidJson = block_type === "sync" && misc.isJson(this.dataArrayToString(data.data));
 
 		const metrics =
@@ -493,6 +499,8 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			{
 				if(syncBlockAndValidJson)
 					value = _this.dataArrayToFormattedJson(value);
+				else if(hashBlock)
+					value = _this.dataArrayToHexString(value);
 				else if(value.length > _this.textBlockInlineViewThreshold)
 					value = <i>see block data preview</i>;
 				else
