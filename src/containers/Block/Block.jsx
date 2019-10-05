@@ -417,13 +417,13 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(key === "id" || key === "hash")
 				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
-			if(key === "prev_hash" && value !== "0000000000000000000000000000000000000000000000000000000000000000")
+			if(key === "prev_hash" && data.id !== 1)
 				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
-			else if(key === "data_hash")
+			else if(key === "data_hash" && data.id !== 1)
 				value = <a href={router.buildUrl("search", {q: "data_hash:"+value})}>{value}</a>;
 
-			else if(key === "meta_hash")
+			else if(key === "meta_hash" && data.id !== 1)
 				value = <a href={router.buildUrl("search", {q: "meta_hash:"+value})}>{value}</a>;
 
 			else if(key === "type")
