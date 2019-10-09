@@ -225,7 +225,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const block_type = ("type" in store.routeParams) ? store.routeParams.type.toLowerCase() : "all";
 		const block_type_count = this.data.block_type_count;
 		const block_type_count_current = valueOrZero(block_type_count, block_type);
-		const block_type_options = config.settingsBlockTypes.map(x=><option value={x.toLowerCase()}>{x} ({valueOrZero(block_type_count, x.toLowerCase())})</option>);
+		const block_type_options = config.settingsBlockTypes.map((x, i)=><option key={i} value={x.toLowerCase()}>{x} ({valueOrZero(block_type_count, x.toLowerCase())})</option>);
 		const count = store.routeParams.count;
 		const offset = store.routeParams.offset;
 
