@@ -61,7 +61,7 @@ import Table from "../../components/Table/Table.jsx";
 		if(!store.route.startsWith("verify"))
 			return false;
 
-		api.getUrl("/api/verify_chain", useCache, background)
+		api.getUrl("/api/verify-chain", useCache, background)
 		.then(function(data)
 		{
 			// Make sure the refresh timer is in the correct state.
@@ -134,7 +134,7 @@ import Table from "../../components/Table/Table.jsx";
 	{
 		const _this = this;
 
-		api.postUrl("/api/verify_chain", null, false, true)
+		api.postUrl("/api/verify-chain", null, false, true)
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {verify_chain: null}, {verify_chain: data});

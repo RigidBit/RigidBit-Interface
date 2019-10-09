@@ -194,7 +194,7 @@ import Table from "../../components/Table/Table.jsx";
 		if(!store.route.startsWith("verify"))
 			return false;
 
-		api.getUrl("/api/verify_chain")
+		api.getUrl("/api/verify-chain")
 		.then(function(data)
 		{
 			const newData = _.merge(mobx.toJS(_this.data), {verify_chain: null}, {verify_chain: data});
