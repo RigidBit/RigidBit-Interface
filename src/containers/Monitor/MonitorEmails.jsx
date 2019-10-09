@@ -162,7 +162,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const tableRows = [];
 
 		if(this.data.monitor_history_email_records.length === 0)
-			tableRows.push(<tr key={0}><td className="empty-table" colSpan={5}>No data available to display.</td></tr>);
+			tableRows.push(<tr key={0}><td className="empty-table" colSpan={6}>No data available to display.</td></tr>);
 		else
 			this.data.monitor_history_email_records.forEach(function(row, r)
 			{
