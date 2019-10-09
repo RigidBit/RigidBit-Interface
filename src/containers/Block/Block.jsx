@@ -204,7 +204,16 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 	isBlockMetaAvailable = () =>
 	{
 		if(this.isDataReady() && this.isDataValid() && this.data.hasOwnProperty("meta") && _.isArray(mobx.toJS(this.data.meta)) && this.data.meta.length > 0)
-			return true;
+		{
+			// Don't show unless a non-hidden value is present.
+			let available = false;
+			this.data.meta.forEach(function(value)
+			{
+				if(value.name[0] !== "_")
+					available = true;
+			});
+			return available;
+		}
 
 		return false;
 	};
@@ -241,14 +250,17 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataValid())
 			return false;
 
+		if(this.isStoreHashOnly())
+			return false;
+
 		const block_type = data.block.type.toLowerCase();
-		if(block_type != "file" && block_type != "text")
+		if(block_type !== "file" && block_type !== "text")
 			return false;
 
-		if(block_type == "file" && (data.data.archive !== true || data.meta === null || data.meta.length === 0))
+		if(block_type === "file" && (data.data.archive !== true || data.meta === null || data.meta.length === 0))
 			return false;
 
-		if(block_type == "file")
+		if(block_type === "file")
 		{
 			const extension = this.filenameExtensionFromBlockMetaData(data.meta);
 			if(!extension || !_.includes(validExtensions, extension.toLowerCase()))
@@ -259,6 +271,17 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return false;
 
 		return true;
+	};
+
+	isStoreHashOnly = () =>
+	{
+		if(!this.isDataReady())
+			return false;
+
+		if(!this.isDataValid())
+			return false;
+
+		return Boolean(_.find(this.data.meta, (o)=>o.name === "__store_hash_only" && o.value === "1"));
 	};
 
 	registerKeypressHandler = (addHandler) =>
@@ -304,6 +327,9 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 	updateData = action((data) =>
 	{
+		// Sort meta data.
+		data.meta = _.sortBy(data.meta, "name");
+
 		this.data = data;
 		this.updateSelectedTags(this.generateTagSelectOptions(this.data.tags));
 
@@ -427,7 +453,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = <a href={router.buildUrl("search", {q: "meta_hash:"+value})}>{value}</a>;
 
 			else if(key === "type")
-				value = <a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>;
+			{
+				const store_hash_only = _this.isStoreHashOnly();
+				const hash_only = (store_hash_only) ? ` (Hash Only)` : "";
+				value = <React.Fragment><a href={router.buildUrl("blocks", {...config.navigationDefaultBlocksParams, type: value.toLowerCase()})}>{value}</a>{hash_only}</React.Fragment>;
+			}
 
 			else if(key === "timestamp")
 				value = misc.timestampToDate(value);
@@ -532,7 +562,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			tableRows.push(html);
 		});
 
-		if(data.archive === true || block_type === "text")
+		if(data.archive === true)
 		{
 			const html =
 			(
@@ -588,12 +618,10 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 
 		if(!this.isBlockMetaAvailable())
 			return null;
-			// return htmlHelpers.renderContainer(containerClassName, containerTitle, "No meta data is available for this block.");
 
 		const block_type = data.block.type;
 
 		const tableRows = [];
-		data.meta = _.sortBy(data.meta, "name");
 		data.meta.forEach(function(meta, m)
 		{
 			const label = meta["name"].replace(/_/g, " ");
@@ -679,7 +707,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		const imageExtensions = this.dataPreviewImageExtensions;
 		const movieExtensions = this.dataPreviewMovieExtensions;
 
-		if(block_type === "text")
+		if(block_type === "text" && !this.isStoreHashOnly())
 		{
 			const html =
 			(
