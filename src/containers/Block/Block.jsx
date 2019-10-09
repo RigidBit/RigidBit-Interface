@@ -443,7 +443,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			if(key === "id" || key === "hash")
 				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
-			if(key === "prev_hash" && data.id !== 1)
+			else if(key === "prev_hash" && data.id !== 1)
 				value = <a href={router.buildUrl("block", {id: value})}>{value}</a>;
 
 			else if(key === "data_hash" && data.id !== 1)
@@ -463,7 +463,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 				value = misc.timestampToDate(value);
 
 			else if(key === "verified")
-				value = _this.renderBlockVerify();
+				value = <React.Fragment>{_this.renderBlockVerify()} {_this.renderBlockProof()}</React.Fragment>;
 
 			if(value === null)
 				value = <i>null</i>;
@@ -816,6 +816,19 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			</div>
 		);
 		return htmlHelpers.renderContainer(containerClassName, containerTitle, html);
+	};
+
+	renderBlockProof = () =>
+	{
+		if(!this.isDataValid())
+			return null;
+
+		const html =
+		(
+			<a href={api.apiUrlFromRelativePath("/api/trace-block/"+this.data.block.id+"?download=true")}>Download Proof</a>
+		);
+
+		return html;
 	};
 
 	renderBlockVerify = () =>
