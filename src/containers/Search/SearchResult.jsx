@@ -234,7 +234,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			["tags", "Tags", data.tags],
 			["image-preview", "Preview", data],
 			["view-on-block-explorer", "View", data],
-			["download", "Download", data.block.id],
+			["download", "Download", data],
 			// ["block_time", "Block Time", misc.timestampToDate(data.block.timestamp)],
 			["deleted_block_id", "Deleted Block ID", data.meta],
 		];
@@ -374,20 +374,24 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "download")
 			{
-				if(block_type === "data" || block_type === "email" || block_type === "file" || block_type === "text")
+				if(block_type === "data" || block_type === "email" || block_type === "file" || block_type === "text" || block_type === "sync")
 				{
-					row =
-					(
-						<tr key={m} className={key}>
-							<td className="name">{label}:</td>
-							<td className="value">
-								<a href={api.apiUrlFromRelativePath("/api/file-download/"+value)}>Download</a>
-								{" "}
-								<a href={api.apiUrlFromRelativePath("/api/file-inline/"+value)} target="_blank">Open in New Window</a>
-							</td>
-							<td className="empty"></td>
-						</tr>
-					);
+					const hash_only = Boolean(_.find(value.meta, (o)=>o.name === "__store_hash_only" && o.value === "1"));
+					if(!hash_only)
+					{
+						row =
+						(
+							<tr key={m} className={key}>
+								<td className="name">{label}:</td>
+								<td className="value">
+									<a href={api.apiUrlFromRelativePath("/api/file-download/"+value.block.id)}>Download</a>
+									{" "}
+									<a href={api.apiUrlFromRelativePath("/api/file-inline/"+value.block.id)} target="_blank">Open in New Window</a>
+								</td>
+								<td className="empty"></td>
+							</tr>
+						);
+					}
 				}
 			}
 
@@ -395,7 +399,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 			{
 				if(block_type === "delete")
 				{
-					const item = _this.findItemContainingKey(value, "name", key);
+					const item = _this.findItemContainingKey(value, "name", "block_id");
 					if(item)
 					{
 						const link = <a href={"#" + router.buildPath("block", {id: item.value})}>{item.value}</a>;
