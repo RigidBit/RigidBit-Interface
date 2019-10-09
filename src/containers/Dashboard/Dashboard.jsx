@@ -130,15 +130,15 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			return null;
 
 		// Sort data by configured ordering.
-		const dashboardBlockTypesDisplayOrder = ["data", "datahash", "delete", "email", "file", "filehash", "hash", "text", "timestamp", "sync"];
+		const dashboardBlockTypesDisplayOrder = ["data", "delete", "email", "file", "hash", "text", "timestamp", "sync"];
 		let data = mobx.toJS(this.data.block_type_count);
 		data = _.sortBy(data, function(item)
 		{
 			return _.indexOf(dashboardBlockTypesDisplayOrder, item.block_type.toLowerCase());
 		});
 
-		const blockTypes = ["data", "datahash", "delete", "email", "file", "filehash", "hash", "text", "sync", "timestamp"];
-		const blockTypesFiltered = ["data", "email", "file", "filehash", "hash", "text"];
+		const blockTypes = ["data", "delete", "email", "file", "hash", "text", "sync", "timestamp"];
+		const blockTypesFiltered = ["data", "email", "file", "hash", "text"];
 
 		const chartData = _.cloneDeep(charts.dataBaseSet1);
 		data.forEach(function(item)
@@ -225,7 +225,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const types = ["data", "datahash", "delete", "email", "file", "filehash", "hash", "text", "timestamp", "sync"];
+		const types = ["data", "delete", "email", "file", "hash", "text", "timestamp", "sync"];
 		const dates = Object.keys(this.data.block_type_usage_daily).sort();
 		const block_type_usage_daily = _.mapValues(mobx.toJS(this.data.block_type_usage_daily), function(date)
 		{
@@ -307,7 +307,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		if(!this.isDataReady())
 			return null;
 
-		const types = ["data", "datahash", "delete", "email", "file", "filehash", "hash", "text", "timestamp", "sync"];
+		const types = ["data", "delete", "email", "file", "hash", "text", "timestamp", "sync"];
 		const dates = Object.keys(this.data.block_type_usage_hourly).sort();
 		const block_type_usage_hourly = _.mapValues(mobx.toJS(this.data.block_type_usage_hourly), function(date)
 		{
