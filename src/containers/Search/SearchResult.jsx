@@ -223,7 +223,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 		const metrics =
 		[
-			["id", "ID/Type/Timestamp", data.block],
+			["id", "ID/Type/Timestamp", data],
 			["hash", "Block Hash", data.block.hash],
 			["data_hash", "Data Hash", data.block.data_hash],
 			["email", "Email", data],
@@ -250,10 +250,11 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			if(key === "id")
 			{
-				const id_link = <a href={"/#/block/"+value.id}>{value.id}</a>;
-				const type_link = <a href={"#" + router.buildPath("search", {q: `"type:${value.type}"`})}>{value.type}</a>;
-				const timestamp = misc.timestampToDate(value.timestamp);
-				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{id_link} ({type_link}) <div className="timestamp">{timestamp}</div></td><td className="empty"></td></tr>;
+				const id_link = <a href={"/#/block/"+value.block.id}>{value.block.id}</a>;
+				const type_link = <a href={"#" + router.buildPath("search", {q: `"type:${value.block.type}"`})}>{value.block.type}</a>;
+				const timestamp = misc.timestampToDate(value.block.timestamp);
+				const hash_only = (Boolean(_.find(value.meta, (o)=>o.name === "__store_hash_only" && o.value === "1"))) ? "(Hash Only)" : null;
+				row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value">{id_link} ({type_link}) {hash_only} <div className="timestamp">{timestamp}</div></td><td className="empty"></td></tr>;
 			}
 
 			else if(key === "type" || key === "block_time")
@@ -317,7 +318,7 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "image-preview")
 			{
-				if(block_type === "file")
+				if(block_type === "file" && !(Boolean(_.find(value.meta, (o)=>o.name === "__store_hash_only" && o.value === "1"))))
 				{
 					const item = _this.findItemContainingKey(value.meta, "name", "filename");
 					if(item && _.includes(config.dataPreviewImageExtensions, misc.filenameExtension(item.value).toLowerCase()))
@@ -337,19 +338,20 @@ const REGEX_TRIM = /^['"]+|['"]+$/g;
 
 			else if(key === "text")
 			{
-				if(_.has(value, "data") && block_type === "text")
-				{
-					const text = misc.uintToString(value.data);
-					let location = _this.indexOfFirstTerm(text, search) - Math.round(config.maximumSearchDataLength / 4);
-					if(location < 0) location = 0;
-					const highlightedText = _this.highlightSearches(misc.uintToString(value.data).substr(location, config.maximumSearchDataLength), search);
-					row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value text"><div>{highlightedText}</div></td><td className="empty"></td></tr>;
-				}
-				else if(_.has(value, "data") && block_type === "hash")
-				{
-					const text = misc.uintToString(value.data);
-					row = <tr key={m} className={key}><td className="name">Hash:</td><td className="value text"><div>{text}</div></td><td className="empty"></td></tr>;
-				}
+				//TODO: This entire section is broken because the endpoint no longer returns data.
+				// if(_.has(value, "data") && block_type === "text" && !(Boolean(_.find(value.meta, (o)=>o.name === "__store_hash_only" && o.value === "1"))))
+				// {
+				// 	const text = misc.uintToString(value.data);
+				// 	let location = _this.indexOfFirstTerm(text, search) - Math.round(config.maximumSearchDataLength / 4);
+				// 	if(location < 0) location = 0;
+				// 	const highlightedText = _this.highlightSearches(misc.uintToString(value.data).substr(location, config.maximumSearchDataLength), search);
+				// 	row = <tr key={m} className={key}><td className="name">{label}:</td><td className="value text"><div>{highlightedText}</div></td><td className="empty"></td></tr>;
+				// }
+				// else if(_.has(value, "data") && block_type === "hash")
+				// {
+				// 	const text = misc.uintToString(value.data);
+				// 	row = <tr key={m} className={key}><td className="name">Hash:</td><td className="value text"><div>{text}</div></td><td className="empty"></td></tr>;
+				// }
 			}
 
 			else if(key === "tags")
