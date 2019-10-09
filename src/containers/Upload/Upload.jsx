@@ -175,10 +175,11 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 		}
 
 		const formData = new FormData();
-		const url = (!this.fileHash.current.checked) ? "/api/file" : "/api/filehash";
+		const url = "/api/file";
 
 		formData.append("meta", "");
 		formData.append("tags", JSON.stringify(_.map(_this.selectedFileTags, "value")));
+		if(this.fileHash.current.checked) { formData.append("store_hash_only", "true"); }
 		_this.formDataAppendFiles(formData, _this.file.current);
 
 		api.postUrl(url, formData)
@@ -189,7 +190,7 @@ import Navigation from "../../components/Navigation/Navigation.jsx";
 			_this.handleFileChange();
 			_this.fileHashCheckboxChanged();
 
-			const noun = (url === "/api/file") ? "File" : "Filehash";
+			const noun = "File";
 			const linkUrl = "/#/block/"+data.id;
 			iziToast.success({title: "Success", message: `${noun} has been saved.&nbsp; <a href="${linkUrl}">View</a>`});
 		})
