@@ -157,8 +157,8 @@ import Table from "../../components/Table/Table.jsx";
 		api.getUrl("/api/program_data/front_end_ui/saved_search")
 		.then(function(data)
 		{
-			data = _.sortBy(data, "id");
 			data = _.map(data, (x)=>{x.value=JSON.parse(x.value); return x;});
+			data = _.sortBy(data, "value.label");
 			const newData = _.merge(mobx.toJS(_this.data), {searches: null}, {searches: data});
 			_this.updateData(newData);
 		})

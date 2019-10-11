@@ -140,6 +140,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		.then(function(data)
 		{
 			data = _.map(data, (x)=>{x.value=JSON.parse(x.value); return x;});
+			data = _.sortBy(data, "value.label");
 			const newData = _.merge(mobx.toJS(_this.variables), {savedSearches: null}, {savedSearches: data});
 			_this.updateDataVariables(newData);
 		})
