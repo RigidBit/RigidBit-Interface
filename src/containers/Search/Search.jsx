@@ -166,7 +166,7 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 		let buttons = [];
 		for(let search of this.variables.savedSearches)
 		{
-			const button = <a className="button" href={router.buildUrl("search", {q: search.value.search})}>{search.value.label}</a>;
+			const button = <a key={search.id} className="button" href={router.buildUrl("search", {q: search.value.search})}>{search.value.label}</a>;
 			buttons.push(button);
 		}
 
