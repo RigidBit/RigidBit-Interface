@@ -66,12 +66,9 @@ import SearchResult from "../../containers/Search/SearchResult.jsx";
 
 	handleRouteParamChange = action(() =>
 	{
-		if("q" in store.routeParams && store.routeParams.q.length > 0)
-		{
-			const query = store.routeParams.q;
-			this.searchPhrase = query;
-			this.search.current.value = query;
-		}
+		const query = ("q" in store.routeParams) ? store.routeParams.q : "";
+		this.searchPhrase = query;
+		this.search.current.value = query;
 	});
 
 	_handleSearchChange = _.debounce((phrase) =>
